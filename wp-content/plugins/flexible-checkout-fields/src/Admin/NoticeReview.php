@@ -65,7 +65,7 @@ class NoticeReview implements Hookable, HookablePluginDependant {
 		$notice_date   = strtotime( get_option( $option_notice, false ) );
 		$min_date      = strtotime( current_time( 'mysql' ) );
 
-		if ( ( basename( $_SERVER['PHP_SELF'] ) !== 'index.php' )
+		if ( ( basename( $_SERVER['PHP_SELF'] ) !== 'index.php' ) // phpcs:ignore
 			|| ( ( $notice_date !== false ) && ( $notice_date > $min_date ) ) ) {
 			return;
 		}

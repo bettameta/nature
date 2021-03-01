@@ -147,18 +147,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 
 		add_filter( 'flexible_chekout_fields_fields', array( $this, 'getCheckoutFields' ), 10, 2 );
 
-		add_filter( 'flexible_checkout_fields_field_tabs', array( $this, 'flexible_checkout_fields_field_tabs' ), 10 );
-
-		add_action( 'flexible_checkout_fields_field_tabs_content', array(
-			$this,
-			'flexible_checkout_fields_field_tabs_content'
-		), 10, 4 );
-
-		add_action( 'flexible_checkout_fields_field_tabs_content_js', array(
-			$this,
-			'flexible_checkout_fields_field_tabs_content_js'
-		), 10 );
-
 		add_action( 'woocommerce_default_address_fields', array( $this, 'woocommerce_default_address_fields' ), 9999 );
 		add_filter( 'woocommerce_get_country_locale', array( $this, 'woocommerce_get_country_locale' ), 9999 );
 		add_filter( 'woocommerce_get_country_locale_base', array( $this, 'woocommerce_get_country_locale_base' ), 9999 );
@@ -894,30 +882,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		return $this->getCheckoutFields( $fields, 'order' );
 	}
 
-	public function changeAdminBillingFields( $labels ) {
-		return $this->changeAdminLabelsCheckoutFields( $labels, 'billing' );
-	}
-
-	public function changeAdminShippingFields( $labels ) {
-		return $this->changeAdminLabelsCheckoutFields( $labels, 'shipping' );
-	}
-
-	public function changeAdminOrderFields( $labels ) {
-		return $this->changeAdminLabelsCheckoutFields( $labels, 'order' );
-	}
-
-	public function addCustomBillingFieldsToAdmin( $order ) {
-		$this->printCheckoutFields( $order, 'billing' );
-	}
-
-	public function addCustomShippingFieldsToAdmin( $order ) {
-		$this->printCheckoutFields( $order, 'shipping' );
-	}
-
-	public function addCustomOrderFieldsToAdmin( $order ) {
-		$this->printCheckoutFields( $order, 'order' );
-	}
-
 	public function addCustomFieldsBillingFields( $fields ) {
 		return $this->getCheckoutUserFields( $fields, 'billing' );
 	}
@@ -962,29 +926,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		echo 1;
 	}
 
-	public function flexible_checkout_fields_field_tabs( $tabs ) {
-		$tabs[] = array(
-			'hash'  => 'advanced',
-			'title' => __( 'Advanced', 'flexible-checkout-fields' )
-		);
-		$tabs[] = [
-			'hash'  => 'pricing',
-			'title' => __( 'Pricing', 'flexible-checkout-fields' ),
-		];
-
-		return $tabs;
-	}
-
-	public function flexible_checkout_fields_field_tabs_content( $key, $name, $field, $settings ) {
-		include $this->plugin_path . '/views/settings-field-advanced.php';
-		include $this->plugin_path . '/views/settings-field-pricing.php';
-	}
-
-	public function flexible_checkout_fields_field_tabs_content_js() {
-		include $this->plugin_path . '/views/settings-field-advanced-js.php';
-		include $this->plugin_path . '/views/settings-field-pricing-js.php';
-	}
-
 	public function woocommerce_get_country_locale_default( $address_fields ) {
 		return $address_fields;
 	}
@@ -1009,11 +950,6 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		if (function_exists('get_current_screen')) {
 			$current_screen = get_current_screen();
-		}
-
-		if ( isset( $current_screen ) && 'woocommerce_page_inspire_checkout_fields_settings' === $current_screen->id ) {
-			wp_enqueue_style( 'jquery-ui-style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/jquery-ui' . $suffix . '.css', array(), $this->scripts_version );
-			wp_enqueue_script( 'jquery-tiptip' );
 		}
 
 		wp_enqueue_style( 'inspire_checkout_fields_admin_style', trailingslashit( $this->get_plugin_assets_url() ) . 'css/admin' . $suffix . '.css', array(), $this->scripts_version );

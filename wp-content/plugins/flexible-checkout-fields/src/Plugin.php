@@ -12,9 +12,10 @@ use FcfVendor\WPDesk\PluginBuilder\Plugin\AbstractPlugin;
 use FcfVendor\WPDesk\PluginBuilder\Plugin\HookableCollection;
 use FcfVendor\WPDesk\PluginBuilder\Plugin\HookableParent;
 use WPDesk\FCF\Free\Admin;
+use WPDesk\FCF\Free\Field;
 use WPDesk\FCF\Free\Helpers;
 use WPDesk\FCF\Free\Integration;
-
+use WPDesk\FCF\Free\Settings;
 /**
  * Main plugin class. The most important flow decisions are made here.
  */
@@ -61,8 +62,14 @@ class Plugin extends AbstractPlugin implements HookableCollection {
 	 */
 	public function init() {
 		$this->add_hookable( new Admin\NoticeReview() );
+		$this->add_hookable( new Admin\Page() );
+		( new Field\Types() )->init();
 		$this->add_hookable( new Helpers\Shortener() );
 		$this->add_hookable( new Integration\IntegratorIntegration( $this->plugin_old ) );
+		$this->add_hookable( new Settings\Page() );
+		( new Settings\Forms() )->init();
+		( new Settings\Routes() )->init();
+		( new Settings\Tabs() )->init();
 	}
 
 	/**

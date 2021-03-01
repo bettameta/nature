@@ -4,7 +4,7 @@ Tags: woocommerce, payment, payment request, credit card, automattic
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.9.2
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,18 @@ Please note that our support for the checkout block is still experimental and th
 4. Manage Disputes
 
 == Changelog ==
+
+= 2.0.0 - 2021-02-22 =
+* Update - Render customer details in transactions list as text instead of link if order missing.
+* Update - Render transaction summary on details page for multi-currency transactions.
+* Update - Improvements to fraud prevention.
+* Fix - Added better notices for end users if there are connection errors when making payments. 
+* Fix - If account is set to manual payouts display 'Temporarily suspended' under Payments > Settings.
+* Add - Add file dropzones to dispute evidence upload fields
+* Add - Currency conversion indicator to Transactions list.
+* Add - Transaction timeline details for multi-currency transactions.
+* Update - Link order note with transaction details page.
+* Fix - Updating payment method using saved payment for WC Subscriptions orders.
 
 = 1.9.2 - 2021-02-05 =
 * Fix - Checkout and cart blocks aren't usable in editor when WooCommerce Payments is enabled.

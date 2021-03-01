@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-release/1.9.2',
-    'version' => 'dev-release/1.9.2',
+    'pretty_version' => 'dev-trunk',
+    'version' => 'dev-trunk',
     'aliases' => 
     array (
     ),
-    'reference' => 'bc800dd98a2b60e6c1eb4e83cbd3523c730a2e18',
+    'reference' => '10dc6e2e808d97860f82418ca3fac242335bb026',
     'name' => 'woocommerce/payments',
   ),
   'versions' => 
@@ -121,12 +121,12 @@
     ),
     'woocommerce/payments' => 
     array (
-      'pretty_version' => 'dev-release/1.9.2',
-      'version' => 'dev-release/1.9.2',
+      'pretty_version' => 'dev-trunk',
+      'version' => 'dev-trunk',
       'aliases' => 
       array (
       ),
-      'reference' => 'bc800dd98a2b60e6c1eb4e83cbd3523c730a2e18',
+      'reference' => '10dc6e2e808d97860f82418ca3fac242335bb026',
     ),
   ),
 );

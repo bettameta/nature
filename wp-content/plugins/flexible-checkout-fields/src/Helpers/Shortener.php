@@ -33,7 +33,7 @@ class Shortener implements Hookable, HookablePluginDependant {
 	 * Generates short URL for link.
 	 *
 	 * @param string $default_value Default value for filter.
-	 * @param string $short_path Path for short URL.
+	 * @param string $short_path    Path for short URL.
 	 *
 	 * @return string Short URL.
 	 *
@@ -44,7 +44,7 @@ class Shortener implements Hookable, HookablePluginDependant {
 			return '#';
 		}
 
-		$locale   = get_locale();
+		$locale    = get_locale();
 		$short_url = self::SHORTENER_DOMAIN . $short_path;
 		switch ( $locale ) {
 			case 'pl_PL':

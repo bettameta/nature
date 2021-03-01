@@ -3,7 +3,7 @@ Contributors: socialdude, socialtech
 Tags: share, pop up, popup, share icons, share buttons, social media, social, popups, sharing icons, sharing buttons, social share, sharing
 Requires at least: 3.5
 Tested up to: 5.6
-Stable tag: 2.6.4
+Stable tag: 2.6.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -274,6 +274,10 @@ You cannot use the same plugin twice, however you can install both the USM as we
 
 
 == Changelog ==
+= 2.6.5 =
+* Plugin Translation added
+* Tooltip issue fixed
+
 = 2.6.4 =
 * Responsive icon refresh issue fixed
 * Added carrousel 
@@ -974,5 +978,5 @@ You cannot use the same plugin twice, however you can install both the USM as we
 
 == Upgrade Notice ==
 
-= 2.6.4 =
+= 2.6.5 =
 Please upgrade
