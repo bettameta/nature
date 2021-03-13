@@ -214,7 +214,7 @@ $option1['sfsi_whatsapp_display']     = (isset($option1['sfsi_whatsapp_display']
         </li>
         <!-- END LINKEDIN ICON -->
 
-       
+
         <!-- PINTEREST ICON -->
         <li class="sfsi_vertically_center">
             <div>

@@ -62,7 +62,6 @@ class Plugin extends AbstractPlugin implements HookableCollection {
 	 */
 	public function init() {
 		$this->add_hookable( new Admin\NoticeReview() );
-		$this->add_hookable( new Admin\Page() );
 		( new Field\Types() )->init();
 		$this->add_hookable( new Helpers\Shortener() );
 		$this->add_hookable( new Integration\IntegratorIntegration( $this->plugin_old ) );

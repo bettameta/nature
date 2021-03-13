@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Flexible Checkout Fields plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Checkout Fields 3.0.1\n"
+"Project-Id-Version: Flexible Checkout Fields 3.0.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-checkout-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-01T15:02:02+00:00\n"
+"POT-Creation-Date: 2021-03-12T14:11:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: flexible-checkout-fields\n"
@@ -147,24 +147,24 @@ msgstr ""
 msgid "File Upload"
 msgstr ""
 
-#: classes/plugin.php:986
+#: classes/plugin.php:934
 msgid "Uploading file..."
 msgstr ""
 
-#: classes/plugin.php:1059
+#: classes/plugin.php:1007
 #: src/Settings/Menu.php:40
 msgid "Settings"
 msgstr ""
 
-#: classes/plugin.php:1060
+#: classes/plugin.php:1008
 msgid "Docs"
 msgstr ""
 
-#: classes/plugin.php:1061
+#: classes/plugin.php:1009
 msgid "Support"
 msgstr ""
 
-#: classes/plugin.php:1065
+#: classes/plugin.php:1013
 msgid "Upgrade"
 msgstr ""
 
@@ -177,16 +177,16 @@ msgid "Opt-out"
 msgstr ""
 
 #: classes/user-profile.php:100
-#: src/Settings/Page.php:191
+#: src/Settings/Page.php:192
 msgid "Yes"
 msgstr ""
 
 #: classes/user-profile.php:101
-#: src/Settings/Page.php:192
+#: src/Settings/Page.php:193
 msgid "No"
 msgstr ""
 
-#: src/Field/Type/DefaultType.php:54
+#: src/Field/Type/DefaultType.php:55
 #: src/Field/Type/Wc/WcAddress2Type.php:53
 #: src/Field/Type/Wc/WcCountryType.php:50
 #: src/Field/Type/Wc/WcDefaultType.php:53
@@ -269,12 +269,12 @@ msgid "State/County formatting"
 msgstr ""
 
 #: src/Settings/Option/LabelOption.php:56
-#: src/Settings/Page.php:196
+#: src/Settings/Page.php:197
 msgid "This field is required."
 msgstr ""
 
 #: src/Settings/Option/LabelOption.php:66
-#: src/Settings/Page.php:194
+#: src/Settings/Page.php:195
 msgid "Label"
 msgstr ""
 
@@ -357,80 +357,80 @@ msgstr ""
 msgid "Checkout Fields"
 msgstr ""
 
-#: src/Settings/Page.php:182
+#: src/Settings/Page.php:183
 msgid "Edit form"
 msgstr ""
 
-#: src/Settings/Page.php:183
+#: src/Settings/Page.php:184
 msgid "Add new field"
 msgstr ""
 
-#: src/Settings/Page.php:184
+#: src/Settings/Page.php:185
 msgid "Edit section"
 msgstr ""
 
-#: src/Settings/Page.php:185
+#: src/Settings/Page.php:186
 msgid "Edit settings"
 msgstr ""
 
-#: src/Settings/Page.php:186
+#: src/Settings/Page.php:187
 msgid "Add Field"
 msgstr ""
 
-#: src/Settings/Page.php:187
+#: src/Settings/Page.php:188
 msgid "Add New"
 msgstr ""
 
-#: src/Settings/Page.php:188
+#: src/Settings/Page.php:189
 msgid "Save Changes"
 msgstr ""
 
-#: src/Settings/Page.php:189
+#: src/Settings/Page.php:190
 msgid "Reset Section Settings"
 msgstr ""
 
-#: src/Settings/Page.php:190
+#: src/Settings/Page.php:191
 msgid "Read more"
 msgstr ""
 
-#: src/Settings/Page.php:193
+#: src/Settings/Page.php:194
 msgid "Field Type"
 msgstr ""
 
-#: src/Settings/Page.php:195
+#: src/Settings/Page.php:196
 msgid "Name"
 msgstr ""
 
-#: src/Settings/Page.php:197
+#: src/Settings/Page.php:198
 msgid "Field name should contains only lowercase letters, numbers and underscore sign."
 msgstr ""
 
-#: src/Settings/Page.php:198
+#: src/Settings/Page.php:199
 msgid "Select..."
 msgstr ""
 
-#: src/Settings/Page.php:199
+#: src/Settings/Page.php:200
 msgid "Loading..."
 msgstr ""
 
-#: src/Settings/Page.php:200
+#: src/Settings/Page.php:201
 msgid "No options."
 msgstr ""
 
 #. translators: %1$s: break line, %2$s: anchor opening tag, %3$s: anchor closing tag
-#: src/Settings/Page.php:203
+#: src/Settings/Page.php:204
 msgid "This field is available in the PRO version.%1$s %2$sUpgrade to PRO%3$s"
 msgstr ""
 
-#: src/Settings/Page.php:208
+#: src/Settings/Page.php:209
 msgid "Are you sure you want to delete this field? Deleting a field will remove it from all orders."
 msgstr ""
 
-#: src/Settings/Page.php:209
+#: src/Settings/Page.php:210
 msgid "Do you really want to reset section settings? Resetting a section remove all added fields from orders."
 msgstr ""
 
-#: src/Settings/Page.php:210
+#: src/Settings/Page.php:211
 msgid "No fields available."
 msgstr ""
 

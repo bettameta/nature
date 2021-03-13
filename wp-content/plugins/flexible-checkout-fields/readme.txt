@@ -4,7 +4,7 @@ Contributors: wpdesk,dyszczo,grola,piotrpo,marcinkolanko,mateuszgbiorczyk,sebast
 Donate link: https://www.wpdesk.net/flexible-checkout-fields-woocommerce/
 Tags: woocommerce checkout fields, woocommerce custom fields, woocommerce checkout manager, woocommerce checkout editor, woocommerce fields manager, woocommerce fields editor, woocommerce custom checkout fields, woocommerce checkout options, woocommerce checkout pro, woocommerce custom sections, woocommerce file upload
 Requires at least: 4.9
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: trunk
 Requires PHP: 7.0
 License: GPLv3 or later
@@ -187,8 +187,27 @@ If you are upgrading from the old WooCommerce Checkout Fields version (1.1, wooc
 
 == Changelog ==
 
+= 3.0.6 - 2021-03-12 =
+* Fixed displaying Country/Region field
+
+= 3.0.5 - 2021-03-11 =
+* Fixed displaying fields without specific field type
+* Added support for WordPress 5.7
+* Added support for WooCommerce 5.1
+
+= 3.0.4 - 2021-03-03 =
+* Fixed support for default checkbox field type
+
+= 3.0.3 - 2021-03-02 =
+* Fixed displaying address fields on Order editing screen
+* Fixed issue about footer in administration panel
+* Fixed retrieval of options for Select fields
+
+= 3.0.2 - 2021-03-01 =
+* Fixed editing of order in administration panel
+
 = 3.0.1 - 2021-03-01 =
-* Fixed added new of field
+* Fixed adding of new field
 
 = 3.0.0 - 2021-03-01 =
 * Major Update!

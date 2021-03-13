@@ -227,7 +227,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
 
             <p class='sfsi_email_last_paragraph'>
                 <?php _e('This will create your FREE account on follow.it, using above email.','ultimate-social-media-icons') ?> <br>
-                <?php 
+                <?php
                     printf(
                         __( 'All data will be treated highly confidentially, see the %1s Privacy Policy %2s','ultimate-social-media-icons' ),
                         '<a href="https://follow.it/info/privacy" target="new">',
@@ -263,7 +263,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
         <h2 class="sfsicls_facebook"><span><?php _e('Facebook','ultimate-social-media-icons') ?></span></h2>
         <div class="inr_cont">
             <p>
-                <?php 
+                <?php
                         printf(
                             __( 'The Facebook icon can perform several actions. Pick below which ones it should perform. If you select several options, then users can select what they want to do %1s (see an example) %2s ','ultimate-social-media-icons' ),
                             '<a class="rit_link pop-up" href="javascript:;" data-id="fbex-s2">',
@@ -301,7 +301,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
         <h2 class="sfsicls_twt"><?php _e('Twitter','ultimate-social-media-icons') ?></h2>
         <div class="inr_cont twt_tab_2">
             <p>
-                <?php 
+                <?php
                         printf(
                             __( 'The Twitter icon can perform several actions. Pick below which ones it should perform. If you select several options, then users can select what they want to do %1s (see an example) %2s ','ultimate-social-media-icons' ),
                             '<a class="rit_link pop-up" href="javascript:;" data-id="fbex-s2">',
@@ -339,7 +339,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
         <h2 class="sfsicls_utube"><?php _e('Youtube','ultimate-social-media-icons') ?></h2>
         <div class="inr_cont utube_inn">
             <p>
-                <?php 
+                <?php
                         printf(
                             __( 'The Youtube icon can perform several actions. Pick below which ones it should perform. If you select several options, then users can select what they want to do %1s (see an example) %2s ','ultimate-social-media-icons' ),
                             '<a class="rit_link pop-up" href="javascript:;" data-id="fbex-s2">',
@@ -392,7 +392,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
         <h2 class="sfsicls_pinterest"><?php _e('Pinterest','ultimate-social-media-icons') ?></h2>
         <div class="inr_cont">
             <p>
-                <?php 
+                <?php
                         printf(
                             __( ' The Pinterest icon can perform several actions. Pick below which ones it should perform. If you select several options, then users can select what they want to do %1s (see an example) %2s ','ultimate-social-media-icons' ),
                             '<a class="rit_link pop-up" href="javascript:;" data-id="fbex-s2">',
@@ -422,7 +422,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
         <h2 class="sfsicls_linkdin"><?php _e('LinkedIn','ultimate-social-media-icons') ?></h2>
         <div class="inr_cont linked_tab_2 link_in">
             <p>
-                <?php 
+                <?php
                         printf(
                             __( ' The LinkedIn icon can perform several actions. Pick below which ones it should perform. If you select several options, then users can select what they want to do %1s (see an example) %2s ','ultimate-social-media-icons' ),
                             '<a class="rit_link pop-up" href="javascript:;" data-id="fbex-s2">',
@@ -431,7 +431,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
                 ?>
             </p>
             <p>
-                <?php 
+                <?php
                         printf(
                             __( ' You find your ID in the link of your profile page, e.g. https://www.linkedin.com/profile/view?id=%1s8539887%2s&trk=nav_responsive_tab_profile_pic','ultimate-social-media-icons' ),
                             '<b>',
@@ -448,7 +448,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
             <div class="radio_section fb_url link_4" style="margin: 10px 0 0px;"><input name="sfsi_linkedin_recommendBusines" <?php echo ($option2['sfsi_linkedin_recommendBusines'] == 'yes') ?  'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" /><label class="anthr_labl"><?php _e('Recommend my business or product on Linkedin:','ultimate-social-media-icons') ?></label><input name="sfsi_linkedin_recommendProductId" type="text" value="<?php echo ($option2['sfsi_linkedin_recommendProductId'] != '') ?  $option2['sfsi_linkedin_recommendProductId'] : ''; ?>" class="add link_dbl" placeholder="Enter Product ID, e.g. 1441" /> <input name="sfsi_linkedin_recommendCompany" type="text" value="<?php echo ($option2['sfsi_linkedin_recommendCompany'] != '') ?  $option2['sfsi_linkedin_recommendCompany'] : ''; ?>" class="add" placeholder="Enter company name, e.g. Google”" /></div>
 
             <div class="lnkdin_instruction">
-                <?php _e('To find your Product or Company ID, you can use their ID lookup tool at','ultimate-social-media-icons') ?> <a target="_blank" href="https://developer.linkedin.com/apply-getting-started#company-lookup">https://developer.linkedin.com/apply-getting-started#company-lookup</a><?php _e('You need to be logged in to Linkedin to be able to use it.','ultimate-social-media-icons') ?>. 
+                <?php _e('To find your Product or Company ID, you can use their ID lookup tool at','ultimate-social-media-icons') ?> <a target="_blank" href="https://developer.linkedin.com/apply-getting-started#company-lookup">https://developer.linkedin.com/apply-getting-started#company-lookup</a><?php _e('You need to be logged in to Linkedin to be able to use it.','ultimate-social-media-icons') ?>.
             </div>
         </div>
     </div>
@@ -650,7 +650,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
 
         <div class="notice_custom_icons_premium sfsi_new_prmium_follw" style="<?php echo $bannerDisplay; ?>">
             <p>
-                <?php 
+                <?php
                         printf(
                             __( '%1sNew:%2sIn the Premium Plugin you can also give custom icons the feature that when people click on it, they can call you, or send you an SMS.%3sGo premium now%4sor learn more.%5s','ultimate-social-media-icons' ),
                             '<b>',

@@ -19,6 +19,7 @@ use WPDesk\FCF\Free\Settings\Option\CssOption;
 use WPDesk\FCF\Free\Settings\Option\CustomFieldOption;
 use WPDesk\FCF\Free\Settings\Option\DisplayOnOption;
 use WPDesk\FCF\Free\Settings\Option\EnabledOption;
+use WPDesk\FCF\Free\Settings\Option\FieldTypeDefaultOption;
 use WPDesk\FCF\Free\Settings\Option\FormattingWcOption;
 use WPDesk\FCF\Free\Settings\Option\LabelOption;
 use WPDesk\FCF\Free\Settings\Option\LogicAdvOption;
@@ -80,12 +81,13 @@ class DefaultType extends TypeAbstract implements TypeInterface {
 	public function get_options_objects(): array {
 		return [
 			GeneralTab::TAB_NAME    => [
-				PriorityOption::FIELD_NAME    => new PriorityOption(),
-				EnabledOption::FIELD_NAME     => new EnabledOption(),
-				CustomFieldOption::FIELD_NAME => new CustomFieldOption(),
-				RequiredOption::FIELD_NAME    => new RequiredOption(),
-				LabelOption::FIELD_NAME       => new LabelOption(),
-				NameOption::FIELD_NAME        => new NameOption(),
+				PriorityOption::FIELD_NAME         => new PriorityOption(),
+				FieldTypeDefaultOption::FIELD_NAME => new FieldTypeDefaultOption(),
+				EnabledOption::FIELD_NAME          => new EnabledOption(),
+				CustomFieldOption::FIELD_NAME      => new CustomFieldOption(),
+				RequiredOption::FIELD_NAME         => new RequiredOption(),
+				LabelOption::FIELD_NAME            => new LabelOption(),
+				NameOption::FIELD_NAME             => new NameOption(),
 			],
 			AdvancedTab::TAB_NAME   => [
 				ValidationOption::FIELD_NAME     => new ValidationOption(),

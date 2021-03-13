@@ -30,13 +30,23 @@ abstract class RouteAbstract implements RouteInterface {
 	 */
 	public function get_route_params(): array {
 		return [
-			'form_values'    => [
+			'form_values'     => [
 				'description' => 'Form values',
 				'required'    => true,
 				'default'     => [],
 			],
-			'section_fields' => [
-				'description' => 'Section fields',
+			'form_field_name' => [
+				'description' => 'Key of field',
+				'required'    => true,
+				'default'     => '',
+			],
+			'form_section'    => [
+				'description' => 'Section name',
+				'required'    => true,
+				'default'     => '',
+			],
+			'form_fields'     => [
+				'description' => 'Form fields',
 				'required'    => true,
 				'default'     => [],
 			],

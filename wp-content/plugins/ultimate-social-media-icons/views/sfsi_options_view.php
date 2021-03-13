@@ -98,7 +98,7 @@
                 <div>
                     <div class="px-2 py-5 sfsi_intro_bg_white sfsi_intro_section">
                         <div class="text-center">
-                            <h1 style="color:#8A4983;font-family: montserrat-regular; "><b><?php _e("Welcome to the",'ultimate-social-media-icons') ?></b><b style="font-family: montserrat-extrabold "><?php _e("Ultimate Social Media Plugin!",'ultimate-social-media-icons') ?></b></h1>
+                            <h1 style="color:#8A4983;font-family: montserrat-regular; "><b><?php _e("Welcome to the",'ultimate-social-media-icons') ?></b><b style="font-family: montserrat-extrabold "> <?php _e("Ultimate Social Media Plugin!",'ultimate-social-media-icons') ?></b></h1>
                         </div>
                         <div class="row py-3">
                             <div class="col-12 col-md-2 col-lg-2 col-xxl-2 d-lg-flex justify-content-lg-end align-items-center pr-lg-0">
@@ -234,7 +234,7 @@
                 }
             }, 1000);
             }
-            
+
         </script>
         <div class="row">
             <div class="col-12 col-md-9 col-lg-12 sfsi_intro_section2" style="<?php echo ($sfsi_new_intro_banner_hide_option['sfsi_display_section2'] == "true") ?  'display:block !important;' : 'display:none!important;'; ?>">
@@ -365,7 +365,7 @@
         <!-- step 6 END here -->
 
         <!-- step 7 Start here -->
-        <h3 style="font-size: large!important;"><span>7</span><?php _e("Do you want to display a pop-up, asking people to subscribe?",'ultimate-social-media-icons') ?></h3>
+        <h3 id="usm-normalize-h3-7p"><span>7</span><?php _e("Do you want to display a pop-up, asking people to subscribe?",'ultimate-social-media-icons') ?></h3>
         <?php include(SFSI_DOCROOT . '/views/sfsi_option_view7.php'); ?>
         <!-- step 7 END here -->
        
@@ -399,7 +399,7 @@
         <p class="red_txt errorMsg" style="display:none;font-size:21px"> </p>
         <p class="green_txt sucMsg" style="display:none;font-size:21px"> </p>
 
-        <?php // include(SFSI_DOCROOT . '/views/sfsi_affiliate_banner.php'); 
+        <?php // include(SFSI_DOCROOT . '/views/sfsi_affiliate_banner.php');
         ?><?php include(SFSI_DOCROOT . '/views/sfsi_section_for_premium.php'); ?>
 
         <!--<p class="bldtxtmsg">Need top-notch Wordpress development work at a competitive price? Visit us at <a href="https://www.ultimatelysocial.com/usm-premium/?utm_source=usmi_settings_page&utm_campaign=footer_credit&utm_medium=banner">ultimatelysocial.com</a></p>-->

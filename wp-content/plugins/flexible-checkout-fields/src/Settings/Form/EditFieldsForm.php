@@ -120,11 +120,11 @@ class EditFieldsForm extends FormAbstract implements FormInterface {
 
 		$settings = get_option( self::SETTINGS_OPTION_NAME, [] ) ?: [];
 		if ( ! $section_fields ) {
-			if ( isset( $settings[ $params['section_name'] ] ) ) {
-				unset( $settings[ $params['section_name'] ] );
+			if ( isset( $settings[ $params['form_section'] ] ) ) {
+				unset( $settings[ $params['form_section'] ] );
 			}
 		} else {
-			$settings[ $params['section_name'] ] = $section_fields;
+			$settings[ $params['form_section'] ] = $section_fields;
 		}
 
 		update_option( self::SETTINGS_OPTION_NAME, $settings );

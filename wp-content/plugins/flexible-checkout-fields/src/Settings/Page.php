@@ -81,6 +81,7 @@ class Page implements Hookable, HookablePluginDependant {
 			return;
 		}
 
+		add_filter( 'admin_footer_text', [ $this, 'update_footer_text' ] );
 		$this->load_styles_for_page();
 		$this->load_scripts_for_page();
 	}
@@ -212,14 +213,27 @@ class Page implements Hookable, HookablePluginDependant {
 	}
 
 	/**
+	 * Removes WooCommerce footer from plugin settings page.
+	 *
+	 * @return string New footer content.
+	 *
+	 * @internal
+	 */
+	public function update_footer_text(): string {
+		return '';
+	}
+
+	/**
 	 * Enqueues styles in WordPress Admin Dashboard.
 	 */
 	private function load_styles_for_page() {
+		$is_debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG );
+
 		wp_register_style(
 			'fcf-admin',
 			trailingslashit( $this->plugin->get_plugin_assets_url() ) . 'css/new-admin.css',
 			[],
-			$this->plugin->get_script_version()
+			( $is_debug ) ? time() : $this->plugin->get_script_version()
 		);
 		wp_enqueue_style( 'fcf-admin' );
 	}
@@ -228,11 +242,13 @@ class Page implements Hookable, HookablePluginDependant {
 	 * Enqueues scripts in WordPress Admin Dashboard.
 	 */
 	private function load_scripts_for_page() {
+		$is_debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG );
+
 		wp_register_script(
 			'fcf-admin',
 			trailingslashit( $this->plugin->get_plugin_assets_url() ) . 'js/new-admin.js',
 			[],
-			$this->plugin->get_script_version(),
+			( $is_debug ) ? time() : $this->plugin->get_script_version(),
 			true
 		);
 		wp_enqueue_script( 'fcf-admin' );

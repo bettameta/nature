@@ -131,9 +131,11 @@ if (!isset($option6['sfsi_rectfbshare'])) {
                   <label class="heading-label select-icons">
                     <?php _e("Select Icons",'ultimate-social-media-icons') ?>
                   </label>
+
                 </li>
                 <?php foreach ($sfsi_responsive_icons['default_icons'] as $icon => $icon_config) :
                   ?>
+
                   <li class="sfsi_responsive_default_icon_container sfsi_vertical_center sfsi_border_left_0">
                     <div class="radio_section tb_4_ck">
                       <input name="sfsi_responsive_<?php echo $icon; ?>_display" <?php echo ($icon_config['active'] == 'yes') ?  'checked="true"' : ''; ?> id="sfsi_responsive_<?php echo $icon; ?>_display" type="checkbox" value="yes" class="styled" data-icon="<?php echo $icon; ?>" />
@@ -172,7 +174,7 @@ if (!isset($option6['sfsi_rectfbshare'])) {
                 </div>
               <?php } ?>
 
-             
+
             </li>
             <?php if ($option6['sfsi_display_button_type'] == 'standard_buttons') : $display = "display:block";
             else :  $display = "display:none";
@@ -248,7 +250,7 @@ if (!isset($option6['sfsi_rectfbshare'])) {
                       <?php _e("learn more",'ultimate-social-media-icons') ?></a>
                   </p>
                 <?php } ?>
-               
+
                 <div class="row PostsSettings_section">
 
                   <h4><?php _e("Options:",'ultimate-social-media-icons') ?></h4>
@@ -261,8 +263,15 @@ if (!isset($option6['sfsi_rectfbshare'])) {
 
                   <!-- by developer - 28-05-2019 -->
 
+                  <!-- <div class="options">
+                    <p><b>New:</b> In the Premium Plugin you can choose to display the text before
+                      the sharing icons in a font of your choice. You can also define the<b> font
+                        size, type</b>, and the <b>margins below/above the icons</b>. <a href="https://www.ultimatelysocial.com/usm-premium/?utm_source=usmi_settings_page&utm_campaign=more_placement_options&utm_medium=banner" target="_blank" style="color:#00a0d2 !important; text-decoration: none !important;">Check
+                        it out.</a></p>
+                  </div> -->
+                  <?php if (false): ?>
                   <div class="options">
-                  <?php 
+                  <?php
                       printf(
                         __( '%1sNew: %2s In the Premium Plugin you can choose to display the text before
                         the sharing icons in a font of your choice. You can also define the %3s font
@@ -276,8 +285,9 @@ if (!isset($option6['sfsi_rectfbshare'])) {
                           '</a></b></p>'
                       );
                   ?>
-                      
+
                   </div>
+                  <?php endif; ?>
 
                   <!-- end  -->
                   <div class="options">
@@ -307,7 +317,7 @@ if (!isset($option6['sfsi_rectfbshare'])) {
                 </div>
               </div>
             </li>
-            
+
             <?php $display2 = ($option6['sfsi_display_button_type'] == 'responsive_button') ? "display:block;border-left:0!important":"display:none;border-left:0!important"; ?>
             <!-- sfsi_responsive_icons_end_post -->
             <li class="sfsi_responsive_icon_option_li sfsi_responsive_show " style="margin-left:20px;border-left:0;<?php echo $display2 ?>">
@@ -451,13 +461,13 @@ if (!isset($option6['sfsi_rectfbshare'])) {
                 </div>
               </div>
             </li>
-            
+
           </ul>
         </div>
       </li>
     </ul>
 
-    
+
 
     <a class="sfsiColbtn closeSec" href="javascript:;">
       <?php _e("Collapse area",'ultimate-social-media-icons') ?>

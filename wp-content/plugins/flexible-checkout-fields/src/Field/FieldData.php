@@ -26,13 +26,7 @@ class FieldData {
 	public static function get_field_data( array $field_settings, bool $is_decode = true ): array {
 		$field_data = [];
 
-		$new_field_settings = $field_settings;
-		if ( ! isset( $field_settings['type'] ) ) {
-			$new_field_settings['type'] = DefaultType::FIELD_TYPE;
-		}
-
-		if ( ! ( $option_objects = self::get_field_options( $field_settings ) )
-			&& ! ( $option_objects = self::get_field_options( $new_field_settings ) ) ) {
+		if ( ! ( $option_objects = self::get_field_options( $field_settings ) ) ) {
 			return $field_data;
 		}
 
@@ -40,7 +34,7 @@ class FieldData {
 		foreach ( $option_objects as $field_option ) {
 			$field_data = $field_option[ ( $is_decode ) ? 'update_field_callback' : 'save_field_callback' ](
 				$field_data,
-				$new_field_settings
+				$field_settings
 			);
 		}
 		return $field_data;
@@ -61,6 +55,6 @@ class FieldData {
 				return $field_type['options'];
 			}
 		}
-		return [];
+		return $field_types[ DefaultType::FIELD_TYPE ]['options'] ?? [];
 	}
 }

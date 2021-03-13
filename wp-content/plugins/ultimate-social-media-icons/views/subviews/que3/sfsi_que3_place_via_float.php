@@ -58,7 +58,7 @@ $style                                    =  ($option9['sfsi_icons_float'] == "y
 
                                 
 
-                                <<span class="sfsi_flicnsoptn3 sfsioptncl"><?php _e("Center top",'ultimate-social-media-icons') ?></span>
+                                <span class="sfsi_flicnsoptn3 sfsioptncl"><?php _e("Center top",'ultimate-social-media-icons') ?></span>
 
                                 <label class="sfsi_float_position_icon_label"><img src="<?php echo SFSI_PLUGURL;?>images/float_position_icon.png" alt='error'/></label>
 

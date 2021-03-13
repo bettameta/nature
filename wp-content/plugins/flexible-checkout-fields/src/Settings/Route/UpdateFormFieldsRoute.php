@@ -16,7 +16,7 @@ use WPDesk\FCF\Free\Settings\Form\EditFieldsForm;
  */
 class UpdateFormFieldsRoute extends RouteAbstract implements RouteInterface {
 
-	const REST_API_ROUTE = '(?P<section_name>[a-z_]+)/fields';
+	const REST_API_ROUTE = '(?P<form_section>[a-z_]+)/fields';
 
 	/**
 	 * Returns route of REST API endpoint.
@@ -34,7 +34,7 @@ class UpdateFormFieldsRoute extends RouteAbstract implements RouteInterface {
 	 */
 	public function get_route_params(): array {
 		return [
-			'section_name' => [
+			'form_section' => [
 				'description' => 'Section name',
 				'required'    => true,
 			],

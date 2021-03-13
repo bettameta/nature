@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3
+class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -293,8 +293,8 @@ class ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
         'WPDesk\\FCF\\Free\\Admin\\NoticeReview' => __DIR__ . '/../..' . '/src/Admin/NoticeReview.php',
-        'WPDesk\\FCF\\Free\\Admin\\Page' => __DIR__ . '/../..' . '/src/Admin/Page.php',
         'WPDesk\\FCF\\Free\\Field\\FieldData' => __DIR__ . '/../..' . '/src/Field/FieldData.php',
+        'WPDesk\\FCF\\Free\\Field\\Type\\CheckboxDefaultType' => __DIR__ . '/../..' . '/src/Field/Type/CheckboxDefaultType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\CheckboxType' => __DIR__ . '/../..' . '/src/Field/Type/CheckboxType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\ColorType' => __DIR__ . '/../..' . '/src/Field/Type/ColorType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\DateType' => __DIR__ . '/../..' . '/src/Field/Type/DateType.php',
@@ -349,6 +349,7 @@ class ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnThankYouOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnThankYouOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnWithoutAddressOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnWithoutAddressOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\EnabledOption' => __DIR__ . '/../..' . '/src/Settings/Option/EnabledOption.php',
+        'WPDesk\\FCF\\Free\\Settings\\Option\\FieldTypeDefaultOption' => __DIR__ . '/../..' . '/src/Settings/Option/FieldTypeDefaultOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\FieldTypeOption' => __DIR__ . '/../..' . '/src/Settings/Option/FieldTypeOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\FormattingFieldLabelOption' => __DIR__ . '/../..' . '/src/Settings/Option/FormattingFieldLabelOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\FormattingNewLineOption' => __DIR__ . '/../..' . '/src/Settings/Option/FormattingNewLineOption.php',
@@ -402,9 +403,9 @@ class ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit584045e23fd1b0abc2a8e8d10e4a42e3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1477cac63f9fface0e9165d515219d4f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1477cac63f9fface0e9165d515219d4f::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1477cac63f9fface0e9165d515219d4f::$classMap;
 
         }, null, ClassLoader::class);
     }

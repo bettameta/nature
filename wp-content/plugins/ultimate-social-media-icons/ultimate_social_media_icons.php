@@ -8,7 +8,7 @@ Author: UltimatelySocial
 Author URI: http://ultimatelysocial.com
 Text Domain: ultimate-social-media-icons
 Domain Path: /languages
-Version: 2.6.5
+Version: 2.6.6
 License: GPLv2 or later
 */
 require_once 'analyst/main.php';
@@ -1041,7 +1041,7 @@ function sfsi_admin_notice()
 
                         <br>
                         <?php _e("If you do not know how to do the upgrade, please ask your server team or hosting company to do it for you.",'ultimate-social-media-icons') ?>'
-                
+
                     </p>
                 </div>
 

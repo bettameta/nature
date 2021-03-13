@@ -11,6 +11,7 @@ use WPDesk\FCF\Free\Field\Type\TypeIntegration;
 use WPDesk\FCF\Free\Field\Type\TextType;
 use WPDesk\FCF\Free\Field\Type\TextareaType;
 use WPDesk\FCF\Free\Field\Type\CheckboxType;
+use WPDesk\FCF\Free\Field\Type\CheckboxDefaultType;
 use WPDesk\FCF\Free\Field\Type\RadioType;
 use WPDesk\FCF\Free\Field\Type\SelectType;
 use WPDesk\FCF\Free\Field\Type\Multiselect;
@@ -42,6 +43,7 @@ class Types {
 		( new TypeIntegration( new TextType() ) )->hooks();
 		( new TypeIntegration( new TextareaType() ) )->hooks();
 		( new TypeIntegration( new CheckboxType() ) )->hooks();
+		( new TypeIntegration( new CheckboxDefaultType() ) )->hooks();
 		( new TypeIntegration( new RadioType() ) )->hooks();
 		( new TypeIntegration( new SelectType() ) )->hooks();
 		( new TypeIntegration( new Multiselect() ) )->hooks();
