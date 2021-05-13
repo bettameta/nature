@@ -11,6 +11,7 @@ use WPDesk\FCF\Free\Settings\Form\FormAbstract;
 use WPDesk\FCF\Free\Settings\Form\FormInterface;
 use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Field\FieldData;
+use WPDesk\FCF\Free\Settings\Option\ExternalFieldOption;
 
 /**
  * Supports settings for form.
@@ -39,7 +40,10 @@ class EditFieldsForm extends FormAbstract implements FormInterface {
 	 */
 	public function get_form_data( array $form_data, string $form_key = '' ): array {
 		$settings       = get_option( self::SETTINGS_OPTION_NAME, [] );
-		$section_fields = array_merge( $this->get_section_form_data( $form_key ), $settings[ $form_key ] ?? [] );
+		$section_fields = $this->combine_fields_settings(
+			$this->get_section_form_data( $form_key ),
+			$settings[ $form_key ] ?? []
+		);
 		if ( ! $section_fields ) {
 			return $form_data;
 		}
@@ -93,6 +97,28 @@ class EditFieldsForm extends FormAbstract implements FormInterface {
 			$sections[ $custom_section['section'] ] = [];
 		}
 		return $sections;
+	}
+
+	/**
+	 * Combines default field settings with settings saved by plugin.
+	 *
+	 * @param array $checkout_fields Default field settings.
+	 * @param array $settings_fields Field settings saved by plugin.
+	 *
+	 * @return array Final field settings.
+	 */
+	private function combine_fields_settings( array $checkout_fields, array $settings_fields ): array {
+		$fields = $checkout_fields;
+		foreach ( $fields as $field_name => $field ) {
+			if ( ! isset( $settings_fields[ $field_name ] ) ) {
+				$fields[ $field_name ][ ExternalFieldOption::FIELD_NAME ] = 1;
+			}
+		}
+
+		foreach ( $settings_fields as $field_name => $settings_field ) {
+			$fields[ $field_name ] = array_merge( $fields[ $field_name ] ?? [], $settings_field );
+		}
+		return $fields;
 	}
 
 	/**

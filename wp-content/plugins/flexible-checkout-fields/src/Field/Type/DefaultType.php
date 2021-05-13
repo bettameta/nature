@@ -19,6 +19,8 @@ use WPDesk\FCF\Free\Settings\Option\CssOption;
 use WPDesk\FCF\Free\Settings\Option\CustomFieldOption;
 use WPDesk\FCF\Free\Settings\Option\DisplayOnOption;
 use WPDesk\FCF\Free\Settings\Option\EnabledOption;
+use WPDesk\FCF\Free\Settings\Option\ExternalFieldOption;
+use WPDesk\FCF\Free\Settings\Option\ExternalFieldInfoOption;
 use WPDesk\FCF\Free\Settings\Option\FieldTypeDefaultOption;
 use WPDesk\FCF\Free\Settings\Option\FormattingWcOption;
 use WPDesk\FCF\Free\Settings\Option\LabelOption;
@@ -52,7 +54,7 @@ class DefaultType extends TypeAbstract implements TypeInterface {
 	 * @return string Field label.
 	 */
 	public function get_field_type_label(): string {
-		return __( 'WooCommerce Default Field', 'flexible-checkout-fields' );
+		return __( 'Default Field', 'flexible-checkout-fields' );
 	}
 
 	/**
@@ -70,7 +72,7 @@ class DefaultType extends TypeAbstract implements TypeInterface {
 	 * @return bool Status if field type is available.
 	 */
 	public function is_available(): bool {
-		return true;
+		return false;
 	}
 
 	/**
@@ -81,13 +83,15 @@ class DefaultType extends TypeAbstract implements TypeInterface {
 	public function get_options_objects(): array {
 		return [
 			GeneralTab::TAB_NAME    => [
-				PriorityOption::FIELD_NAME         => new PriorityOption(),
-				FieldTypeDefaultOption::FIELD_NAME => new FieldTypeDefaultOption(),
-				EnabledOption::FIELD_NAME          => new EnabledOption(),
-				CustomFieldOption::FIELD_NAME      => new CustomFieldOption(),
-				RequiredOption::FIELD_NAME         => new RequiredOption(),
-				LabelOption::FIELD_NAME            => new LabelOption(),
-				NameOption::FIELD_NAME             => new NameOption(),
+				ExternalFieldInfoOption::FIELD_NAME => new ExternalFieldInfoOption(),
+				PriorityOption::FIELD_NAME          => new PriorityOption(),
+				FieldTypeDefaultOption::FIELD_NAME  => new FieldTypeDefaultOption(),
+				EnabledOption::FIELD_NAME           => new EnabledOption(),
+				CustomFieldOption::FIELD_NAME       => new CustomFieldOption(),
+				ExternalFieldOption::FIELD_NAME     => new ExternalFieldOption(),
+				RequiredOption::FIELD_NAME          => new RequiredOption(),
+				LabelOption::FIELD_NAME             => new LabelOption(),
+				NameOption::FIELD_NAME              => new NameOption(),
 			],
 			AdvancedTab::TAB_NAME   => [
 				ValidationOption::FIELD_NAME     => new ValidationOption(),

@@ -20,6 +20,7 @@ abstract class OptionAbstract implements OptionInterface {
 	const FIELD_TYPE_HIDDEN        = 'HiddenField';
 	const FIELD_TYPE_INFO          = 'InfoField';
 	const FIELD_TYPE_INFO_ADV      = 'InfoAdvField';
+	const FIELD_TYPE_INFO_NOTICE   = 'InfoNoticeField';
 	const FIELD_TYPE_NUMBER        = 'NumberField';
 	const FIELD_TYPE_RADIO         = 'RadioField';
 	const FIELD_TYPE_RADIO_LIST    = 'RadioListField';

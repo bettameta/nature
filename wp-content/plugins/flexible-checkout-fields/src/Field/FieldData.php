@@ -50,8 +50,12 @@ class FieldData {
 	public static function get_field_options( array $field_settings ): array {
 		$field_types = apply_filters( 'flexible_checkout_fields/field_types', [] );
 		foreach ( $field_types as $field_type ) {
-			if ( in_array( $field_settings['name'], $field_type['reserved_field_names'], true )
-				|| ( isset( $field_settings['type'] ) && ( $field_settings['type'] === $field_type['type'] ) ) ) {
+			if ( in_array( $field_settings['name'], $field_type['reserved_field_names'], true ) ) {
+				return $field_type['options'];
+			}
+		}
+		foreach ( $field_types as $field_type ) {
+			if ( isset( $field_settings['type'] ) && ( $field_settings['type'] === $field_type['type'] ) ) {
 				return $field_type['options'];
 			}
 		}

@@ -75,6 +75,15 @@ class WcAddress2Type extends TypeAbstract implements TypeInterface {
 	}
 
 	/**
+	 * Returns whether field type is available for plugin version.
+	 *
+	 * @return bool Status if field type is available.
+	 */
+	public function is_available(): bool {
+		return true;
+	}
+
+	/**
 	 * Returns list of options for field settings.
 	 *
 	 * @return OptionInterface[] List of option fields.

@@ -592,7 +592,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 								if ( $custom_field ) {
 									$new[ $key ][ $field['name'] ]['type'] = $field['type'] ?? '';
 
-									if ( isset( $checkout_field_type[ $field['type'] ?? '' ]['has_options'] ) ) {
+									if ( isset( $checkout_field_type[ $field['type'] ?? '' ]['has_options'] ) && isset( $field['option'] ) ) {
 										$field_options                            = new Flexible_Checkout_Fields_Field_Options( $field['option'], $new[ $key ][ $field['name'] ]['placeholder'], $field['type'] );
 										$new[ $key ][ $field['name'] ]['options'] = $field_options->get_options_as_array();
 									}
@@ -734,7 +734,7 @@ class Flexible_Checkout_Fields_Plugin extends \FcfVendor\WPDesk\PluginBuilder\Pl
 						$new[ $key ]['type'] = $field['type'];
 					}
 
-					if ( isset( $field['type'] ) && ( ! empty( $checkout_field_type[ $field['type'] ]['has_options'] ) ) ) {
+					if ( isset( $field['type'] ) && ( ! empty( $checkout_field_type[ $field['type'] ]['has_options'] ) ) && isset( $field['option'] ) ) {
 						$field_options          = new Flexible_Checkout_Fields_Field_Options( $field['option'], $new[ $key ]['placeholder'], $field['type'] );
 						$new[ $key ]['options'] = $field_options->get_options_as_array();
 					}

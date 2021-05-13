@@ -20,6 +20,8 @@ use WPDesk\FCF\Free\Settings\Option\CssOption;
 use WPDesk\FCF\Free\Settings\Option\CustomFieldOption;
 use WPDesk\FCF\Free\Settings\Option\DisplayOnOption;
 use WPDesk\FCF\Free\Settings\Option\EnabledOption;
+use WPDesk\FCF\Free\Settings\Option\ExternalFieldOption;
+use WPDesk\FCF\Free\Settings\Option\ExternalFieldInfoOption;
 use WPDesk\FCF\Free\Settings\Option\FieldTypeOption;
 use WPDesk\FCF\Free\Settings\Option\FormattingOption;
 use WPDesk\FCF\Free\Settings\Option\LabelOption;
@@ -83,13 +85,15 @@ class TextareaType extends TypeAbstract implements TypeInterface {
 	public function get_options_objects(): array {
 		return [
 			GeneralTab::TAB_NAME    => [
-				PriorityOption::FIELD_NAME    => new PriorityOption(),
-				FieldTypeOption::FIELD_NAME   => new FieldTypeOption(),
-				CustomFieldOption::FIELD_NAME => new CustomFieldOption(),
-				EnabledOption::FIELD_NAME     => new EnabledOption(),
-				RequiredOption::FIELD_NAME    => new RequiredOption(),
-				LabelOption::FIELD_NAME       => new LabelOption(),
-				NameOption::FIELD_NAME        => new NameOption(),
+				ExternalFieldInfoOption::FIELD_NAME => new ExternalFieldInfoOption(),
+				PriorityOption::FIELD_NAME          => new PriorityOption(),
+				FieldTypeOption::FIELD_NAME         => new FieldTypeOption(),
+				EnabledOption::FIELD_NAME           => new EnabledOption(),
+				CustomFieldOption::FIELD_NAME       => new CustomFieldOption(),
+				ExternalFieldOption::FIELD_NAME     => new ExternalFieldOption(),
+				RequiredOption::FIELD_NAME          => new RequiredOption(),
+				LabelOption::FIELD_NAME             => new LabelOption(),
+				NameOption::FIELD_NAME              => new NameOption(),
 			],
 			AdvancedTab::TAB_NAME   => [
 				ValidationOption::FIELD_NAME     => new ValidationOption(),

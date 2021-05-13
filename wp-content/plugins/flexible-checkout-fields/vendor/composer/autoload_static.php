@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
+class ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -303,6 +303,7 @@ class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
         'WPDesk\\FCF\\Free\\Field\\Type\\HeadingType' => __DIR__ . '/../..' . '/src/Field/Type/HeadingType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\HtmlType' => __DIR__ . '/../..' . '/src/Field/Type/HtmlType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\Multiselect' => __DIR__ . '/../..' . '/src/Field/Type/Multiselect.php',
+        'WPDesk\\FCF\\Free\\Field\\Type\\RadioDefaultType' => __DIR__ . '/../..' . '/src/Field/Type/RadioDefaultType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\RadioType' => __DIR__ . '/../..' . '/src/Field/Type/RadioType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\SelectType' => __DIR__ . '/../..' . '/src/Field/Type/SelectType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\TextType' => __DIR__ . '/../..' . '/src/Field/Type/TextType.php',
@@ -312,6 +313,7 @@ class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
         'WPDesk\\FCF\\Free\\Field\\Type\\TypeIntegration' => __DIR__ . '/../..' . '/src/Field/Type/TypeIntegration.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\TypeInterface' => __DIR__ . '/../..' . '/src/Field/Type/TypeInterface.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\Wc\\WcAddress2Type' => __DIR__ . '/../..' . '/src/Field/Type/Wc/WcAddress2Type.php',
+        'WPDesk\\FCF\\Free\\Field\\Type\\Wc\\WcContactType' => __DIR__ . '/../..' . '/src/Field/Type/Wc/WcContactType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\Wc\\WcCountryType' => __DIR__ . '/../..' . '/src/Field/Type/Wc/WcCountryType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\Wc\\WcDefaultType' => __DIR__ . '/../..' . '/src/Field/Type/Wc/WcDefaultType.php',
         'WPDesk\\FCF\\Free\\Field\\Type\\Wc\\WcNotesType' => __DIR__ . '/../..' . '/src/Field/Type/Wc/WcNotesType.php',
@@ -345,10 +347,13 @@ class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnAccountAddressOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnAccountAddressOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnAccountOrderOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnAccountOrderOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnEmailsOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnEmailsOption.php',
+        'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnOnlyAddressOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnOnlyAddressOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnThankYouOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnThankYouOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnWithoutAddressOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnWithoutAddressOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\EnabledOption' => __DIR__ . '/../..' . '/src/Settings/Option/EnabledOption.php',
+        'WPDesk\\FCF\\Free\\Settings\\Option\\ExternalFieldInfoOption' => __DIR__ . '/../..' . '/src/Settings/Option/ExternalFieldInfoOption.php',
+        'WPDesk\\FCF\\Free\\Settings\\Option\\ExternalFieldOption' => __DIR__ . '/../..' . '/src/Settings/Option/ExternalFieldOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\FieldTypeDefaultOption' => __DIR__ . '/../..' . '/src/Settings/Option/FieldTypeDefaultOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\FieldTypeOption' => __DIR__ . '/../..' . '/src/Settings/Option/FieldTypeOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\FormattingFieldLabelOption' => __DIR__ . '/../..' . '/src/Settings/Option/FormattingFieldLabelOption.php',
@@ -375,6 +380,7 @@ class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
         'WPDesk\\FCF\\Free\\Settings\\Option\\SettingSectionsAdvOption' => __DIR__ . '/../..' . '/src/Settings/Option/SettingSectionsAdvOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\ValidationInfoOption' => __DIR__ . '/../..' . '/src/Settings/Option/ValidationInfoOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\ValidationOption' => __DIR__ . '/../..' . '/src/Settings/Option/ValidationOption.php',
+        'WPDesk\\FCF\\Free\\Settings\\Option\\ValidationPostcodeOption' => __DIR__ . '/../..' . '/src/Settings/Option/ValidationPostcodeOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Page' => __DIR__ . '/../..' . '/src/Settings/Page.php',
         'WPDesk\\FCF\\Free\\Settings\\Route\\RouteAbstract' => __DIR__ . '/../..' . '/src/Settings/Route/RouteAbstract.php',
         'WPDesk\\FCF\\Free\\Settings\\Route\\RouteIntegration' => __DIR__ . '/../..' . '/src/Settings/Route/RouteIntegration.php',
@@ -403,9 +409,9 @@ class ComposerStaticInit1477cac63f9fface0e9165d515219d4f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1477cac63f9fface0e9165d515219d4f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1477cac63f9fface0e9165d515219d4f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1477cac63f9fface0e9165d515219d4f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7::$classMap;
 
         }, null, ClassLoader::class);
     }

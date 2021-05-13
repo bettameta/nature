@@ -65,8 +65,6 @@ class WcDefaultType extends TypeAbstract implements TypeInterface {
 			'billing_company',
 			'billing_address_1',
 			'billing_city',
-			'billing_phone',
-			'billing_email',
 			'shipping_first_name',
 			'shipping_last_name',
 			'shipping_company',

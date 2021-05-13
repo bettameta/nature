@@ -1,5 +1,15 @@
 <?php
 
+
+
+
+
+
+
+
+
+
+
 namespace Composer;
 
 use Composer\Semver\VersionParser;
@@ -19,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '10dc6e2e808d97860f82418ca3fac242335bb026',
+    'reference' => '173cb081d597f34be01311a9e73100028f6b8585',
     'name' => 'woocommerce/payments',
   ),
   'versions' => 
@@ -139,7 +149,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '10dc6e2e808d97860f82418ca3fac242335bb026',
+      'reference' => '173cb081d597f34be01311a9e73100028f6b8585',
     ),
   ),
 );

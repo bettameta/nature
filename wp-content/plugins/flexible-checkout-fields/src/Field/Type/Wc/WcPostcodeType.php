@@ -23,7 +23,7 @@ use WPDesk\FCF\Free\Settings\Option\NameOption;
 use WPDesk\FCF\Free\Settings\Option\PlaceholderOption;
 use WPDesk\FCF\Free\Settings\Option\PriorityOption;
 use WPDesk\FCF\Free\Settings\Option\RequiredHiddenOption;
-use WPDesk\FCF\Free\Settings\Option\ValidationOption;
+use WPDesk\FCF\Free\Settings\Option\ValidationPostcodeOption;
 use WPDesk\FCF\Free\Settings\Option\ValidationInfoOption;
 
 /**
@@ -73,6 +73,15 @@ class WcPostcodeType extends TypeAbstract implements TypeInterface {
 	}
 
 	/**
+	 * Returns whether field type is available for plugin version.
+	 *
+	 * @return bool Status if field type is available.
+	 */
+	public function is_available(): bool {
+		return true;
+	}
+
+	/**
 	 * Returns list of options for field settings.
 	 *
 	 * @return OptionInterface[] List of option fields.
@@ -87,8 +96,8 @@ class WcPostcodeType extends TypeAbstract implements TypeInterface {
 				NameOption::FIELD_NAME           => new NameOption(),
 			],
 			AdvancedTab::TAB_NAME   => [
-				ValidationOption::FIELD_NAME     => new ValidationOption(),
-				ValidationInfoOption::FIELD_NAME => new ValidationInfoOption(),
+				ValidationPostcodeOption::FIELD_NAME => new ValidationPostcodeOption(),
+				ValidationInfoOption::FIELD_NAME     => new ValidationInfoOption(),
 			],
 			AppearanceTab::TAB_NAME => [
 				PlaceholderOption::FIELD_NAME => new PlaceholderOption(),
