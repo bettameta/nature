@@ -1,40 +1,41 @@
 jQuery( document ).ready( function() {
 
 	var notice_selector       = '[data-notice="fcf-admin-notice"]';
-	var button_close_selector = notice_selector + ' .notice-dismiss';
-	var button_hide_selector  = notice_selector + ' [data-notice-button]';
+	var button_close_selector = '.notice-dismiss';
+	var button_hide_selector  = '[data-notice-button]';
 
-	var notice = document.querySelector( notice_selector );
-	if ( ! notice ) {
+	var notice_wrapper = document.querySelector( notice_selector );
+	if ( ! notice_wrapper ) {
 		return;
 	}
 
-	var close_notice = function( e, is_permanently ) {
-        e.preventDefault();
-    	window.removeEventListener( 'click', close_event );
-
+	var close_notice = function ( is_permanently ) {
 		jQuery.ajax(
-			notice.getAttribute( 'data-notice-url' ),
+			notice_wrapper.getAttribute( 'data-notice-url' ),
 			{
 				type: 'POST',
 				data: {
-					action: notice.getAttribute( 'data-notice-action' ),
+					action: notice_wrapper.getAttribute( 'data-notice-action' ),
 					is_permanently: ( is_permanently ) ? 1 : 0,
 				},
 			}
 		);
-	}
-	var close_event = function( e ) {
-      if ( e.target.matches( button_close_selector ) ) {
-        close_notice(  e, false );
-      } else if ( e.target.matches( button_hide_selector ) ) {
-        close_notice(  e, true );
 
-		var button = document.querySelector( button_close_selector );
-		button.click();
-      }
+		if ( is_permanently ) {
+			notice_wrapper.querySelector( button_close_selector ).click();
+		}
 	}
 
-    window.addEventListener( 'click', close_event );
+	var click_on_close = function( e ) {
+		notice_wrapper.removeEventListener( 'click', click_on_close );
+
+		if ( e.target.matches( button_close_selector ) ) {
+			close_notice( false );
+		} else if ( e.target.matches( button_hide_selector ) ) {
+			close_notice( true );
+		}
+	}
+
+	notice_wrapper.addEventListener( 'click', click_on_close );
 
 } );

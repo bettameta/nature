@@ -36,9 +36,9 @@
 		   class="button button-hero button-primary">
 			<?php echo esc_html( __( 'Add review', 'flexible-checkout-fields' ) ); ?>
 		</a>
-		<a href="#"
+		<button type="button"
 		   class="button button-hero" data-notice-button>
 			<?php echo esc_html( __( 'I added review, do not show again', 'flexible-checkout-fields' ) ); ?>
-		</a>
+		</button>
 	</div>
 </div>

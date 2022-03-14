@@ -56,6 +56,19 @@ class EditFieldsForm extends FormAbstract implements FormInterface {
 			$form_data[ $field_name ] = $new_field_data;
 		}
 
+		uasort(
+			$form_data,
+			function( $a, $b ) {
+				if ( ( $a['priority'] ?? 0 ) === 0 ) {
+					return 1;
+				} elseif ( ( $b['priority'] ?? 0 ) === 0 ) {
+					return -1;
+				}
+
+				return ( $a['priority'] < $b['priority'] ) ? -1 : 1;
+			}
+		);
+
 		return $form_data;
 	}
 

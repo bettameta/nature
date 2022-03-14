@@ -320,6 +320,7 @@ return array(
     'WPDesk\\FCF\\Free\\Settings\\Forms' => $baseDir . '/src/Settings/Forms.php',
     'WPDesk\\FCF\\Free\\Settings\\Menu' => $baseDir . '/src/Settings/Menu.php',
     'WPDesk\\FCF\\Free\\Settings\\Option\\CssOption' => $baseDir . '/src/Settings/Option/CssOption.php',
+    'WPDesk\\FCF\\Free\\Settings\\Option\\CustomFieldDisabledOption' => $baseDir . '/src/Settings/Option/CustomFieldDisabledOption.php',
     'WPDesk\\FCF\\Free\\Settings\\Option\\CustomFieldOption' => $baseDir . '/src/Settings/Option/CustomFieldOption.php',
     'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnAccountAddressOption' => $baseDir . '/src/Settings/Option/DisplayOnAccountAddressOption.php',
     'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnAccountOrderOption' => $baseDir . '/src/Settings/Option/DisplayOnAccountOrderOption.php',

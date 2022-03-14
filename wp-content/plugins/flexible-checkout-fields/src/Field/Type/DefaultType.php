@@ -16,7 +16,7 @@ use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
 use WPDesk\FCF\Free\Settings\Tab\LogicTab;
 use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Option\CssOption;
-use WPDesk\FCF\Free\Settings\Option\CustomFieldOption;
+use WPDesk\FCF\Free\Settings\Option\CustomFieldDisabledOption;
 use WPDesk\FCF\Free\Settings\Option\DisplayOnOption;
 use WPDesk\FCF\Free\Settings\Option\EnabledOption;
 use WPDesk\FCF\Free\Settings\Option\ExternalFieldOption;
@@ -83,15 +83,15 @@ class DefaultType extends TypeAbstract implements TypeInterface {
 	public function get_options_objects(): array {
 		return [
 			GeneralTab::TAB_NAME    => [
-				ExternalFieldInfoOption::FIELD_NAME => new ExternalFieldInfoOption(),
-				PriorityOption::FIELD_NAME          => new PriorityOption(),
-				FieldTypeDefaultOption::FIELD_NAME  => new FieldTypeDefaultOption(),
-				EnabledOption::FIELD_NAME           => new EnabledOption(),
-				CustomFieldOption::FIELD_NAME       => new CustomFieldOption(),
-				ExternalFieldOption::FIELD_NAME     => new ExternalFieldOption(),
-				RequiredOption::FIELD_NAME          => new RequiredOption(),
-				LabelOption::FIELD_NAME             => new LabelOption(),
-				NameOption::FIELD_NAME              => new NameOption(),
+				ExternalFieldInfoOption::FIELD_NAME   => new ExternalFieldInfoOption(),
+				PriorityOption::FIELD_NAME            => new PriorityOption(),
+				FieldTypeDefaultOption::FIELD_NAME    => new FieldTypeDefaultOption(),
+				EnabledOption::FIELD_NAME             => new EnabledOption(),
+				CustomFieldDisabledOption::FIELD_NAME => new CustomFieldDisabledOption(),
+				ExternalFieldOption::FIELD_NAME       => new ExternalFieldOption(),
+				RequiredOption::FIELD_NAME            => new RequiredOption(),
+				LabelOption::FIELD_NAME               => new LabelOption(),
+				NameOption::FIELD_NAME                => new NameOption(),
 			],
 			AdvancedTab::TAB_NAME   => [
 				ValidationOption::FIELD_NAME     => new ValidationOption(),

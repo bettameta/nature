@@ -146,9 +146,9 @@ class WC_Payments_Utils {
 	 * List of currencies supported by Stripe, the amounts for which are already in the smallest unit.
 	 * Sourced directly from https://stripe.com/docs/currencies#zero-decimal
 	 *
-	 * @return array $currencies
+	 * @return string[]
 	 */
-	public static function zero_decimal_currencies() {
+	public static function zero_decimal_currencies(): array {
 		return [
 			'bif', // Burundian Franc.
 			'clp', // Chilean Peso.
@@ -166,6 +166,27 @@ class WC_Payments_Utils {
 			'xaf', // Central African Cfa Franc.
 			'xof', // West African Cfa Franc.
 			'xpf', // Cfp Franc.
+		];
+	}
+
+	/**
+	 * List of countries enabled for Stripe platform account. See also
+	 * https://docs.woocommerce.com/document/payments/countries/ for the most actual status.
+	 *
+	 * @return string[]
+	 */
+	public static function supported_countries(): array {
+		return [
+			'AU' => __( 'Australia', 'woocommerce-payments' ),
+			'CA' => __( 'Canada', 'woocommerce-payments' ),
+			'DE' => __( 'Germany', 'woocommerce-payments' ),
+			'ES' => __( 'Spain', 'woocommerce-payments' ),
+			'FR' => __( 'France', 'woocommerce-payments' ),
+			'GB' => __( 'United Kingdom (UK)', 'woocommerce-payments' ),
+			'IE' => __( 'Ireland', 'woocommerce-payments' ),
+			'IT' => __( 'Italy', 'woocommerce-payments' ),
+			'NZ' => __( 'New Zealand', 'woocommerce-payments' ),
+			'US' => __( 'United States (US)', 'woocommerce-payments' ),
 		];
 	}
 
@@ -371,5 +392,81 @@ class WC_Payments_Utils {
 			&& 'checkout' === $current_tab
 			&& 0 === strpos( $current_section, 'woocommerce_payments' )
 		);
+	}
+
+	/**
+	 * Converts a locale to the closest supported by Stripe.js.
+	 *
+	 * Stripe.js supports only a subset of IETF language tags, if a country specific locale is not supported we use
+	 * the default for that language (https://stripe.com/docs/js/appendix/supported_locales).
+	 * If no match is found we return 'auto' so Stripe.js uses the browser locale.
+	 *
+	 * @param string $locale The locale to convert.
+	 *
+	 * @return string Closest locale supported by Stripe ('auto' if NONE)
+	 */
+	public static function convert_to_stripe_locale( string $locale ): string {
+		// List copied from: https://stripe.com/docs/js/appendix/supported_locales.
+		$supported = [
+			'ar',     // Arabic.
+			'bg',     // Bulgarian (Bulgaria).
+			'cs',     // Czech (Czech Republic).
+			'da',     // Danish.
+			'de',     // German (Germany).
+			'el',     // Greek (Greece).
+			'en',     // English.
+			'en-GB',  // English (United Kingdom).
+			'es',     // Spanish (Spain).
+			'es-419', // Spanish (Latin America).
+			'et',     // Estonian (Estonia).
+			'fi',     // Finnish (Finland).
+			'fr',     // French (France).
+			'fr-CA',  // French (Canada).
+			'he',     // Hebrew (Israel).
+			'hu',     // Hungarian (Hungary).
+			'id',     // Indonesian (Indonesia).
+			'it',     // Italian (Italy).
+			'ja',     // Japanese.
+			'lt',     // Lithuanian (Lithuania).
+			'lv',     // Latvian (Latvia).
+			'ms',     // Malay (Malaysia).
+			'mt',     // Maltese (Malta).
+			'nb',     // Norwegian Bokmål.
+			'nl',     // Dutch (Netherlands).
+			'pl',     // Polish (Poland).
+			'pt-BR',  // Portuguese (Brazil).
+			'pt',     // Portuguese (Brazil).
+			'ro',     // Romanian (Romania).
+			'ru',     // Russian (Russia).
+			'sk',     // Slovak (Slovakia).
+			'sl',     // Slovenian (Slovenia).
+			'sv',     // Swedish (Sweden).
+			'th',     // Thai.
+			'tr',     // Turkish (Turkey).
+			'zh',     // Chinese Simplified (China).
+			'zh-HK',  // Chinese Traditional (Hong Kong).
+			'zh-TW',  // Chinese Traditional (Taiwan).
+		];
+
+		// Stripe uses '-' instead of '_' (used in WordPress).
+		$locale = str_replace( '_', '-', $locale );
+
+		if ( in_array( $locale, $supported, true ) ) {
+			return $locale;
+		}
+
+		// For the Latin America and Caribbean region Stripe uses the locale.
+		// For now we only support Spanish (Spain) in the extension, if/when support for Latin America and the Caribbean
+		// locales is added we will need to group all locales for 'UN M49' under 'es_419' (52 countries in total).
+		// https://en.wikipedia.org/wiki/UN_M49.
+
+		// Remove the country code and try with that.
+		$base_locale = substr( $locale, 0, 2 );
+		if ( in_array( $base_locale, $supported, true ) ) {
+			return $base_locale;
+		}
+
+		// Return 'auto' so Stripe.js uses the browser locale.
+		return 'auto';
 	}
 }

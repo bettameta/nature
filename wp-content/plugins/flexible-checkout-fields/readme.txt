@@ -187,6 +187,10 @@ If you are upgrading from the old WooCommerce Checkout Fields version (1.1, wooc
 
 == Changelog ==
 
+= 3.0.10 - 2021-05-20 =
+* Fixed support for checkbox, radio and select fields added by other plugins
+* Added support for WooCommerce 5.3
+
 = 3.0.9 - 2021-04-28 =
 * Fixed compatibility with WPML
 * Added support for WooCommerce 5.2

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7
+class ComposerStaticInitbd920cdc00ca8143065e1e2a0f4c2210
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -343,6 +343,7 @@ class ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7
         'WPDesk\\FCF\\Free\\Settings\\Forms' => __DIR__ . '/../..' . '/src/Settings/Forms.php',
         'WPDesk\\FCF\\Free\\Settings\\Menu' => __DIR__ . '/../..' . '/src/Settings/Menu.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\CssOption' => __DIR__ . '/../..' . '/src/Settings/Option/CssOption.php',
+        'WPDesk\\FCF\\Free\\Settings\\Option\\CustomFieldDisabledOption' => __DIR__ . '/../..' . '/src/Settings/Option/CustomFieldDisabledOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\CustomFieldOption' => __DIR__ . '/../..' . '/src/Settings/Option/CustomFieldOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnAccountAddressOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnAccountAddressOption.php',
         'WPDesk\\FCF\\Free\\Settings\\Option\\DisplayOnAccountOrderOption' => __DIR__ . '/../..' . '/src/Settings/Option/DisplayOnAccountOrderOption.php',
@@ -409,9 +410,9 @@ class ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf21ce1a4c2909ecafb0fab7f4c5d01f7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbd920cdc00ca8143065e1e2a0f4c2210::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbd920cdc00ca8143065e1e2a0f4c2210::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbd920cdc00ca8143065e1e2a0f4c2210::$classMap;
 
         }, null, ClassLoader::class);
     }

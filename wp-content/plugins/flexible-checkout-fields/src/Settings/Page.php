@@ -209,6 +209,7 @@ class Page implements Hookable, HookablePluginDependant {
 			'alert_remove_field'      => __( 'Are you sure you want to delete this field? Deleting a field will remove it from all orders.', 'flexible-checkout-fields' ),
 			'alert_reset'             => __( 'Do you really want to reset section settings? Resetting a section remove all added fields from orders.', 'flexible-checkout-fields' ),
 			'alert_no_fields'         => __( 'No fields available.', 'flexible-checkout-fields' ),
+			'alert_failed_save'       => __( 'Failed to connect to WordPress REST API.', 'flexible-checkout-fields' ),
 		];
 	}
 
