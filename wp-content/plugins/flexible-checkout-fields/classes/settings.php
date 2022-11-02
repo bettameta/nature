@@ -19,30 +19,26 @@
         function init_polylang() {
         	if ( function_exists( 'pll_register_string' ) ) {
         		$settings = get_option('inspire_checkout_fields_settings', array() );
-        		$checkout_field_type = $this->plugin->get_fields();
         		foreach ( $settings as $section ) {
         			if ( is_array( $section ) ) {
         				foreach ( $section as $field ) {
-        					if ( isset( $field['label'] ) && $field['label'] != '' ) {
+        					if ( isset( $field['label'] ) && $field['label'] !== '' ) {
         						pll_register_string( $field['label'], $field['label'], __('Flexible Checkout Fields', 'flexible-checkout-fields' ) );
         					}
-        					if ( isset( $field['placeholder'] ) && $field['placeholder'] != '' ) {
+        					if ( isset( $field['placeholder'] ) && $field['placeholder'] !== '' ) {
         						pll_register_string( $field['placeholder'], $field['placeholder'], __('Flexible Checkout Fields', 'flexible-checkout-fields' ) );
         					}
-					        if ( isset( $field['default'] ) && $field['default'] != '' ) {
+					        if ( isset( $field['default'] ) && $field['default'] !== '' ) {
 						        pll_register_string( $field['default'], $field['default'], __('Flexible Checkout Fields', 'flexible-checkout-fields' ) );
 					        }
-        					if ( isset( $field['type'] ) && isset( $checkout_field_type[$field['type']]['has_options'] ) && $checkout_field_type[$field['type']]['has_options'] ) {
-        						$array_options = explode("\n", $field['option']);
-        						if ( !empty( $array_options ) ){
-        							foreach ( $array_options as $option ) {
-        								$tmp = explode(':', $option, 2);
-        								$option_label = trim( $tmp[1] );
-        								pll_register_string( $option_label, $option_label, __('Flexible Checkout Fields', 'flexible-checkout-fields' ) );
-        								unset($tmp);
-        							}
-        						}
-        					}
+							if ( isset( $field['options'] ) ) {
+								foreach ( $field['options'] as $option_data ) {
+									pll_register_string( $option_data['value'], $option_data['value'], __('Flexible Checkout Fields', 'flexible-checkout-fields' ) );
+								}
+							}
+							if ( isset( $field['regex_message'] ) && $field['regex_message'] !== '' ) {
+								pll_register_string( $field['regex_message'], $field['regex_message'], __('Flexible Checkout Fields', 'flexible-checkout-fields' ) );
+							}
         				}
         			}
         		}
@@ -53,30 +49,26 @@
         	if ( function_exists( 'icl_register_string' ) ) {
         		$icl_language_code = defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : get_bloginfo('language');
         		$settings = get_option('inspire_checkout_fields_settings', array() );
-        		$checkout_field_type = $this->plugin->get_fields();
         		foreach ( $settings as $section ) {
         			if ( is_array( $section ) ) {
         				foreach ( $section as $field ) {
-        					if ( isset( $field['label'] ) && $field['label'] != '' ) {
+        					if ( isset( $field['label'] ) && $field['label'] !== '' ) {
         						icl_register_string( 'flexible-checkout-fields', $field['label'], $field['label'], false, $icl_language_code );
         					}
-        					if ( isset( $field['placeholder'] ) && $field['placeholder'] != '' ) {
+        					if ( isset( $field['placeholder'] ) && $field['placeholder'] !== '' ) {
         						icl_register_string( 'flexible-checkout-fields', $field['placeholder'], $field['placeholder'], false, $icl_language_code );
         					}
-					        if ( isset( $field['default'] ) && $field['default'] != '' ) {
+					        if ( isset( $field['default'] ) && $field['default'] !== '' ) {
 						        icl_register_string( 'flexible-checkout-fields', $field['default'], $field['default'], false, $icl_language_code );
 					        }
-        					if ( isset( $field['type'] ) && isset( $checkout_field_type[$field['type']]['has_options'] ) && $checkout_field_type[$field['type']]['has_options'] && $field['option'] ) {
-        						$array_options = explode("\n", $field['option']);
-        						if ( !empty( $array_options ) ){
-        							foreach ( $array_options as $option ) {
-        								$tmp = explode(':', $option, 2);
-        								$option_label = trim( $tmp[1] );
-        								icl_register_string( 'flexible-checkout-fields', $option_label, $option_label, false, $icl_language_code );
-        								unset($tmp);
-        							}
-        						}
-        					}
+							if ( isset( $field['options'] ) ) {
+								foreach ( $field['options'] as $option_data ) {
+									icl_register_string( 'flexible-checkout-fields', $option_data['value'], $option_data['value'], false, $icl_language_code );
+								}
+							}
+							if ( isset( $field['regex_message'] ) && $field['regex_message'] !== '' ) {
+								icl_register_string( 'flexible-checkout-fields', $field['regex_message'], $field['regex_message'], false, $icl_language_code );
+							}
         				}
         			}
         		}

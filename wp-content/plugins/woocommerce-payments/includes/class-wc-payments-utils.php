@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use WCPay\Exceptions\{ Amount_Too_Small_Exception, API_Exception, Connection_Exception };
+
 /**
  * WC Payments Utils class
  */
@@ -114,14 +116,14 @@ class WC_Payments_Utils {
 	 *
 	 * @return int The amount in cents.
 	 */
-	public static function prepare_amount( $amount, $currency = 'USD' ) {
+	public static function prepare_amount( $amount, $currency = 'USD' ): int {
 		$conversion_rate = 100;
 
-		if ( in_array( strtolower( $currency ), self::zero_decimal_currencies(), true ) ) {
+		if ( self::is_zero_decimal_currency( strtolower( $currency ) ) ) {
 			$conversion_rate = 1;
 		}
 
-		return round( (float) $amount * $conversion_rate );
+		return (int) round( (float) $amount * $conversion_rate );
 	}
 
 	/**
@@ -135,11 +137,51 @@ class WC_Payments_Utils {
 	public static function interpret_stripe_amount( int $amount, string $currency = 'usd' ): float {
 		$conversion_rate = 100;
 
-		if ( in_array( $currency, self::zero_decimal_currencies(), true ) ) {
+		if ( self::is_zero_decimal_currency( $currency ) ) {
 			$conversion_rate = 1;
 		}
 
 		return (float) $amount / $conversion_rate;
+	}
+
+	/**
+	 * Interprets an exchange rate from the Stripe API.
+	 *
+	 * @param float  $exchange_rate        The exchange rate returned from the stripe API.
+	 * @param string $presentment_currency The currency the customer was charged in.
+	 * @param string $base_currency        The Stripe account currency.
+	 * @return float
+	 */
+	public static function interpret_string_exchange_rate(
+		float $exchange_rate,
+		string $presentment_currency,
+		string $base_currency
+	): float {
+		$is_presentment_currency_zero_decimal = self::is_zero_decimal_currency( strtolower( $presentment_currency ) );
+		$is_base_currency_zero_decimal        = self::is_zero_decimal_currency( strtolower( $base_currency ) );
+
+		if ( $is_presentment_currency_zero_decimal && ! $is_base_currency_zero_decimal ) {
+			return $exchange_rate / 100;
+		} elseif ( ! $is_presentment_currency_zero_decimal && $is_base_currency_zero_decimal ) {
+			return $exchange_rate * 100;
+		} else {
+			return $exchange_rate;
+		}
+	}
+
+	/**
+	 * Check whether a given currency is in the list of zero-decimal currencies supported by Stripe.
+	 *
+	 * @param string $currency The currency code.
+	 *
+	 * @return bool
+	 */
+	public static function is_zero_decimal_currency( string $currency ): bool {
+		if ( in_array( $currency, self::zero_decimal_currencies(), true ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -171,21 +213,29 @@ class WC_Payments_Utils {
 
 	/**
 	 * List of countries enabled for Stripe platform account. See also
-	 * https://docs.woocommerce.com/document/payments/countries/ for the most actual status.
+	 * https://woocommerce.com/document/payments/countries/ for the most actual status.
 	 *
 	 * @return string[]
 	 */
 	public static function supported_countries(): array {
 		return [
+			'AT' => __( 'Austria', 'woocommerce-payments' ),
 			'AU' => __( 'Australia', 'woocommerce-payments' ),
+			'BE' => __( 'Belgium', 'woocommerce-payments' ),
 			'CA' => __( 'Canada', 'woocommerce-payments' ),
+			'CH' => __( 'Switzerland', 'woocommerce-payments' ),
 			'DE' => __( 'Germany', 'woocommerce-payments' ),
 			'ES' => __( 'Spain', 'woocommerce-payments' ),
 			'FR' => __( 'France', 'woocommerce-payments' ),
 			'GB' => __( 'United Kingdom (UK)', 'woocommerce-payments' ),
+			'HK' => __( 'Hong Kong', 'woocommerce-payments' ),
 			'IE' => __( 'Ireland', 'woocommerce-payments' ),
 			'IT' => __( 'Italy', 'woocommerce-payments' ),
+			'NL' => __( 'Netherlands', 'woocommerce-payments' ),
 			'NZ' => __( 'New Zealand', 'woocommerce-payments' ),
+			'PL' => __( 'Poland', 'woocommerce-payments' ),
+			'PT' => __( 'Portugal', 'woocommerce-payments' ),
+			'SG' => __( 'Singapore', 'woocommerce-payments' ),
 			'US' => __( 'United States (US)', 'woocommerce-payments' ),
 		];
 	}
@@ -201,31 +251,6 @@ class WC_Payments_Utils {
 	}
 
 	/**
-	 * Updates the order when the payment authorization has expired without being captured.
-	 * It updates the order status, adds an order note, and updates the metadata so the "Capture" action
-	 * button isn't displayed anymore.
-	 *
-	 * @param WC_Order $order Order object.
-	 */
-	public static function mark_payment_expired( $order ) {
-		$order->update_meta_data( '_intention_status', 'canceled' );
-		$order->update_status(
-			'cancelled',
-			sprintf(
-				self::esc_interpolated_html(
-				/* translators: %1: transaction ID of the payment */
-					__( 'Payment authorization has <strong>expired</strong> (<code>%1$s</code>).', 'woocommerce-payments' ),
-					[
-						'strong' => '<strong>',
-						'code'   => '<code>',
-					]
-				),
-				$order->get_transaction_id()
-			)
-		);
-	}
-
-	/**
 	 * Returns the charge_id for an "Order #" search term
 	 * or all charge_ids for a "Subscription #" search term.
 	 *
@@ -236,7 +261,7 @@ class WC_Payments_Utils {
 	public static function get_charge_ids_from_search_term( $term ) {
 		$order_term = __( 'Order #', 'woocommerce-payments' );
 		if ( substr( $term, 0, strlen( $order_term ) ) === $order_term ) {
-			$term_parts = explode( '#', $term, 2 );
+			$term_parts = explode( $order_term, $term, 2 );
 			$order_id   = isset( $term_parts[1] ) ? $term_parts[1] : '';
 			$order      = wc_get_order( $order_id );
 			if ( $order ) {
@@ -246,7 +271,7 @@ class WC_Payments_Utils {
 
 		$subscription_term = __( 'Subscription #', 'woocommerce-payments' );
 		if ( function_exists( 'wcs_get_subscription' ) && substr( $term, 0, strlen( $subscription_term ) ) === $subscription_term ) {
-			$term_parts      = explode( '#', $term, 2 );
+			$term_parts      = explode( $subscription_term, $term, 2 );
 			$subscription_id = isset( $term_parts[1] ) ? $term_parts[1] : '';
 			$subscription    = wcs_get_subscription( $subscription_id );
 			if ( $subscription ) {
@@ -307,24 +332,20 @@ class WC_Payments_Utils {
 			'phone'   => $order->get_billing_phone(),
 		];
 
-		$remove_empty_entries = function ( $value ) {
-			return ! empty( $value );
-		};
-
-		$billing_details['address'] = array_filter( $billing_details['address'], $remove_empty_entries );
-		return array_filter( $billing_details, $remove_empty_entries );
+		$billing_details['address'] = array_filter( $billing_details['address'] );
+		return array_filter( $billing_details );
 	}
 
 	/**
 	 * Redacts the provided array, removing the sensitive information, and limits its depth to LOG_MAX_RECURSION.
 	 *
-	 * @param array   $array The array to redact.
-	 * @param array   $keys_to_redact The keys whose values need to be redacted.
-	 * @param integer $level The current recursion level.
+	 * @param object|array $array          The array to redact.
+	 * @param array        $keys_to_redact The keys whose values need to be redacted.
+	 * @param integer      $level          The current recursion level.
 	 *
-	 * @return array The redacted array.
+	 * @return string|array The redacted array.
 	 */
-	public static function redact_array( $array, $keys_to_redact, $level = 0 ) {
+	public static function redact_array( $array, array $keys_to_redact, int $level = 0 ) {
 		if ( is_object( $array ) ) {
 			// TODO: if we ever want to log objects, they could implement a method returning an array or a string.
 			return get_class( $array ) . '()';
@@ -468,5 +489,320 @@ class WC_Payments_Utils {
 
 		// Return 'auto' so Stripe.js uses the browser locale.
 		return 'auto';
+	}
+
+	/**
+	 * Returns redacted customer-facing error messages for notices.
+	 *
+	 * This function tries to filter out API exceptions that should not be displayed to customers.
+	 * Generally, only Stripe exceptions with type of `card_error` should be displayed.
+	 * Other API errors should be redacted (https://stripe.com/docs/api/errors#errors-message).
+	 *
+	 * @param Exception $e Exception to get the message from.
+	 *
+	 * @return string
+	 */
+	public static function get_filtered_error_message( Exception $e ) {
+		$error_message = method_exists( $e, 'getLocalizedMessage' ) ? $e->getLocalizedMessage() : $e->getMessage();
+
+		// These notices can be shown when placing an order or adding a new payment method, so we aim for
+		// more generic messages instead of specific order/payment messages when the API Exception is redacted.
+		if ( $e instanceof Connection_Exception ) {
+			$error_message = __( 'There was an error while processing this request. If you continue to see this notice, please contact the admin.', 'woocommerce-payments' );
+		} elseif ( $e instanceof Amount_Too_Small_Exception ) {
+			$minimum_amount = $e->get_minimum_amount();
+			$currency       = $e->get_currency();
+
+			// Cache the result.
+			static::cache_minimum_amount( $currency, $minimum_amount );
+			$interpreted_amount = self::interpret_stripe_amount( $minimum_amount, $currency );
+			$price              = wc_price( $interpreted_amount, [ 'currency' => strtoupper( $currency ) ] );
+
+			return sprintf(
+				// translators: %s a formatted price.
+				__(
+					'The selected payment method requires a total amount of at least %s.',
+					'woocommerce-payments'
+				),
+				wp_strip_all_tags( html_entity_decode( $price ) )
+			);
+		} elseif ( $e instanceof API_Exception && 'wcpay_bad_request' === $e->get_error_code() ) {
+			$error_message = __( 'We\'re not able to process this request. Please refresh the page and try again.', 'woocommerce-payments' );
+		} elseif ( $e instanceof API_Exception && ! empty( $e->get_error_type() ) && 'card_error' !== $e->get_error_type() ) {
+			$error_message = __( 'We\'re not able to process this request. Please refresh the page and try again.', 'woocommerce-payments' );
+		} elseif ( $e instanceof API_Exception && 'card_error' === $e->get_error_type() && 'incorrect_zip' === $e->get_error_code() ) {
+			$error_message = __( 'We couldn’t verify the postal code in your billing address. Make sure the information is current with your card issuing bank and try again.', 'woocommerce-payments' );
+		}
+
+		return $error_message;
+	}
+
+	/**
+	 * Saves the minimum amount required for transactions in a given currency.
+	 *
+	 * @param string $currency The currency.
+	 * @param int    $amount   The minimum amount.
+	 */
+	public static function cache_minimum_amount( $currency, $amount ) {
+		set_transient( 'wcpay_minimum_amount_' . strtolower( $currency ), $amount, DAY_IN_SECONDS );
+	}
+
+	/**
+	 * Checks if there is a minimum amount required for transactions in a given currency.
+	 *
+	 * @param string $currency The currency to check for.
+	 *
+	 * @return int|null Either the minimum amount, or `null` if not available.
+	 */
+	public static function get_cached_minimum_amount( $currency ) {
+		$cached = get_transient( 'wcpay_minimum_amount_' . strtolower( $currency ) );
+		return (int) $cached ? (int) $cached : null;
+	}
+
+	/**
+	 * Check if order is locked for payment processing
+	 *
+	 * @param WC_Order $order  The order that is being paid.
+	 * @param string   $intent_id The id of the intent that is being processed.
+	 * @return bool    A flag that indicates whether the order is already locked.
+	 */
+	public static function is_order_locked( $order, $intent_id = null ) {
+		$order_id       = $order->get_id();
+		$transient_name = 'wcpay_processing_intent_' . $order_id;
+		$processing     = get_transient( $transient_name );
+
+		// Block the process if the same intent is already being handled.
+		return ( '-1' === $processing || ( isset( $intent_id ) && $processing === $intent_id ) );
+	}
+
+	/**
+	 * Lock an order for payment intent processing for 5 minutes.
+	 *
+	 * @param WC_Order $order  The order that is being paid.
+	 * @param string   $intent_id The id of the intent that is being processed.
+	 * @return void
+	 */
+	public static function lock_order_payment( $order, $intent_id = null ) {
+		$order_id       = $order->get_id();
+		$transient_name = 'wcpay_processing_intent_' . $order_id;
+
+		set_transient( $transient_name, empty( $intent_id ) ? '-1' : $intent_id, 5 * MINUTE_IN_SECONDS );
+	}
+
+	/**
+	 * Unlocks an order for processing by payment intents.
+	 *
+	 * @param WC_Order $order The order that is being unlocked.
+	 */
+	public static function unlock_order_payment( $order ) {
+		$order_id = $order->get_id();
+		delete_transient( 'wcpay_processing_intent_' . $order_id );
+	}
+
+	/**
+	 * Returns the correct id to be used on the transaction URL
+	 * The Payment Intent ID is prioritized and it fallbacks to the charge ID
+	 *
+	 * @param string $intent_id Payment intent ID.
+	 * @param string $charge_id Charge ID.
+	 *
+	 * @return string
+	 */
+	public static function get_transaction_url_id( $intent_id, $charge_id ) {
+		return ! empty( $intent_id ) ? $intent_id : $charge_id;
+	}
+
+	/**
+	 * Composes url for transaction details page.
+	 *
+	 * @param string $intent_id Payment Intent ID.
+	 * @param string $charge_id Charge ID.
+	 *
+	 * @return string Transaction details page url.
+	 */
+	public static function compose_transaction_url( $intent_id, $charge_id ) {
+		if ( empty( $charge_id ) && empty( $intent_id ) ) {
+			return '';
+		}
+
+		return add_query_arg(
+			[
+				'page' => 'wc-admin',
+				'path' => '/payments/transactions/details',
+				'id'   => self::get_transaction_url_id( $intent_id, $charge_id ),
+			],
+			admin_url( 'admin.php' )
+		);
+	}
+
+	/**
+	 * Retrieve last WC refund from order ID.
+	 *
+	 * @param int $order_id WC Order ID.
+	 *
+	 * @return null|WC_Order_Refund
+	 */
+	public static function get_last_refund_from_order_id( $order_id ) {
+		$wc_refunds = wc_get_orders(
+			[
+				'type'    => 'shop_order_refund',
+				'parent'  => $order_id,
+				'limit'   => 1,
+				'orderby' => 'ID',
+				'order'   => 'DESC',
+			]
+		);
+
+		if ( is_array( $wc_refunds ) && ! empty( $wc_refunds ) && is_a( $wc_refunds[0], WC_Order_Refund::class ) ) {
+			return $wc_refunds[0];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Check to see if the current user is in onboarding experiment treatment mode.
+	 *
+	 * @return bool
+	 */
+	public static function is_in_onboarding_treatment_mode() {
+		if ( ! isset( $_COOKIE['tk_ai'] ) ) {
+			return false;
+		}
+
+		$abtest = new \WCPay\Experimental_Abtest(
+			sanitize_text_field( wp_unslash( $_COOKIE['tk_ai'] ) ),
+			'woocommerce',
+			'yes' === get_option( 'woocommerce_allow_tracking' )
+		);
+
+		return 'treatment' === $abtest->get_variation( 'woo_wcpayments_tasklist_click_introducing_select_business_type_202203_v3' );
+	}
+
+	/**
+	 * Return the currency format based on the symbol position.
+	 * Similar to get_woocommerce_price_format but with an input.
+	 *
+	 * @param string $currency_pos currency symbol position.
+	 *
+	 * @return string The currency format.
+	 */
+	public static function get_woocommerce_price_format( string $currency_pos ): string {
+		$default_left = '%1$s%2$s';
+
+		switch ( $currency_pos ) {
+			case 'left':
+				return $default_left;
+			case 'right':
+				return '%2$s%1$s';
+			case 'left_space':
+				return '%1$s %2$s';
+			case 'right_space':
+				return '%2$s %1$s';
+			default:
+				return $default_left;
+		}
+	}
+
+	/**
+	 * Transform the currency format returned from localization service into
+	 * the format that can be used by wc_price
+	 *
+	 * @param string $currency the currency code.
+	 *
+	 * @return array The currency format.
+	 */
+	public static function get_currency_format_for_wc_price( string $currency ): array {
+		$currency = strtoupper( $currency );
+
+		$currency_data = WC_Payments::get_localization_service()->get_currency_format( $currency );
+
+		$currency_format_for_wc_price = [];
+		foreach ( $currency_data as $key => $format ) {
+			switch ( $key ) {
+				case 'thousand_sep':
+					$currency_format_for_wc_price['thousand_separator'] = $format;
+					break;
+				case 'decimal_sep':
+					$currency_format_for_wc_price['decimal_separator'] = $format;
+					break;
+				case 'num_decimals':
+					$currency_format_for_wc_price['decimals'] = $format;
+					break;
+				case 'currency_pos':
+					$currency_format_for_wc_price['price_format'] = self::get_woocommerce_price_format( $format );
+					break;
+			}
+		}
+		$currency_format_for_wc_price['currency'] = $currency;
+
+		return $currency_format_for_wc_price;
+	}
+
+	/**
+	 * Format an amount according to the given currency format.
+	 *
+	 * @param  float  $amount   Amount to format.
+	 * @param  string $currency 3-letter currency code.
+	 *
+	 * @return string
+	 */
+	public static function format_currency( float $amount, string $currency ): string {
+		$currency = strtoupper( $currency );
+
+		$formatted = html_entity_decode(
+			wp_strip_all_tags(
+				wc_price(
+					$amount,
+					self::get_currency_format_for_wc_price( $currency )
+				)
+			)
+		);
+
+		if ( $amount >= 0 ) {
+			return $formatted;
+		}
+
+		// Handle the subtle display difference for the negative amount between PHP wc_price `-$0.74` vs JavaScript formatCurrency `$-0.74` for the same input.
+		// Remove the minus sign, and then move it right before the number.
+		$formatted = str_replace( '-', '', $formatted );
+
+		return preg_replace( '/([0-9,\.]+)/', '-$1', $formatted );
+	}
+
+	/**
+	 * Format amount according to the given currency with the currency code in the right.
+	 *
+	 * @param  float  $amount          Amount.
+	 * @param  string $currency       3-letter currency code.
+	 * @param  bool   $skip_symbol      Optional. If true, trims off the short currency symbol. Default false.
+	 * @param  array  $currency_format Optional. Additional currency format for wc_price.
+	 *
+	 * @return string Formatted currency representation
+	 */
+	public static function format_explicit_currency(
+		float $amount,
+		string $currency,
+		bool $skip_symbol = false,
+		array $currency_format = []
+	): string {
+		$currency = strtoupper( $currency );
+
+		$formatted_amount = wc_price(
+			$amount,
+			wp_parse_args( $currency_format, self::get_currency_format_for_wc_price( $currency ) )
+		);
+
+		$formatted_amount = html_entity_decode( wp_strip_all_tags( $formatted_amount ) );
+
+		if ( $skip_symbol ) {
+			$formatted_amount = preg_replace( '/[^0-9,\.]+/', '', $formatted_amount );
+		}
+
+		if ( false === strpos( $formatted_amount, $currency ) ) {
+			return $formatted_amount . ' ' . $currency;
+		}
+
+		return $formatted_amount;
 	}
 }

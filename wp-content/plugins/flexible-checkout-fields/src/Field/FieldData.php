@@ -1,14 +1,9 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Field;
 
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Field\Type\DefaultType;
+use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 
 /**
  * Generates field data based on options for field type.
@@ -19,14 +14,15 @@ class FieldData {
 	 * Returns parsed data for field.
 	 *
 	 * @param array $field_settings Settings of field.
-	 * @param bool  $is_decode Is it decoding (used saved settings) data instead of encoding (for settings save).
+	 * @param bool  $is_decode      Is it decoding (used saved settings) data instead of encoding (for settings save).
 	 *
 	 * @return array Data of field.
 	 */
 	public static function get_field_data( array $field_settings, bool $is_decode = true ): array {
-		$field_data = [];
+		$field_data     = [];
+		$option_objects = self::get_field_options( $field_settings );
 
-		if ( ! ( $option_objects = self::get_field_options( $field_settings ) ) ) {
+		if ( ! $option_objects ) {
 			return $field_data;
 		}
 

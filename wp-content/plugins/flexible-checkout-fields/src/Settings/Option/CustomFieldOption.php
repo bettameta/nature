@@ -1,54 +1,39 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
 
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class CustomFieldOption extends OptionAbstract implements OptionInterface {
+class CustomFieldOption extends OptionAbstract {
 
 	const FIELD_NAME = 'custom_field';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns name of option tab.
-	 *
-	 * @return string Tab name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_tab(): string {
 		return GeneralTab::TAB_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_HIDDEN;
 	}
 
 	/**
-	 * Returns default value of option.
-	 *
-	 * @return string|array Default value.
+	 * {@inheritdoc}
 	 */
 	public function get_default_value() {
 		return '1';

@@ -1,9 +1,4 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
@@ -167,7 +162,7 @@ interface OptionInterface {
 	/**
 	 * Returns updated settings of field contain values for this option.
 	 *
-	 * @param array $field_data Original settings of field.
+	 * @param array $field_data     Original settings of field.
 	 * @param array $field_settings Settings of field.
 	 *
 	 * @return array Updated settings of field.
@@ -177,7 +172,7 @@ interface OptionInterface {
 	/**
 	 * Returns updated settings of field contain submitted values.
 	 *
-	 * @param array $field_data Current settings of field.
+	 * @param array $field_data     Current settings of field.
 	 * @param array $field_settings Settings of field.
 	 *
 	 * @return array Updated settings of field.

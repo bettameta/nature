@@ -72,8 +72,8 @@ class WC_Payments_Action_Scheduler_Service {
 	/**
 	 * Track an order by making a request to the Payments API.
 	 *
-	 * @param int  $order_id   The ID of the order which has been updated/created.
-	 * @param bool $is_update  Is this an update event. If false, it is assumed this is a creation event.
+	 * @param mixed $order_id  The ID of the order which has been updated/created.
+	 * @param bool  $is_update Is this an update event. If false, it is assumed this is a creation event.
 	 *
 	 * @return bool
 	 */
@@ -89,6 +89,16 @@ class WC_Payments_Action_Scheduler_Service {
 		if ( empty( $payment_method ) ) {
 			return false;
 		}
+		$order_mode = $order->get_meta( '_wcpay_mode' );
+
+		if ( $order_mode ) {
+			$current_mode = $this->payments_api_client->is_in_test_mode() ? 'test' : 'prod';
+			if ( $current_mode !== $order_mode ) {
+				// If mode doesn't match make sure to stop order tracking to prevent order tracking issues.
+				// False will be returned so maybe future crons will have correct mode.
+				return false;
+			}
+		}
 
 		// Send the order data to the Payments API to track it.
 		$response = $this->payments_api_client->track_order(
@@ -97,6 +107,7 @@ class WC_Payments_Action_Scheduler_Service {
 				[
 					'_payment_method_id'  => $payment_method,
 					'_stripe_customer_id' => $order->get_meta( '_stripe_customer_id' ),
+					'_wcpay_mode'         => $order_mode,
 				]
 			),
 			$is_update
@@ -123,12 +134,12 @@ class WC_Payments_Action_Scheduler_Service {
 	 *
 	 * @return void
 	 */
-	public function schedule_job( $timestamp, $hook, $args = [], $group = self::GROUP_ID ) {
+	public function schedule_job( int $timestamp, string $hook, array $args = [], string $group = self::GROUP_ID ) {
 		// Unschedule any previously scheduled instances of this particular job.
-		as_unschedule_action( $hook, $args, self::GROUP_ID );
+		as_unschedule_action( $hook, $args, $group );
 
 		// Schedule the job.
-		as_schedule_single_action( $timestamp, $hook, $args, self::GROUP_ID );
+		as_schedule_single_action( $timestamp, $hook, $args, $group );
 	}
 
 	/**
@@ -138,7 +149,7 @@ class WC_Payments_Action_Scheduler_Service {
 	 *
 	 * @return bool
 	 */
-	public function pending_action_exists( $hook ): bool {
+	public function pending_action_exists( string $hook ): bool {
 		$actions = as_get_scheduled_actions(
 			[
 				'hook'   => $hook,

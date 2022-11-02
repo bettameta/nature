@@ -1,56 +1,39 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
 
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class PriorityOption extends OptionAbstract implements OptionInterface {
+class PriorityOption extends OptionAbstract {
 
 	const FIELD_NAME = 'priority';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns name of option tab.
-	 *
-	 * @return string Tab name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_tab(): string {
 		return GeneralTab::TAB_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_HIDDEN;
 	}
 
 	/**
-	 * Filters option value from all unsafe strings.
-	 *
-	 * @param string|array $field_value Original option value.
-	 *
-	 * @return string|array Updated value of option.
+	 * {@inheritdoc}
 	 */
 	public function sanitize_option_value( $field_value ) {
 		return intval( $field_value );

@@ -1,14 +1,9 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings;
 
-use WPDesk\FCF\Free\Settings\Form\FormIntegration;
 use WPDesk\FCF\Free\Settings\Form\EditFieldsForm;
+use WPDesk\FCF\Free\Settings\Form\FormIntegration;
 use WPDesk\FCF\Free\Settings\Form\SettingsPageForm;
 
 /**

@@ -1,9 +1,4 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings;
 
@@ -12,8 +7,8 @@ use FcfVendor\WPDesk\PluginBuilder\Plugin\HookablePluginDependant;
 use FcfVendor\WPDesk\PluginBuilder\Plugin\PluginAccess;
 use FcfVendor\WPDesk\View\Renderer\SimplePhpRenderer;
 use FcfVendor\WPDesk\View\Resolver\DirResolver;
+use WPDesk\FCF\Free\Field\Types;
 use WPDesk\FCF\Free\Settings\Route\RouteIntegration;
-use WPDesk\FCF\Free\Settings\Menu;
 
 /**
  * Supports page of plugin settings.
@@ -46,9 +41,7 @@ class Page implements Hookable, HookablePluginDependant {
 	}
 
 	/**
-	 * Integrate with WordPress and with other plugins using action/filter system.
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function hooks() {
 		add_action( 'admin_menu', [ $this, 'add_settings_page' ], 80 );
@@ -130,15 +123,35 @@ class Page implements Hookable, HookablePluginDependant {
 				];
 				break;
 			default:
-				if ( ! ( $section = $this->get_active_section( $menu_sections ) ) ) {
+				$section = $this->get_active_section( $menu_sections );
+				if ( ! $section ) {
 					break;
 				}
+
 				$settings['form_fields'] = [
 					'api_route'     => sprintf( '%s/fields', $section['id'] ),
 					'form_index'    => $section['id'],
 					'option_fields' => apply_filters( 'flexible_checkout_fields/field_types', [], $section['id'] ),
 					'option_values' => array_values( apply_filters( 'flexible_checkout_fields/form_data_fields', [], $section['id'] ) ),
 					'settings_tabs' => apply_filters( 'flexible_checkout_fields/field_settings_tabs', [] ),
+					'field_group'   => [
+						[
+							'name'  => Types::FIELD_GROUP_TEXT,
+							'label' => __( 'Text Fields', 'flexible-checkout-fields' ),
+						],
+						[
+							'name'  => Types::FIELD_GROUP_OPTION,
+							'label' => __( 'Option Fields', 'flexible-checkout-fields' ),
+						],
+						[
+							'name'  => Types::FIELD_GROUP_PICKER,
+							'label' => __( 'Picker Fields', 'flexible-checkout-fields' ),
+						],
+						[
+							'name'  => Types::FIELD_GROUP_OTHER,
+							'label' => __( 'Other Fields', 'flexible-checkout-fields' ),
+						],
+					],
 				];
 
 				if ( ! $section['has_section_form'] ) {
@@ -191,16 +204,19 @@ class Page implements Hookable, HookablePluginDependant {
 			'button_read_more'        => __( 'Read more', 'flexible-checkout-fields' ),
 			'button_yes'              => __( 'Yes', 'flexible-checkout-fields' ),
 			'button_no'               => __( 'No', 'flexible-checkout-fields' ),
+			'button_upload_image'     => __( 'Upload image', 'flexible-checkout-fields' ),
+			'button_select_color'     => __( 'Select color', 'flexible-checkout-fields' ),
 			'field_type'              => __( 'Field Type', 'flexible-checkout-fields' ),
 			'field_label'             => __( 'Label', 'flexible-checkout-fields' ),
 			'field_name'              => __( 'Name', 'flexible-checkout-fields' ),
 			'validation_required'     => __( 'This field is required.', 'flexible-checkout-fields' ),
+			'validation_max_length'   => __( 'This value is too long.', 'flexible-checkout-fields' ),
 			'validation_slug'         => __( 'Field name should contains only lowercase letters, numbers and underscore sign.', 'flexible-checkout-fields' ),
 			'select_placeholder'      => __( 'Select...', 'flexible-checkout-fields' ),
 			'select_loading'          => __( 'Loading...', 'flexible-checkout-fields' ),
 			'select_empty'            => __( 'No options.', 'flexible-checkout-fields' ),
 			'alert_field_unavailable' => sprintf(
-				/* translators: %1$s: break line, %2$s: anchor opening tag, %3$s: anchor closing tag */
+			/* translators: %1$s: break line, %2$s: anchor opening tag, %3$s: anchor closing tag */
 				__( 'This field is available in the PRO version.%1$s %2$sUpgrade to PRO%3$s', 'flexible-checkout-fields' ),
 				'<br>',
 				'<a href="' . esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-field-type-upgrade' ) ) . '" target="_blank" class="fcfArrowLink">',
@@ -217,7 +233,6 @@ class Page implements Hookable, HookablePluginDependant {
 	 * Removes WooCommerce footer from plugin settings page.
 	 *
 	 * @return string New footer content.
-	 *
 	 * @internal
 	 */
 	public function update_footer_text(): string {
@@ -252,6 +267,7 @@ class Page implements Hookable, HookablePluginDependant {
 			( $is_debug ) ? time() : $this->plugin->get_script_version(),
 			true
 		);
+		wp_enqueue_media();
 		wp_enqueue_script( 'fcf-admin' );
 	}
 }

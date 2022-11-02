@@ -88,7 +88,7 @@ jQuery( function( $ ) {
 							tolerance   : 'pointer',
 							stop: function() {
 								$( $list.find( '.select2-selection__choice' ).get().reverse() ).each( function() {
-									var id     = $( self ).data( 'data' ).id;
+									var id     = $( this ).data( 'data' ).id;
 									var option = $select.find( 'option[value="' + id + '"]' )[0];
 									$select.prepend( option );
 								} );
@@ -264,6 +264,8 @@ jQuery( function( $ ) {
 
 				// Ajax category search boxes
 				$( ':input.wc-category-search' ).filter( ':not(.enhanced)' ).each( function() {
+					var return_format = $( this ).data( 'return_id' ) ? 'id' : 'slug';
+
 					var select2_args = $.extend( {
 						allowClear        : $( this ).data( 'allow_clear' ) ? true : false,
 						placeholder       : $( this ).data( 'placeholder' ),
@@ -287,7 +289,7 @@ jQuery( function( $ ) {
 								if ( data ) {
 									$.each( data, function( id, term ) {
 										terms.push({
-											id:   term.slug,
+											id:   'id' === return_format ? term.term_id : term.slug,
 											text: term.formatted_name
 										});
 									});

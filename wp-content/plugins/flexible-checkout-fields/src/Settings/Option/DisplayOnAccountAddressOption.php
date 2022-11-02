@@ -1,53 +1,37 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
-
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class DisplayOnAccountAddressOption extends OptionAbstract implements OptionInterface {
+class DisplayOnAccountAddressOption extends OptionAbstract {
 
 	const FIELD_NAME = 'display_on_address';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_CHECKBOX;
 	}
 
 	/**
-	 * Returns label of option.
-	 *
-	 * @return string Option label.
+	 * {@inheritdoc}
 	 */
 	public function get_option_label(): string {
 		return __( 'My Account - address', 'flexible-checkout-fields' );
 	}
 
 	/**
-	 * Returns default value of option.
-	 *
-	 * @return string|array Default value.
+	 * {@inheritdoc}
 	 */
 	public function get_default_value() {
 		return '1';

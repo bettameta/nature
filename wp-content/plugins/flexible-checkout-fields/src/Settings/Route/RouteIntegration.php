@@ -1,13 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Route;
-
-use WPDesk\FCF\Free\Settings\Route\RouteInterface;
 
 /**
  * Initializes integration for REST API route.
@@ -33,9 +26,7 @@ class RouteIntegration {
 	}
 
 	/**
-	 * Integrate with WordPress and with other plugins using action/filter system.
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function hooks() {
 		add_action( 'rest_api_init', [ $this, 'register_endpoint' ] );
@@ -54,7 +45,7 @@ class RouteIntegration {
 				'methods'             => $this->value_object->get_route_methods(),
 				'args'                => $this->value_object->get_route_params(),
 				'callback'            => [ $this, 'get_endpoint_response' ],
-				'permission_callback' => function() {
+				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
 			],
@@ -68,7 +59,6 @@ class RouteIntegration {
 	 * @param \WP_REST_Request $request .
 	 *
 	 * @return \WP_REST_Response|\WP_Error .
-	 *
 	 * @internal
 	 */
 	public function get_endpoint_response( \WP_REST_Request $request ) {

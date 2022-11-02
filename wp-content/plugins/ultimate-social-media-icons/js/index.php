@@ -1,3 +1,3 @@
 <?php
-echo _('Access Denied');
-?>
+	
+	_e( 'Access Denied', 'ultimate-social-media-icons' );

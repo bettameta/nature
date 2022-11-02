@@ -1,16 +1,10 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Integration;
 
 use FcfVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 use FcfVendor\WPDesk\PluginBuilder\Plugin\HookablePluginDependant;
 use FcfVendor\WPDesk\PluginBuilder\Plugin\PluginAccess;
-use WPDesk\FCF\Free\Integration\Integrator;
 
 /**
  * .
@@ -36,9 +30,7 @@ class IntegratorIntegration implements Hookable, HookablePluginDependant {
 	}
 
 	/**
-	 * Integrate with WordPress and with other plugins using action/filter system.
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function hooks() {
 		add_action( 'init', [ $this, 'set_hook_for_integration' ], 0 );

@@ -1,15 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Integration;
-
-use WPDesk\FCF\Free\Integration\FieldsInterface;
-use WPDesk\FCF\Free\Integration\Field;
-use WPDesk\FCF\Free\Integration\FieldInterface;
 
 /**
  * .

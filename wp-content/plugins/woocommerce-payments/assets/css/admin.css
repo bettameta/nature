@@ -17,6 +17,10 @@
 #adminmenu
 	#toplevel_page_wc-admin-path--payments-connect
 	.menu-icon-generic
+	div.wp-menu-image::before,
+#adminmenu
+	#toplevel_page_wc-admin-path--payments-deposits
+	.menu-icon-generic
 	div.wp-menu-image::before {
 	font-family: 'WCPay' !important;
 	content: '\e900';
@@ -71,6 +75,16 @@
 	background-size: contain;
 }
 
+.payment-method__brand--eps {
+	background: no-repeat url( '../images/payment-methods/eps.svg' );
+	background-size: contain;
+}
+
+.payment-method__brand--p24 {
+	background: no-repeat url( '../images/payment-methods/przelewy24.svg' );
+	background-size: contain;
+}
+
 .payment-method__brand--sepa_debit {
 	background: no-repeat url( '../images/cards/sepa.svg' );
 	background-size: contain;
@@ -78,6 +92,11 @@
 
 .payment-method__brand--sofort {
 	background: no-repeat url( '../images/payment-methods/sofort.svg' );
+	background-size: contain;
+}
+
+.payment-method__brand--ideal {
+	background: no-repeat url( '../images/payment-methods/ideal.svg' );
 	background-size: contain;
 }
 
@@ -91,7 +110,42 @@
 	background-size: contain;
 }
 
-.payment-method__icon {
+.payment-method__brand--bancontact {
+	background: no-repeat url( '../images/payment-methods/bancontact.svg' );
+	background-size: contain;
+}
+
+.payment-method__brand--sepa_debit {
+	background: no-repeat url( '../images/payment-methods/sepa_debit.svg' );
+	background-size: contain;
+}
+
+.payment-method__brand--au_becs_debit {
+	background: no-repeat url( '../images/payment-methods/bank_debit.svg' );
+	background-size: contain;
+}
+
+.payment-method__brand--link {
+	background: no-repeat url( '../images/cards/link.png' );
+	background-size: contain;
+}
+
+.wc_gateways tr[data-gateway_id='woocommerce_payments'] .payment-method__icon {
 	border: 1px solid #ddd;
 	border-radius: 2px;
+}
+
+.woocommerce-payments-page .woocommerce-inbox-message .components-dropdown {
+	position: absolute;
+}
+
+.wc-payment-gateway-method-name-woopay-wrapper {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+}
+
+.wc-payment-gateway-method-name-woopay-wrapper img {
+	margin: 0 5px;
+	padding-top: 2px;
 }

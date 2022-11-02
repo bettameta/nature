@@ -14,15 +14,9 @@ if ( ! class_exists( 'WPDesk_Flexible_Checkout_Fields_Tracker' ) ) {
 		public function hooks() {
 			add_filter( 'wpdesk_tracker_data', array( $this, 'wpdesk_tracker_data' ), 11 );
 			add_filter( 'wpdesk_tracker_notice_screens', array( $this, 'wpdesk_tracker_notice_screens' ) );
-			add_filter( 'wpdesk_track_plugin_deactivation', array( $this, 'wpdesk_track_plugin_deactivation' ) );
 
 			add_filter( 'plugin_action_links_flexible-checkout-fields/flexible-checkout-fields.php', array( $this, 'plugin_action_links' ) );
 			add_action( 'activated_plugin', array( $this, 'activated_plugin' ), 10, 2 );
-		}
-
-		public function wpdesk_track_plugin_deactivation( $plugins ) {
-			$plugins['flexible-checkout-fields/flexible-checkout-fields.php'] = 'flexible-checkout-fields/flexible-checkout-fields.php';
-			return $plugins;
 		}
 
 		public function wpdesk_tracker_data( $data ) {

@@ -20,7 +20,7 @@ class WPCapture
     {
         new \FcfVendor\WPDesk\Notice\Notice(\sprintf(
             // Translators: directory.
-            \__('Can not enable WP Desk Debug log! Cannot create directory %s or this directory is not writeable!', 'wpdesk-helper'),
+            \__('Can not enable WP Desk Debug log! Cannot create directory %s or this directory is not writeable!', 'flexible-checkout-fields'),
             $dir
         ), \FcfVendor\WPDesk\Notice\Notice::NOTICE_TYPE_ERROR);
     }
@@ -33,7 +33,7 @@ class WPCapture
     {
         new \FcfVendor\WPDesk\Notice\Notice(\sprintf(
             // Translators: directory.
-            \__('Can not enable WP Desk Debug log! Cannot create file %s!', 'wpdesk-helper'),
+            \__('Can not enable WP Desk Debug log! Cannot create file %s!', 'flexible-checkout-fields'),
             $file
         ), \FcfVendor\WPDesk\Notice\Notice::NOTICE_TYPE_ERROR);
     }

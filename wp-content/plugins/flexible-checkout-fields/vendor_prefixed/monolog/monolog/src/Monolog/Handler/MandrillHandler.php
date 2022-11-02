@@ -45,7 +45,11 @@ class MandrillHandler extends \FcfVendor\Monolog\Handler\MailHandler
     {
         $message = clone $this->message;
         $message->setBody($content);
-        $message->setDate(\time());
+        if (\version_compare(\FcfVendor\Swift::VERSION, '6.0.0', '>=')) {
+            $message->setDate(new \DateTimeImmutable());
+        } else {
+            $message->setDate(\time());
+        }
         $ch = \curl_init();
         \curl_setopt($ch, \CURLOPT_URL, 'https://mandrillapp.com/api/1.0/messages/send-raw.json');
         \curl_setopt($ch, \CURLOPT_POST, 1);

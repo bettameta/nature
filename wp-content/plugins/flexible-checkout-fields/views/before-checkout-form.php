@@ -24,14 +24,14 @@
 	jQuery(window).on('load', function() {
 		<?php if ( isset( $args['settings']['billing'] ) && is_array( $args['settings']['billing'] ) ) : ?>
 		    <?php foreach ( $args['settings']['billing'] as $field ) : ?>
-	        	<?php if ( $field['required'] == '0' ) : ?>
+	        	<?php if ( ( $field['required'] ?? '' ) == '0' ) : ?>
 	        		jQuery('#<?php echo esc_attr( $field['name'] ); ?>_field').removeClass('validate-required');
 	        	<?php endif; ?>
 		    <?php endforeach; ?>
 		<?php endif; ?>
 	    <?php if ( isset( $args['settings']['shipping'] ) && is_array( $args['settings']['shipping'] ) ) : ?>
 	    	<?php foreach ( $args['settings']['shipping'] as $field ) : ?>
-    	    	<?php if ( $field['required'] == '0' ) : ?>
+    	    	<?php if ( ( $field['required'] ?? '' ) == '0' ) : ?>
     				jQuery('#<?php echo esc_attr( $field['name'] ); ?>_field').removeClass('validate-required');
 	        	<?php endif; ?>
     		<?php endforeach; ?>

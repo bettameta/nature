@@ -1,9 +1,4 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Form;
 
@@ -23,7 +18,7 @@ interface FormInterface {
 	 * Returns basic settings for form.
 	 *
 	 * @param array  $form_data Default settings of form.
-	 * @param string $form_key Key of form.
+	 * @param string $form_key  Key of form.
 	 *
 	 * @return array Settings of form.
 	 */

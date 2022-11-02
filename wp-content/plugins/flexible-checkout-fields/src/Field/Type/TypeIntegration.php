@@ -1,13 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Field\Type;
-
-use WPDesk\FCF\Free\Field\Type\TypeInterface;
 
 /**
  * Initializes integration for REST API route.
@@ -31,9 +24,7 @@ class TypeIntegration {
 	}
 
 	/**
-	 * Integrate with WordPress and with other plugins using action/filter system.
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function hooks() {
 		add_filter( 'flexible_checkout_fields/field_types', [ $this, 'add_field_type' ], 0 );
@@ -45,7 +36,6 @@ class TypeIntegration {
 	 * @param array $types List of field types.
 	 *
 	 * @return array Updated list of field types.
-	 *
 	 * @internal
 	 */
 	public function add_field_type( array $types ): array {
@@ -62,6 +52,7 @@ class TypeIntegration {
 	private function get_field_type_settings(): array {
 		return [
 			'type'                 => $this->type_object->get_field_type(),
+			'field_group'          => $this->type_object->get_field_group(),
 			'reserved_field_names' => $this->type_object->get_reserved_field_names(),
 			'label'                => $this->type_object->get_field_type_label(),
 			'icon'                 => $this->type_object->get_field_type_icon(),

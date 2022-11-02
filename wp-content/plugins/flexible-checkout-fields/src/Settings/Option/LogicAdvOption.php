@@ -1,54 +1,39 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Tab\LogicTab;
 
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class LogicAdvOption extends OptionAbstract implements OptionInterface {
+class LogicAdvOption extends OptionAbstract {
 
 	const FIELD_NAME = 'conditional_logic_adv';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns name of option tab.
-	 *
-	 * @return string Tab name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_tab(): string {
 		return LogicTab::TAB_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_INFO_ADV;
 	}
 
 	/**
-	 * Returns label of option.
-	 *
-	 * @return string Option label.
+	 * {@inheritdoc}
 	 */
 	public function get_option_label(): string {
 		$url_products = esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-field-tab-logic-docs-products-upgrade' ) );
@@ -56,7 +41,7 @@ class LogicAdvOption extends OptionAbstract implements OptionInterface {
 		$url_shipping = esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-field-tab-logic-docs-shipping-upgrade' ) );
 		$url_upgrade  = esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-field-tab-logic-upgrade' ) );
 		return sprintf(
-			/* translators: %1$s: anchor opening tag, %2$s: anchor closing tag, %3$s: anchor opening tag, %4$s: anchor closing tag, %5$s: anchor opening tag, %6$s: anchor closing tag, %7$s: break line, %8$s: anchor opening tag, %9$s: anchor closing tag */
+		/* translators: %1$s: anchor opening tag, %2$s: anchor closing tag, %3$s: anchor opening tag, %4$s: anchor closing tag, %5$s: anchor opening tag, %6$s: anchor closing tag, %7$s: break line, %8$s: anchor opening tag, %9$s: anchor closing tag */
 			__( 'Add conditional logic based on %1$sproducts and categories%2$s as well as %3$sFCF fields%4$s and %5$sshipping methods%6$s set. %7$s%8$sUpgrade to PRO%9$s', 'flexible-checkout-fields' ),
 			'<a href="' . $url_products . '" target="_blank">',
 			'</a>',

@@ -71,6 +71,7 @@ class WC_Order extends WC_Abstract_Order {
 			'state'      => '',
 			'postcode'   => '',
 			'country'    => '',
+			'phone'      => '',
 		),
 		'payment_method'       => '',
 		'payment_method_title' => '',
@@ -102,7 +103,7 @@ class WC_Order extends WC_Abstract_Order {
 		}
 
 		try {
-			do_action( 'woocommerce_pre_payment_complete', $this->get_id() );
+			do_action( 'woocommerce_pre_payment_complete', $this->get_id(), $transaction_id );
 
 			if ( WC()->session ) {
 				WC()->session->set( 'order_awaiting_payment', false );
@@ -118,9 +119,9 @@ class WC_Order extends WC_Abstract_Order {
 				$this->set_status( apply_filters( 'woocommerce_payment_complete_order_status', $this->needs_processing() ? 'processing' : 'completed', $this->get_id(), $this ) );
 				$this->save();
 
-				do_action( 'woocommerce_payment_complete', $this->get_id() );
+				do_action( 'woocommerce_payment_complete', $this->get_id(), $transaction_id );
 			} else {
-				do_action( 'woocommerce_payment_complete_order_status_' . $this->get_status(), $this->get_id() );
+				do_action( 'woocommerce_payment_complete_order_status_' . $this->get_status(), $this->get_id(), $transaction_id );
 			}
 		} catch ( Exception $e ) {
 			/**
@@ -743,6 +744,17 @@ class WC_Order extends WC_Abstract_Order {
 	}
 
 	/**
+	 * Get shipping phone.
+	 *
+	 * @since  5.6.0
+	 * @param  string $context What the value is for. Valid values are view and edit.
+	 * @return string
+	 */
+	public function get_shipping_phone( $context = 'view' ) {
+		return $this->get_address_prop( 'phone', 'shipping', $context );
+	}
+
+	/**
 	 * Get the payment method.
 	 *
 	 * @param  string $context What the value is for. Valid values are view and edit.
@@ -869,7 +881,7 @@ class WC_Order extends WC_Abstract_Order {
 		$address = $this->get_address( 'shipping' );
 
 		// Remove name and company before generate the Google Maps URL.
-		unset( $address['first_name'], $address['last_name'], $address['company'] );
+		unset( $address['first_name'], $address['last_name'], $address['company'], $address['phone'] );
 
 		$address = apply_filters( 'woocommerce_shipping_address_map_url_parts', $address, $this );
 
@@ -936,8 +948,8 @@ class WC_Order extends WC_Abstract_Order {
 		 * Filter orders formatted shipping address.
 		 *
 		 * @since 3.8.0
-		 * @param string   $address     Formatted billing address string.
-		 * @param array    $raw_address Raw billing address.
+		 * @param string   $address     Formatted shipping address string.
+		 * @param array    $raw_address Raw shipping address.
 		 * @param WC_Order $order       Order data. @since 3.9.0
 		 */
 		return apply_filters( 'woocommerce_order_get_formatted_shipping_address', $address ? $address : $empty_content, $raw_address, $this );
@@ -1230,6 +1242,17 @@ class WC_Order extends WC_Abstract_Order {
 	 */
 	public function set_shipping_country( $value ) {
 		$this->set_address_prop( 'country', 'shipping', $value );
+	}
+
+	/**
+	 * Set shipping phone.
+	 *
+	 * @since 5.6.0
+	 * @param string $value Shipping phone.
+	 * @throws WC_Data_Exception Throws exception when invalid data is found.
+	 */
+	public function set_shipping_phone( $value ) {
+		$this->set_address_prop( 'phone', 'shipping', $value );
 	}
 
 	/**
@@ -1665,7 +1688,13 @@ class WC_Order extends WC_Abstract_Order {
 	 * @return string
 	 */
 	public function get_edit_order_url() {
-		return apply_filters( 'woocommerce_get_edit_order_url', get_admin_url( null, 'post.php?post=' . $this->get_id() . '&action=edit' ), $this );
+		$edit_url = \Automattic\WooCommerce\Utilities\OrderUtil::get_order_admin_edit_url( $this->get_id() );
+		/**
+		 * Filter the URL to edit the order in the backend.
+		 *
+		 * @since 3.3.0
+		 */
+		return apply_filters( 'woocommerce_get_edit_order_url', $edit_url, $this );
 	}
 
 	/*
@@ -2030,7 +2059,7 @@ class WC_Order extends WC_Abstract_Order {
 	 * @param string $tax_display Tax to display.
 	 */
 	protected function add_order_item_totals_payment_method_row( &$total_rows, $tax_display ) {
-		if ( $this->get_total() > 0 && $this->get_payment_method_title() && 'other' !== $this->get_payment_method_title() ) {
+		if ( $this->get_total() > 0 && $this->get_payment_method_title() && 'other' !== $this->get_payment_method() ) {
 			$total_rows['payment_method'] = array(
 				'label' => __( 'Payment method:', 'woocommerce' ),
 				'value' => $this->get_payment_method_title(),

@@ -40,6 +40,15 @@ class Plugin_Storage {
 	private static $plugins = array();
 
 	/**
+	 * The blog ID the storage is setup for.
+	 * The data will be refreshed if the blog ID changes.
+	 * Used for the multisite networks.
+	 *
+	 * @var int
+	 */
+	private static $current_blog_id = null;
+
+	/**
 	 * Add or update the plugin information in the storage.
 	 *
 	 * @param string $slug Plugin slug.
@@ -129,7 +138,12 @@ class Plugin_Storage {
 	 */
 	private static function ensure_configured() {
 		if ( ! self::$configured ) {
-			return new WP_Error( 'too_early', __( 'You cannot call this method until Jetpack Config is configured', 'jetpack' ) );
+			return new WP_Error( 'too_early', __( 'You cannot call this method until Jetpack Config is configured', 'jetpack-connection' ) );
+		}
+
+		if ( is_multisite() && get_current_blog_id() !== self::$current_blog_id ) {
+			self::$plugins         = (array) get_option( self::ACTIVE_PLUGINS_OPTION_NAME, array() );
+			self::$current_blog_id = get_current_blog_id();
 		}
 
 		return true;
@@ -141,9 +155,12 @@ class Plugin_Storage {
 	 * @return void
 	 */
 	public static function configure() {
-
 		if ( self::$configured ) {
 			return;
+		}
+
+		if ( is_multisite() ) {
+			self::$current_blog_id = get_current_blog_id();
 		}
 
 		// If a plugin was activated or deactivated.
@@ -165,6 +182,10 @@ class Plugin_Storage {
 	public static function update_active_plugins_option() {
 		// Note: Since this options is synced to wpcom, if you change its structure, you have to update the sanitizer at wpcom side.
 		update_option( self::ACTIVE_PLUGINS_OPTION_NAME, self::$plugins );
+
+		if ( ! class_exists( 'Automattic\Jetpack\Sync\Settings' ) || ! \Automattic\Jetpack\Sync\Settings::is_sync_enabled() ) {
+			self::update_active_plugins_wpcom_no_sync_fallback();
+		}
 	}
 
 	/**
@@ -213,4 +234,36 @@ class Plugin_Storage {
 		return (array) get_option( self::PLUGINS_DISABLED_OPTION_NAME, array() );
 	}
 
+	/**
+	 * Update active plugins option with current list of active plugins on WPCOM.
+	 * This is a fallback to ensure this option is always up to date on WPCOM in case
+	 * Sync is not present or disabled.
+	 *
+	 * @since 1.34.0
+	 */
+	private static function update_active_plugins_wpcom_no_sync_fallback() {
+		$connection = new Manager();
+		if ( ! $connection->is_connected() ) {
+			return;
+		}
+
+		$site_id = \Jetpack_Options::get_option( 'id' );
+
+		$body = wp_json_encode(
+			array(
+				'active_connected_plugins' => self::$plugins,
+			)
+		);
+
+		Client::wpcom_json_api_request_as_blog(
+			sprintf( '/sites/%d/jetpack-active-connected-plugins', $site_id ),
+			'2',
+			array(
+				'headers' => array( 'content-type' => 'application/json' ),
+				'method'  => 'POST',
+			),
+			$body,
+			'wpcom'
+		);
+	}
 }

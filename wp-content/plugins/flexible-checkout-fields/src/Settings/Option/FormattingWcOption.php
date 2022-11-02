@@ -1,25 +1,14 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\FormattingOption;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
-use WPDesk\FCF\Free\Settings\Option\FormattingNewLineOption;
-
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class FormattingWcOption extends FormattingOption implements OptionInterface {
+class FormattingWcOption extends FormattingOption {
 
 	/**
-	 * Returns subfields of option, if exists.
-	 *
-	 * @return OptionInterface[] List of option children.
+	 * {@inheritdoc}
 	 */
 	public function get_children(): array {
 		return [

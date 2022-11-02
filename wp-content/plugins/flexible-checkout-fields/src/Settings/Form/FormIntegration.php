@@ -1,13 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Form;
-
-use WPDesk\FCF\Free\Settings\Form\FormInterface;
 
 /**
  * Initializes integration for form.
@@ -31,9 +24,7 @@ class FormIntegration {
 	}
 
 	/**
-	 * Integrate with WordPress and with other plugins using action/filter system.
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function hooks() {
 		add_filter(
@@ -54,10 +45,9 @@ class FormIntegration {
 	 * Returns updated settings for form.
 	 *
 	 * @param array  $form_data Default settings of form.
-	 * @param string $form_key Key of form.
+	 * @param string $form_key  Key of form.
 	 *
 	 * @return array Settings of form.
-	 *
 	 * @internal
 	 */
 	public function get_form_data( array $form_data, string $form_key = '' ): array {
@@ -68,13 +58,12 @@ class FormIntegration {
 	 * Returns fields of settings for form.
 	 *
 	 * @param array  $form_fields Default fields of form.
-	 * @param string $form_key Key of form.
+	 * @param string $form_key    Key of form.
 	 *
 	 * @return array Fields of form.
-	 *
 	 * @internal
 	 */
-	public function get_form_fields( array $form_fields, string $form_key = '' ): array {
-		return $this->form_object->get_options_list( [] );
+	public function get_form_fields( array $form_fields, string $form_key = '' ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+		return $this->form_object->get_options_list();
 	}
 }

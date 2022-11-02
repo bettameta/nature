@@ -3,10 +3,10 @@
 namespace FcfVendor;
 
 if (!\class_exists('FcfVendor\\Basic_Requirement_Checker')) {
-    require_once 'Basic_Requirement_Checker.php';
+    require_once __DIR__ . '/Basic_Requirement_Checker.php';
 }
 if (!\class_exists('FcfVendor\\WPDesk_Basic_Requirement_Checker_With_Update_Disable')) {
-    require_once 'Basic_Requirement_Checker_With_Update_Disable.php';
+    require_once __DIR__ . '/Basic_Requirement_Checker_With_Update_Disable.php';
 }
 /**
  * Falicitates createion of requirement checker

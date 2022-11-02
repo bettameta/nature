@@ -57,7 +57,7 @@ class AjaxHandler implements \FcfVendor\WPDesk\PluginBuilder\Plugin\HookablePlug
      */
     public function addScriptToAdminHead()
     {
-        include 'views/admin-head-js.php';
+        include __DIR__ . '/views/admin-head-js.php';
     }
     /**
      * Process AJAX notice dismiss.

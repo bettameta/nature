@@ -34,9 +34,11 @@ class WC_Payments_Remote_Note_Service {
 	/**
 	 * Puts the given note data in the inbox if it hasn't been added before.
 	 *
-	 * @param array $note_data Note data from the API.
+	 * @param  array $note_data  Note data from the API.
 	 *
 	 * @return bool True if the note has been added.
+	 *
+	 * @throws Rest_Request_Exception If note data is invalid.
 	 */
 	public function put_note( array $note_data ) : bool {
 		$note = $this->create_note( $note_data );
@@ -54,7 +56,7 @@ class WC_Payments_Remote_Note_Service {
 	 *
 	 * @param array $note_data The note data to process.
 	 *
-	 * @return WC_Admin_Note|Note Note object.
+	 * @return Automattic\WooCommerce\Admin\Notes\WC_Admin_Note|Automattic\WooCommerce\Admin\Notes\Note Note object.
 	 *
 	 * @throws Rest_Request_Exception If note data is invalid.
 	 */
@@ -85,6 +87,8 @@ class WC_Payments_Remote_Note_Service {
 
 				if ( 'wcpay_settings' === $action['url'] ) {
 					$url = WC_Payment_Gateway_WCPay::get_settings_url();
+				} elseif ( isset( $action['url_is_admin'] ) && (bool) $action['url_is_admin'] ) {
+					$url = admin_url( $action['url'] );
 				} else {
 					throw new Rest_Request_Exception( 'Invalid note.' );
 				}

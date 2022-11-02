@@ -1,9 +1,4 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Route;
 
@@ -39,7 +34,6 @@ interface RouteInterface {
 	 * @param array $params Params for endpoint.
 	 *
 	 * @return mixed Response data.
-	 *
 	 * @throws \Exception .
 	 */
 	public function get_endpoint_response( array $params );

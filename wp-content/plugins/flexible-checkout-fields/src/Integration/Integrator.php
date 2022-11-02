@@ -1,18 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Integration;
-
-use WPDesk\FCF\Free\Integration\IntegratorInterface;
-use WPDesk\FCF\Free\Integration\Sections;
-use WPDesk\FCF\Free\Integration\SectionInterface;
-use WPDesk\FCF\Free\Integration\Fields;
-use WPDesk\FCF\Free\Integration\FieldInterface;
-use WPDesk\FCF\Free\Integration\Value;
 
 /**
  * .
@@ -58,7 +46,7 @@ class Integrator implements IntegratorInterface {
 	 * Class constructor.
 	 *
 	 * @param array $field_sections List of field sections.
-	 * @param array $field_groups List of field groups.
+	 * @param array $field_groups   List of field groups.
 	 */
 	public function __construct( array $field_sections, array $field_groups ) {
 		$this->field_sections = $field_sections;
@@ -68,9 +56,8 @@ class Integrator implements IntegratorInterface {
 	/**
 	 * Returns version of integration script.
 	 *
-	 * @example Use method to integration with plugin.
-	 *
 	 * @return string Integration script version.
+	 * @example Use method to integration with plugin.
 	 */
 	public function get_version(): string {
 		$version_major = explode( '.', $this->version_plugin )[0];
@@ -88,9 +75,8 @@ class Integrator implements IntegratorInterface {
 	/**
 	 * Returns version of plugin core (do not use this method for plugin integration).
 	 *
-	 * @example Use method to create plugin dependent on this plugin.
-	 *
 	 * @return string Plugin core version.
+	 * @example Use method to create plugin dependent on this plugin.
 	 */
 	public function get_version_dev(): string {
 		$version_dev_major = explode( '.', $this->version_dev )[0];

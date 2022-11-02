@@ -7,9 +7,8 @@
 
 namespace Automattic\Jetpack;
 
-use Automattic\Jetpack\A8c_Mc_Stats;
-use WP_CLI;
 use Jetpack_Options;
+use WP_CLI;
 
 /**
  * Heartbeat sends a batch of stats to wp.com once a day
@@ -19,7 +18,8 @@ class Heartbeat {
 	/**
 	 * Holds the singleton instance of this class
 	 *
-	 * @since 2.3.3
+	 * @since 1.0.0
+	 * @since-jetpack 2.3.3
 	 * @var Heartbeat
 	 */
 	private static $instance = false;
@@ -34,7 +34,8 @@ class Heartbeat {
 	/**
 	 * Singleton
 	 *
-	 * @since 2.3.3
+	 * @since 1.0.0
+	 * @since-jetpack 2.3.3
 	 * @static
 	 * @return Heartbeat
 	 */
@@ -49,8 +50,8 @@ class Heartbeat {
 	/**
 	 * Constructor for singleton
 	 *
-	 * @since 2.3.3
-	 * @return Heartbeat
+	 * @since 1.0.0
+	 * @since-jetpack 2.3.3
 	 */
 	private function __construct() {
 
@@ -77,7 +78,8 @@ class Heartbeat {
 	/**
 	 * Method that gets executed on the wp-cron call
 	 *
-	 * @since 2.3.3
+	 * @since 1.0.0
+	 * @since-jetpack 2.3.3
 	 * @global string $wp_version
 	 */
 	public function cron_exec() {
@@ -180,7 +182,7 @@ class Heartbeat {
 	 * Handles the response for the jetpack.getHeartbeatData xmlrpc method
 	 *
 	 * @param array $params The parameters received in the request.
-	 * @return array $params all the stats that hearbeat handles.
+	 * @return array $params all the stats that heartbeat handles.
 	 */
 	public static function xmlrpc_data_response( $params = array() ) {
 		// The WordPress XML-RPC server sets a default param of array()
@@ -225,7 +227,7 @@ class Heartbeat {
 
 		if ( isset( $args[0] ) && ! in_array( $args[0], $allowed_args, true ) ) {
 			/* translators: %s is a command like "prompt" */
-			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $args[0] ) );
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack-heartbeat' ), $args[0] ) );
 		}
 
 		$stats           = self::generate_stats_array();
@@ -245,7 +247,7 @@ class Heartbeat {
 		if ( $last_heartbeat ) {
 			$last_date = gmdate( 'Y-m-d H:i:s', $last_heartbeat );
 			/* translators: %s is the full datetime of the last heart beat e.g. 2020-01-01 12:21:23 */
-			WP_CLI::line( sprintf( __( 'Last heartbeat sent at: %s', 'jetpack' ), $last_date ) );
+			WP_CLI::line( sprintf( __( 'Last heartbeat sent at: %s', 'jetpack-heartbeat' ), $last_date ) );
 		}
 	}
 

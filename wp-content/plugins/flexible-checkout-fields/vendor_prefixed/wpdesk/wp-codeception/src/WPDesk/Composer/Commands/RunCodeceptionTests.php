@@ -28,7 +28,8 @@ class RunCodeceptionTests extends \FcfVendor\WPDesk\Composer\Codeception\Command
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
+     *
+     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(\FcfVendor\Symfony\Component\Console\Input\InputInterface $input, \FcfVendor\Symfony\Component\Console\Output\OutputInterface $output)
     {
@@ -55,5 +56,6 @@ class RunCodeceptionTests extends \FcfVendor\WPDesk\Composer\Codeception\Command
         if (empty($fastTest) || self::FAST !== $fastTest) {
             $this->execAndOutput('docker-compose -f ' . $dockerComposeYaml . ' down -v', $output);
         }
+        return 0;
     }
 }

@@ -1,15 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Integration;
-
-use WPDesk\FCF\Free\Integration\SectionsInterface;
-use WPDesk\FCF\Free\Integration\Section;
-use WPDesk\FCF\Free\Integration\SectionInterface;
 
 /**
  * .

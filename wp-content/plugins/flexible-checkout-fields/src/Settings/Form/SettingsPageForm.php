@@ -1,42 +1,28 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Form;
 
-use WPDesk\FCF\Free\Settings\Form\FormAbstract;
-use WPDesk\FCF\Free\Settings\Form\FormInterface;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Option\OptionIntegration;
+use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Option\SettingJqueryOption;
 use WPDesk\FCF\Free\Settings\Option\SettingSectionsAdvOption;
 
 /**
- * Supports settings for form.
+ * {@inheritdoc}
  */
 class SettingsPageForm extends FormAbstract implements FormInterface {
 
 	const FORM_TYPE = 'settings';
 
 	/**
-	 * Returns type of form.
-	 *
-	 * @return string Type of form.
+	 * {@inheritdoc}
 	 */
 	public function get_form_type(): string {
 		return self::FORM_TYPE;
 	}
 
 	/**
-	 * Returns basic settings for form.
-	 *
-	 * @param array  $form_data Default settings of form.
-	 * @param string $form_key Key of form.
-	 *
-	 * @return array Settings of form.
+	 * {@inheritdoc}
 	 */
 	public function get_form_data( array $form_data, string $form_key = '' ): array {
 		$section_fields = [];
@@ -76,7 +62,6 @@ class SettingsPageForm extends FormAbstract implements FormInterface {
 	 * @param array $params Params for endpoint.
 	 *
 	 * @return bool Status of process.
-	 *
 	 * @throws \Exception .
 	 */
 	public function save_form_data( array $params ): bool {

@@ -1,44 +1,30 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
-
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class SettingSectionsAdvOption extends OptionAbstract implements OptionInterface {
+class SettingSectionsAdvOption extends OptionAbstract {
 
 	const FIELD_NAME = 'settings_sections_adv';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_INFO_ADV;
 	}
 
 	/**
-	 * Returns label of option.
-	 *
-	 * @return string Option label.
+	 * {@inheritdoc}
 	 */
 	public function get_option_label(): string {
 		$url = esc_url( apply_filters( 'flexible_checkout_fields/short_url', '#', 'fcf-settings-section-custom-upgrade' ) );

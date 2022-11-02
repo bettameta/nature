@@ -66,14 +66,14 @@ class WC_Payments_Apple_Pay_Registration {
 	 * @param WC_Payment_Gateway_WCPay $gateway WooCommerce Payments gateway.
 	 */
 	public function __construct( WC_Payments_API_Client $payments_api_client, WC_Payments_Account $account, WC_Payment_Gateway_WCPay $gateway ) {
-		$this->domain_name             = $_SERVER['HTTP_HOST'] ?? str_replace( [ 'https://', 'http://' ], '', get_site_url() ); // @codingStandardsIgnoreLine
+		$this->domain_name             = wp_parse_url( get_site_url(), PHP_URL_HOST );
 		$this->apple_pay_verify_notice = '';
 		$this->payments_api_client     = $payments_api_client;
 		$this->account                 = $account;
 		$this->gateway                 = $gateway;
 
 		add_action( 'init', [ $this, 'add_domain_association_rewrite_rule' ], 5 );
-		add_action( 'woocommerce_woocommerce_payments_updated', [ $this, 'verify_domain_if_configured' ] );
+		add_action( 'woocommerce_woocommerce_payments_updated', [ $this, 'verify_domain_on_update' ] );
 		add_action( 'init', [ $this, 'init' ] );
 	}
 
@@ -126,16 +126,28 @@ class WC_Payments_Apple_Pay_Registration {
 	}
 
 	/**
+	 * Verify domain upon plugin update only in case the domain association file has changed.
+	 */
+	public function verify_domain_on_update() {
+		if ( $this->is_enabled() && ! $this->is_hosted_domain_association_file_up_to_date() ) {
+			$this->verify_domain_if_configured();
+		}
+	}
+
+	/**
 	 * Vefifies if hosted domain association file is up to date
 	 * with the file from the plugin directory.
 	 *
 	 * @return bool Whether file is up to date or not.
 	 */
 	private function is_hosted_domain_association_file_up_to_date() {
+		$fullpath = untrailingslashit( ABSPATH ) . '/' . self::DOMAIN_ASSOCIATION_FILE_DIR . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME;
+		if ( ! file_exists( $fullpath ) ) {
+			return false;
+		}
 		// Contents of domain association file from plugin dir.
 		$new_contents = @file_get_contents( WCPAY_ABSPATH . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME ); // @codingStandardsIgnoreLine
 		// Get file contents from local path and remote URL and check if either of which matches.
-		$fullpath        = untrailingslashit( ABSPATH ) . '/' . self::DOMAIN_ASSOCIATION_FILE_DIR . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME;
 		$local_contents  = @file_get_contents( $fullpath ); // @codingStandardsIgnoreLine
 		$url             = get_site_url() . '/' . self::DOMAIN_ASSOCIATION_FILE_DIR . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME;
 		$response        = @wp_remote_get( $url ); // @codingStandardsIgnoreLine
@@ -153,10 +165,8 @@ class WC_Payments_Apple_Pay_Registration {
 		$well_known_dir = untrailingslashit( ABSPATH ) . '/' . self::DOMAIN_ASSOCIATION_FILE_DIR;
 		$fullpath       = $well_known_dir . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME;
 
-		if ( ! file_exists( $well_known_dir ) ) {
-			if ( ! @mkdir( $well_known_dir, 0755 ) ) { // @codingStandardsIgnoreLine
-				return __( 'Unable to create domain association folder to domain root.', 'woocommerce-payments' );
-			}
+		if ( ! is_dir( $well_known_dir ) && ! @mkdir( $well_known_dir, 0755 ) && ! is_dir( $well_known_dir ) ) { // @codingStandardsIgnoreLine
+			return __( 'Unable to create domain association folder to domain root.', 'woocommerce-payments' );
 		}
 
 		if ( ! @copy( WCPAY_ABSPATH . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME, $fullpath ) ) { // @codingStandardsIgnoreLine
@@ -244,11 +254,14 @@ class WC_Payments_Apple_Pay_Registration {
 		return 'live';
 	}
 
+
+
 	/**
 	 * Processes the Apple Pay domain verification.
 	 */
 	public function register_domain_with_apple() {
 		$error = null;
+
 		try {
 			$registration_response = $this->payments_api_client->register_domain_with_apple( $this->domain_name );
 
@@ -346,7 +359,7 @@ class WC_Payments_Apple_Pay_Registration {
 		<div class="notice notice-warning apple-pay-message">
 			<p>
 				<strong><?php echo esc_html( 'Apple Pay:' ); ?></strong>
-				<?php echo esc_html_e( 'Payment Request Buttons are enabled. To use Apple Pay, please use a live WooCommerce Payments account.', 'woocommerce-payments' ); ?>
+				<?php echo esc_html_e( 'Express checkouts are enabled. To use Apple Pay, please use a live WooCommerce Payments account.', 'woocommerce-payments' ); ?>
 			</p>
 		</div>
 		<?php
@@ -379,14 +392,22 @@ class WC_Payments_Apple_Pay_Registration {
 				'title' => [],
 			],
 		];
-		$payment_request_button_text       = __( 'Payment Request Button:', 'woocommerce-payments' );
+		$payment_request_button_text       = __( 'Express checkouts:', 'woocommerce-payments' );
 		$verification_failed_without_error = __( 'Apple Pay domain verification failed.', 'woocommerce-payments' );
 		$verification_failed_with_error    = __( 'Apple Pay domain verification failed with the following error:', 'woocommerce-payments' );
-		$check_log_text                    = sprintf(
-			/* translators: 1) HTML anchor open tag 2) HTML anchor closing tag */
-			esc_html__( 'Please check the %1$slogs%2$s for more details on this issue. Debug log must be enabled to see recorded logs.', 'woocommerce-payments' ),
-			'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">',
-			'</a>'
+		$check_log_text                    = WC_Payments_Utils::esc_interpolated_html(
+			/* translators: a: Link to the logs page */
+			__( 'Please check the <a>logs</a> for more details on this issue. Debug log must be enabled under <strong>Advanced settings</strong> to see recorded logs.', 'woocommerce-payments' ),
+			[
+				'a'      => '<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">',
+				'strong' => '<strong>',
+			]
+		);
+		$learn_more_text = WC_Payments_Utils::esc_interpolated_html(
+			__( '<a>Learn more</a>.', 'woocommerce-payments' ),
+			[
+				'a' => '<a href="https://woocommerce.com/document/payments/apple-pay/#triggering-domain-registration" target="_blank">',
+			]
 		);
 
 		?>
@@ -395,11 +416,13 @@ class WC_Payments_Apple_Pay_Registration {
 				<p>
 					<strong><?php echo esc_html( $payment_request_button_text ); ?></strong>
 					<?php echo esc_html( $verification_failed_without_error ); ?>
+					<?php echo $learn_more_text; /* @codingStandardsIgnoreLine */ ?>
 				</p>
 			<?php else : ?>
 				<p>
 					<strong><?php echo esc_html( $payment_request_button_text ); ?></strong>
 					<?php echo esc_html( $verification_failed_with_error ); ?>
+					<?php echo $learn_more_text; /* @codingStandardsIgnoreLine */ ?>
 				</p>
 				<p><i><?php echo wp_kses( make_clickable( esc_html( $this->apple_pay_verify_notice ) ), $allowed_html ); ?></i></p>
 			<?php endif; ?>

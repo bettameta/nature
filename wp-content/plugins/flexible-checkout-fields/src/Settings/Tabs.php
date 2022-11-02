@@ -1,19 +1,14 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings;
 
-use WPDesk\FCF\Free\Settings\Tab\TabIntegration;
-use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
 use WPDesk\FCF\Free\Settings\Tab\AdvancedTab;
 use WPDesk\FCF\Free\Settings\Tab\AppearanceTab;
 use WPDesk\FCF\Free\Settings\Tab\DisplayTab;
+use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
 use WPDesk\FCF\Free\Settings\Tab\LogicTab;
 use WPDesk\FCF\Free\Settings\Tab\PricingTab;
+use WPDesk\FCF\Free\Settings\Tab\TabIntegration;
 
 /**
  * Supports management for settings tabs of field.

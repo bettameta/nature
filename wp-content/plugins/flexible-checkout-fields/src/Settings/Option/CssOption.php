@@ -1,84 +1,60 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Tab\AppearanceTab;
 
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class CssOption extends OptionAbstract implements OptionInterface {
+class CssOption extends OptionAbstract {
 
 	const FIELD_NAME = 'class';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns name of option tab.
-	 *
-	 * @return string Tab name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_tab(): string {
 		return AppearanceTab::TAB_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_TEXT;
 	}
 
 	/**
-	 * Returns label of option.
-	 *
-	 * @return string Option label.
+	 * {@inheritdoc}
 	 */
 	public function get_option_label(): string {
 		return __( 'CSS class', 'flexible-checkout-fields' );
 	}
 
 	/**
-	 * Returns content for label tooltip.
-	 *
-	 * @return string Tooltip content.
+	 * {@inheritdoc}
 	 */
 	public function get_label_tooltip(): string {
 		return __( 'Enter CSS classes separated by a space.', 'flexible-checkout-fields' );
 	}
 
 	/**
-	 * Returns default value of option.
-	 *
-	 * @return string|array Default value.
+	 * {@inheritdoc}
 	 */
 	public function get_default_value() {
-		return 'form-row';
+		return 'form-row-wide';
 	}
 
 	/**
-	 * Returns updated settings of field contain values for this option.
-	 *
-	 * @param array $field_data Original settings of field.
-	 * @param array $field_settings Settings of field.
-	 *
-	 * @return array Updated settings of field.
+	 * {@inheritdoc}
 	 */
 	public function update_field_data( array $field_data, array $field_settings ): array {
 		$option_name = $this->get_option_name();

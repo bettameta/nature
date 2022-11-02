@@ -1,65 +1,46 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Tab\DisplayTab;
-use WPDesk\FCF\Free\Settings\Option\FormattingStateAbbrOption;
-use WPDesk\FCF\Free\Settings\Option\FormattingStateCommaOption;
 
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class FormattingStateOption extends OptionAbstract implements OptionInterface {
+class FormattingStateOption extends OptionAbstract {
 
 	const FIELD_NAME = 'formatting_state_options';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns name of option tab.
-	 *
-	 * @return string Tab name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_tab(): string {
 		return DisplayTab::TAB_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_CHECKBOX_LIST;
 	}
 
 	/**
-	 * Returns label of option.
-	 *
-	 * @return string Option label.
+	 * {@inheritdoc}
 	 */
 	public function get_option_label(): string {
 		return __( 'State/County formatting', 'flexible-checkout-fields' );
 	}
 
 	/**
-	 * Returns subfields of option, if exists.
-	 *
-	 * @return OptionInterface[] List of option children.
+	 * {@inheritdoc}
 	 */
 	public function get_children(): array {
 		return [

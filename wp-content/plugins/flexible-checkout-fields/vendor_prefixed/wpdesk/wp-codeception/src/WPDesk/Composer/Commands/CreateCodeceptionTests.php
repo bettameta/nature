@@ -93,7 +93,7 @@ class CreateCodeceptionTests extends \FcfVendor\WPDesk\Composer\Codeception\Comm
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
+     * @return int
      * @throws FilesystemException
      */
     protected function execute(\FcfVendor\Symfony\Component\Console\Input\InputInterface $input, \FcfVendor\Symfony\Component\Console\Output\OutputInterface $output)
@@ -112,5 +112,6 @@ class CreateCodeceptionTests extends \FcfVendor\WPDesk\Composer\Codeception\Comm
         $this->execAndOutput('./vendor/bin/codecept generate:activation acceptance ActivationCest', $output);
         $this->execAndOutput('./vendor/bin/codecept generate:woocommerce acceptance WooCommerceCest', $output);
         $this->injectTraitsIntoTesterClass($testsDir);
+        return 0;
     }
 }

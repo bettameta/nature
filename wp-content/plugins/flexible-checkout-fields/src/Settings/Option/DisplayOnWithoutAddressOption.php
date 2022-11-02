@@ -1,27 +1,14 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\DisplayOnOption;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
-use WPDesk\FCF\Free\Settings\Option\DisplayOnThankYouOption;
-use WPDesk\FCF\Free\Settings\Option\DisplayOnAccountOrderOption;
-use WPDesk\FCF\Free\Settings\Option\DisplayOnEmailsOption;
-
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class DisplayOnWithoutAddressOption extends DisplayOnOption implements OptionInterface {
+class DisplayOnWithoutAddressOption extends DisplayOnOption {
 
 	/**
-	 * Returns subfields of option, if exists.
-	 *
-	 * @return OptionInterface[] List of option children.
+	 * {@inheritdoc}
 	 */
 	public function get_children(): array {
 		return [

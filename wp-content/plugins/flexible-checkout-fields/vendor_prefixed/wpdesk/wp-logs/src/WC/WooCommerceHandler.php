@@ -12,6 +12,8 @@ class WooCommerceHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHa
     const DEFAULT_WC_SOURCE = 'wpdesk-logger';
     /** @var \WC_Logger_Interface */
     private $wc_logger;
+    /** @var string */
+    private $channel;
     /**
      * Writes the record down to the log of the implementing handler
      *
@@ -20,7 +22,7 @@ class WooCommerceHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHa
      */
     protected function write(array $record)
     {
-        $context = \array_merge(['source' => self::DEFAULT_WC_SOURCE], $record['extra'], $record['context']);
+        $context = \array_merge(['source' => $this->channel], $record['extra'], $record['context']);
         $this->wc_logger->log($this->convertMonologLevelToWC($record['level']), $record['message'], $context);
     }
     /**
@@ -31,9 +33,10 @@ class WooCommerceHandler extends \FcfVendor\Monolog\Handler\AbstractProcessingHa
     {
         return \FcfVendor\Monolog\Logger::getLevelName($level);
     }
-    public function __construct(\WC_Logger_Interface $originalWcLogger)
+    public function __construct(\WC_Logger_Interface $originalWcLogger, string $channel = self::DEFAULT_WC_SOURCE)
     {
         parent::__construct();
         $this->wc_logger = $originalWcLogger;
+        $this->channel = $channel;
     }
 }

@@ -1,75 +1,53 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Option;
 
-use WPDesk\FCF\Free\Settings\Option\OptionAbstract;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
 
 /**
- * Supports option settings for field.
+ * {@inheritdoc}
  */
-class EnabledOption extends OptionAbstract implements OptionInterface {
+class EnabledOption extends OptionAbstract {
 
 	const FIELD_NAME = 'visible';
 
 	/**
-	 * Returns name of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_name(): string {
 		return self::FIELD_NAME;
 	}
 
 	/**
-	 * Returns name of option tab.
-	 *
-	 * @return string Tab name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_tab(): string {
 		return GeneralTab::TAB_NAME;
 	}
 
 	/**
-	 * Returns type of option.
-	 *
-	 * @return string Option name.
+	 * {@inheritdoc}
 	 */
 	public function get_option_type(): string {
 		return self::FIELD_TYPE_CHECKBOX;
 	}
 
 	/**
-	 * Returns label of option.
-	 *
-	 * @return string Option label.
+	 * {@inheritdoc}
 	 */
 	public function get_option_label(): string {
 		return __( 'Enable field', 'flexible-checkout-fields' );
 	}
 
 	/**
-	 * Returns default value of option.
-	 *
-	 * @return string|array Default value.
+	 * {@inheritdoc}
 	 */
 	public function get_default_value() {
 		return '1';
 	}
 
 	/**
-	 * Returns updated settings of field contain values for this option.
-	 *
-	 * @param array $field_data Original settings of field.
-	 * @param array $field_settings Settings of field.
-	 *
-	 * @return array Updated settings of field.
+	 * {@inheritdoc}
 	 */
 	public function update_field_data( array $field_data, array $field_settings ): array {
 		$option_name  = $this->get_option_name();

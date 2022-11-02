@@ -1,14 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Integration;
-
-use WPDesk\FCF\Free\Integration\FieldInterface;
-
 
 /**
  * .
@@ -32,7 +24,7 @@ class Field implements FieldInterface {
 	/**
 	 * Class constructor.
 	 *
-	 * @param array  $field_data Settings of field.
+	 * @param array  $field_data  Settings of field.
 	 * @param string $field_group Key of field group.
 	 */
 	public function __construct( array $field_data, string $field_group ) {

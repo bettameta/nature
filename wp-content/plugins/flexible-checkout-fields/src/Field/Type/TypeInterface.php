@@ -1,9 +1,4 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Field\Type;
 
@@ -41,6 +36,13 @@ interface TypeInterface {
 	 * @return string Field label.
 	 */
 	public function get_field_type_label(): string;
+
+	/**
+	 * Returns key of field group.
+	 *
+	 * @return string|null
+	 */
+	public function get_field_group();
 
 	/**
 	 * Returns field icon as CSS Class supported by Icomoon.

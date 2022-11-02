@@ -1,13 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings\Tab;
-
-use WPDesk\FCF\Free\Settings\Tab\TabInterface;
 
 /**
  * Initializes integration for settings tab of field.
@@ -31,9 +24,7 @@ class TabIntegration {
 	}
 
 	/**
-	 * Integrate with WordPress and with other plugins using action/filter system.
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function hooks() {
 		add_filter( 'flexible_checkout_fields/field_settings_tabs', [ $this, 'add_settings_tab' ], 0 );
@@ -45,7 +36,6 @@ class TabIntegration {
 	 * @param array $tabs List of field settings tabs.
 	 *
 	 * @return array Updated list of settings tabs.
-	 *
 	 * @internal
 	 */
 	public function add_settings_tab( array $tabs ): array {

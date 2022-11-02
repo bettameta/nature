@@ -1,20 +1,8 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FPF\Free
- */
 
 namespace WPDesk\FCF\Free\Field\Type\Wc;
 
 use WPDesk\FCF\Free\Field\Type\TypeAbstract;
-use WPDesk\FCF\Free\Field\Type\TypeInterface;
-use WPDesk\FCF\Free\Settings\Tab\AdvancedTab;
-use WPDesk\FCF\Free\Settings\Tab\AppearanceTab;
-use WPDesk\FCF\Free\Settings\Tab\DisplayTab;
-use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
-use WPDesk\FCF\Free\Settings\Tab\LogicTab;
-use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Option\CssOption;
 use WPDesk\FCF\Free\Settings\Option\DisplayOnOption;
 use WPDesk\FCF\Free\Settings\Option\EnabledOption;
@@ -22,41 +10,41 @@ use WPDesk\FCF\Free\Settings\Option\FormattingWcOption;
 use WPDesk\FCF\Free\Settings\Option\LabelOption;
 use WPDesk\FCF\Free\Settings\Option\LogicAdvOption;
 use WPDesk\FCF\Free\Settings\Option\NameOption;
+use WPDesk\FCF\Free\Settings\Option\OptionInterface;
 use WPDesk\FCF\Free\Settings\Option\PlaceholderOption;
 use WPDesk\FCF\Free\Settings\Option\PriorityOption;
 use WPDesk\FCF\Free\Settings\Option\RequiredOption;
-use WPDesk\FCF\Free\Settings\Option\ValidationOption;
 use WPDesk\FCF\Free\Settings\Option\ValidationInfoOption;
+use WPDesk\FCF\Free\Settings\Option\ValidationWcOption;
+use WPDesk\FCF\Free\Settings\Tab\AdvancedTab;
+use WPDesk\FCF\Free\Settings\Tab\AppearanceTab;
+use WPDesk\FCF\Free\Settings\Tab\DisplayTab;
+use WPDesk\FCF\Free\Settings\Tab\GeneralTab;
+use WPDesk\FCF\Free\Settings\Tab\LogicTab;
 
 /**
- * Supports field type settings.
+ * {@inheritdoc}
  */
-class WcDefaultType extends TypeAbstract implements TypeInterface {
+class WcDefaultType extends TypeAbstract {
 
 	const FIELD_TYPE = 'wc_text';
 
 	/**
-	 * Returns value of field type.
-	 *
-	 * @return string Field type.
+	 * {@inheritdoc}
 	 */
 	public function get_field_type(): string {
 		return self::FIELD_TYPE;
 	}
 
 	/**
-	 * Returns label of field type.
-	 *
-	 * @return string Field label.
+	 * {@inheritdoc}
 	 */
 	public function get_field_type_label(): string {
 		return __( 'WooCommerce Default Field', 'flexible-checkout-fields' );
 	}
 
 	/**
-	 * Returns reserved field names, overriding this field type for selected field names.
-	 *
-	 * @return array Field names.
+	 * {@inheritdoc}
 	 */
 	public function get_reserved_field_names(): array {
 		return [
@@ -74,18 +62,14 @@ class WcDefaultType extends TypeAbstract implements TypeInterface {
 	}
 
 	/**
-	 * Returns whether field type is hidden.
-	 *
-	 * @return bool Status if field type is hidden.
+	 * {@inheritdoc}
 	 */
 	public function is_hidden(): bool {
 		return true;
 	}
 
 	/**
-	 * Returns whether field type is available for plugin version.
-	 *
-	 * @return bool Status if field type is available.
+	 * {@inheritdoc}
 	 */
 	public function is_available(): bool {
 		return true;
@@ -106,7 +90,7 @@ class WcDefaultType extends TypeAbstract implements TypeInterface {
 				NameOption::FIELD_NAME     => new NameOption(),
 			],
 			AdvancedTab::TAB_NAME   => [
-				ValidationOption::FIELD_NAME     => new ValidationOption(),
+				ValidationWcOption::FIELD_NAME   => new ValidationWcOption(),
 				ValidationInfoOption::FIELD_NAME => new ValidationInfoOption(),
 			],
 			AppearanceTab::TAB_NAME => [

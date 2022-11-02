@@ -26,12 +26,13 @@ class PermanentDismissibleNotice extends \FcfVendor\WPDesk\Notice\Notice
      * @param string $noticeContent Notice content.
      * @param string $noticeName Notice dismiss option name.
      * @param string $noticeType Notice type.
-     * @param int    $priority Priority
+     * @param int $priority Priority
      * @param array $attributes Attributes.
+     * @param bool $showInGutenberg Show notice in gutenberg editor.
      */
-    public function __construct($noticeContent, $noticeName, $noticeType = 'info', $priority = 10, $attributes = array())
+    public function __construct($noticeContent, $noticeName, $noticeType = 'info', $priority = 10, $attributes = array(), $showInGutenberg = \false)
     {
-        parent::__construct($noticeContent, $noticeType, \true, $priority, $attributes);
+        parent::__construct($noticeContent, $noticeType, \true, $priority, $attributes, $showInGutenberg);
         $this->noticeName = $noticeName;
         $this->noticeDismissOptionName = static::OPTION_NAME_PREFIX . $noticeName;
         if (self::OPTION_VALUE_DISMISSED === \get_option($this->noticeDismissOptionName, '')) {

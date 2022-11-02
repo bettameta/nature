@@ -56,7 +56,7 @@ if (!\class_exists('FcfVendor\\WPDesk_Logger')) {
         }
         public function wpdesk_logger_level_options(array $options)
         {
-            return ['disabled' => \__('Disabled', 'wpdesk-helper'), 'emergency' => \__('Emergency', 'wpdesk-helper'), 'alert' => \__('Alert', 'wpdesk-helper'), 'critical' => \__('Critical', 'wpdesk-helper'), 'error' => \__('Error', 'wpdesk-helper'), 'warning' => \__('Warning', 'wpdesk-helper'), 'notice' => \__('Notice', 'wpdesk-helper'), 'info' => \__('Info', 'wpdesk-helper'), 'debug' => \__('Debug', 'wpdesk-helper')];
+            return ['disabled' => \__('Disabled', 'flexible-checkout-fields'), 'emergency' => \__('Emergency', 'flexible-checkout-fields'), 'alert' => \__('Alert', 'flexible-checkout-fields'), 'critical' => \__('Critical', 'flexible-checkout-fields'), 'error' => \__('Error', 'flexible-checkout-fields'), 'warning' => \__('Warning', 'flexible-checkout-fields'), 'notice' => \__('Notice', 'flexible-checkout-fields'), 'info' => \__('Info', 'flexible-checkout-fields'), 'debug' => \__('Debug', 'flexible-checkout-fields')];
         }
         /**
          * @param string $level

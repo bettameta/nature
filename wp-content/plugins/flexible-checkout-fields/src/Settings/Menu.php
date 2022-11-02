@@ -1,13 +1,6 @@
 <?php
-/**
- * .
- *
- * @package WPDesk\FCF\Free
- */
 
 namespace WPDesk\FCF\Free\Settings;
-
-use WPDesk\FCF\Free\Settings\Page;
 
 /**
  * Supports items for menu plugin settings page.
