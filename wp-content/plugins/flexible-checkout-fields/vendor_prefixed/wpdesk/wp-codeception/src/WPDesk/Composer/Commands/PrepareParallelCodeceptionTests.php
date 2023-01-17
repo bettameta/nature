@@ -28,7 +28,7 @@ class PrepareParallelCodeceptionTests extends \FcfVendor\WPDesk\Composer\Codecep
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
+     * @return void
      */
     protected function execute(\FcfVendor\Symfony\Component\Console\Input\InputInterface $input, \FcfVendor\Symfony\Component\Console\Output\OutputInterface $output)
     {
@@ -53,6 +53,5 @@ class PrepareParallelCodeceptionTests extends \FcfVendor\WPDesk\Composer\Codecep
                 }
             }
         }
-        return 0;
     }
 }

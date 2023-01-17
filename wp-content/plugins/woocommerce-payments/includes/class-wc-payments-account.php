@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Automattic\WooCommerce\Admin\Notes\DataStore;
+use Automattic\WooCommerce\Admin\Notes\Note;
 use WCPay\Exceptions\API_Exception;
 use WCPay\Logger;
 use WCPay\Database_Cache;
@@ -194,8 +195,8 @@ class WC_Payments_Account {
 			'paymentsEnabled'     => $account['payments_enabled'],
 			'deposits'            => $account['deposits'] ?? [],
 			'depositsStatus'      => $account['deposits']['status'] ?? $account['deposits_status'] ?? '',
-			'currentDeadline'     => isset( $account['current_deadline'] ) ? $account['current_deadline'] : false,
-			'pastDue'             => isset( $account['has_overdue_requirements'] ) ? $account['has_overdue_requirements'] : false,
+			'currentDeadline'     => $account['current_deadline'] ?? false,
+			'pastDue'             => $account['has_overdue_requirements'] ?? false,
 			'accountLink'         => $this->get_login_url(),
 			'hasSubmittedVatData' => $account['has_submitted_vat_data'] ?? false,
 		];
@@ -565,11 +566,11 @@ class WC_Payments_Account {
 	 * @return bool True if the redirection happened.
 	 */
 	public function maybe_redirect_to_onboarding() {
-		if ( wp_doing_ajax() ) {
+		if ( wp_doing_ajax() || ! current_user_can( 'manage_woocommerce' ) ) {
 			return false;
 		}
 
-		$is_on_settings_page           = WC_Payment_Gateway_WCPay::is_current_page_settings();
+		$is_on_settings_page           = WC_Payments_Admin_Settings::is_current_page_settings();
 		$should_redirect_to_onboarding = (bool) get_option( 'wcpay_should_redirect_to_onboarding', false );
 
 		if (
@@ -711,7 +712,7 @@ class WC_Payments_Account {
 		}
 
 		if ( isset( $_GET['wcpay-reconnect-wpcom'] ) && check_admin_referer( 'wcpay-reconnect-wpcom' ) ) {
-			$this->payments_api_client->start_server_connection( WC_Payment_Gateway_WCPay::get_settings_url() );
+			$this->payments_api_client->start_server_connection( WC_Payments_Admin_Settings::get_settings_url() );
 			return;
 		}
 
@@ -1264,13 +1265,11 @@ class WC_Payments_Account {
 			return $where_clause . " AND name like 'wcpay-promo-%'";
 		};
 
-		$note_class = WC_Payment_Woo_Compat_Utils::get_note_class();
-
 		add_filter( 'woocommerce_note_where_clauses', $add_like_clause );
 
 		$wcpay_promo_notes = $data_store->get_notes(
 			[
-				'status'     => [ $note_class::E_WC_ADMIN_NOTE_ACTIONED ],
+				'status'     => [ Note::E_WC_ADMIN_NOTE_ACTIONED ],
 				'is_deleted' => false,
 				'per_page'   => 10,
 			]
@@ -1285,7 +1284,7 @@ class WC_Payments_Account {
 
 		// Copy the name of each note into the results.
 		foreach ( (array) $wcpay_promo_notes as $wcpay_note ) {
-			$note               = new $note_class( $wcpay_note->note_id );
+			$note               = new Note( $wcpay_note->note_id );
 			$wcpay_note_names[] = $note->get_name();
 		}
 

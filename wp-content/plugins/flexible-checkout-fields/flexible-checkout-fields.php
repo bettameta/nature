@@ -3,15 +3,15 @@
  * Plugin Name: Flexible Checkout Fields
  * Plugin URI: https://www.wpdesk.net/products/flexible-checkout-fields-pro-woocommerce/
  * Description: Manage your WooCommerce checkout fields. Change order, labels, placeholders and add new fields.
- * Version: 3.4.3
+ * Version: 3.5.4
  * Author: WP Desk
  * Author URI: https://www.wpdesk.net/
  * Text Domain: flexible-checkout-fields
  * Domain Path: /lang/
- * Requires at least: 5.7
+ * Requires at least: 5.2
  * Tested up to: 6.1
- * WC requires at least: 6.7
- * WC tested up to: 7.0
+ * WC requires at least: 6.8
+ * WC tested up to: 7.2
  * Requires PHP: 7.0
  *
  * Copyright 2017 WP Desk Ltd.
@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly
 
 /* THIS VARIABLE CAN BE CHANGED AUTOMATICALLY */
-$plugin_version = '3.4.3';
+$plugin_version = '3.5.4';
 
 /*
  * Update when conditions are met:
@@ -61,7 +61,6 @@ $product_id         = 'Flexible Checkout Fields';
 $plugin_file        = __FILE__;
 $plugin_dir         = dirname( __FILE__ );
 
-
 define( $plugin_class_name, $plugin_version );
 
 $requirements = [
@@ -74,6 +73,15 @@ $requirements = [
 		],
 	],
 ];
+
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
 
 require_once __DIR__ . '/inc/wpdesk-woo27-functions.php';
 require __DIR__ . '/vendor_prefixed/wpdesk/wp-plugin-flow/src/plugin-init-php52-free.php';

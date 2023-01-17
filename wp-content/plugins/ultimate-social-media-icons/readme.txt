@@ -2,8 +2,8 @@
 Contributors: socialdude, socialtech
 Tags: share, social, share icons, social media, widget, sharing icons, sharing buttons, social share, sharing
 Requires at least: 3.5
-Tested up to: 6.1
-Stable tag: 2.7.8
+Tested up to: 6.1.1
+Stable tag: 2.8.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -301,6 +301,13 @@ It depends on which language you speak :) however probably the answer is â€œyesâ
 
 
 == Changelog ==
+
+= 2.8.0 =
+* Adjusted PHP compatibility
+
+= 2.7.9 =
+* Added black-friday theme (only for that period)
+* Tested up to WordPress 6.1.1
 
 = 2.7.8 =
 * Fixed issues with after post icons
@@ -1083,6 +1090,7 @@ It depends on which language you speak :) however probably the answer is â€œyesâ
 
 == Upgrade Notice ==
 
-= 2.7.8 =
-* Fixed issues with after post icons
-* Plugin tested with WordPress 6.1 @ PHP 8.1
+= 2.8.0 =
+* Added black-friday theme (only for that period)
+* Tested up to WordPress 6.1.1
+* Adjusted PHP compatibility

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Flexible Checkout Fields plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Checkout Fields 3.4.3\n"
+"Project-Id-Version: Flexible Checkout Fields 3.5.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-checkout-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-13T17:31:09+00:00\n"
+"POT-Creation-Date: 2022-11-24T11:49:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: flexible-checkout-fields\n"
@@ -308,7 +308,7 @@ msgstr ""
 
 #. translators: %1$s: anchor opening tag, %2$s: anchor closing tag, %3$s: anchor opening tag, %4$s: anchor closing tag, %5$s: anchor opening tag, %6$s: anchor closing tag, %7$s: break line, %8$s: anchor opening tag, %9$s: anchor closing tag
 #: src/Settings/Option/LogicAdvOption.php:45
-msgid "Add conditional logic based on %1$sproducts and categories%2$s as well as %3$sFCF fields%4$s and %5$sshipping methods%6$s set. %7$s%8$sUpgrade to PRO%9$s"
+msgid "Add conditional logic based on %1$sproducts and categories%2$s as well as %3$sFCF fields%4$s and %5$sshipping methods%6$s set. %7$s %8$sUpgrade to PRO%9$s"
 msgstr ""
 
 #: src/Settings/Option/NameOption.php:46
@@ -512,7 +512,7 @@ msgstr ""
 
 #. translators: %1$s: break line, %2$s: anchor opening tag, %3$s: anchor closing tag
 #: src/Settings/Page.php:220
-msgid "This field is available in the PRO version.%1$s %2$sUpgrade to PRO%3$s"
+msgid "This field is available in the PRO version. %1$s %2$sUpgrade to PRO%3$s"
 msgstr ""
 
 #: src/Settings/Page.php:225

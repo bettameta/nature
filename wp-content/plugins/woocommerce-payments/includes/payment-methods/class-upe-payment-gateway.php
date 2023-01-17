@@ -7,30 +7,33 @@
 
 namespace WCPay\Payment_Methods;
 
-use WC_Order;
-use WC_Payment_Token_WCPay_SEPA;
-use WC_Payments_Explicit_Price_Formatter;
-use WCPay\Fraud_Prevention\Fraud_Prevention_Service;
-use WP_User;
+use Exception;
+use WCPay\Constants\Order_Status;
+use WCPay\Constants\Payment_Intent_Status;
+use WCPay\Constants\Payment_Method;
+use WCPay\Constants\Payment_Type;
+use WCPay\Exceptions\Amount_Too_Small_Exception;
 use WCPay\Exceptions\Add_Payment_Method_Exception;
+use WCPay\Exceptions\Process_Payment_Exception;
+use WCPay\Fraud_Prevention\Fraud_Prevention_Service;
 use WCPay\Logger;
 use WCPay\Payment_Information;
-use WCPay\Constants\Payment_Type;
 use WCPay\Session_Rate_Limiter;
-use WC_Payment_Gateway_WCPay;
+use WC_Order;
+use WC_Payments;
 use WC_Payments_Account;
 use WC_Payments_Action_Scheduler_Service;
 use WC_Payments_API_Client;
 use WC_Payments_Customer_Service;
+use WC_Payments_Explicit_Price_Formatter;
+use WC_Payment_Gateway_WCPay;
 use WC_Payments_Order_Service;
-use WC_Payments_Token_Service;
 use WC_Payment_Token_CC;
-use WC_Payments;
+use WC_Payments_Token_Service;
+use WC_Payment_Token_WCPay_SEPA;
 use WC_Payments_Utils;
+use WP_User;
 
-use Exception;
-use WCPay\Exceptions\Amount_Too_Small_Exception;
-use WCPay\Exceptions\Process_Payment_Exception;
 
 
 /**
@@ -137,7 +140,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			true
 		);
 
-		$script_dependencies = [ 'stripe', 'wc-checkout' ];
+		$script_dependencies = [ 'stripe', 'wc-checkout', 'wp-i18n' ];
 
 		if ( $this->supports( 'tokenization' ) ) {
 			$script_dependencies[] = 'woocommerce-tokenization-form';
@@ -169,11 +172,12 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 
 			$order_id                  = isset( $_POST['wcpay_order_id'] ) ? absint( $_POST['wcpay_order_id'] ) : null;
 			$payment_intent_id         = isset( $_POST['wc_payment_intent_id'] ) ? wc_clean( wp_unslash( $_POST['wc_payment_intent_id'] ) ) : '';
+			$fingerprint               = isset( $_POST['wcpay-fingerprint'] ) ? wc_clean( wp_unslash( $_POST['wcpay-fingerprint'] ) ) : '';
 			$save_payment_method       = isset( $_POST['save_payment_method'] ) ? 'yes' === wc_clean( wp_unslash( $_POST['save_payment_method'] ) ) : false;
 			$selected_upe_payment_type = ! empty( $_POST['wcpay_selected_upe_payment_type'] ) ? wc_clean( wp_unslash( $_POST['wcpay_selected_upe_payment_type'] ) ) : '';
 			$payment_country           = ! empty( $_POST['wcpay_payment_country'] ) ? wc_clean( wp_unslash( $_POST['wcpay_payment_country'] ) ) : null;
 
-			wp_send_json_success( $this->update_payment_intent( $payment_intent_id, $order_id, $save_payment_method, $selected_upe_payment_type, $payment_country ), 200 );
+			wp_send_json_success( $this->update_payment_intent( $payment_intent_id, $order_id, $save_payment_method, $selected_upe_payment_type, $payment_country, $fingerprint ), 200 );
 		} catch ( Exception $e ) {
 			// Send back error so it can be displayed to the customer.
 			wp_send_json_error(
@@ -202,6 +206,18 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 		if ( ! is_a( $order, 'WC_Order' ) ) {
 			return;
 		}
+
+		$check_session_order = $this->check_against_session_processing_order( $order );
+		if ( is_array( $check_session_order ) ) {
+			return $check_session_order;
+		}
+		$this->maybe_update_session_processing_order( $order_id );
+
+		$check_existing_intention = $this->check_payment_intent_attached_to_order_succeeded( $order );
+		if ( is_array( $check_existing_intention ) ) {
+			return $check_existing_intention;
+		}
+
 		$amount   = $order->get_total();
 		$currency = $order->get_currency();
 
@@ -243,9 +259,15 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			}
 
 			// If paying from order, we need to get the total from the order instead of the cart.
-			$order_id = isset( $_POST['wcpay_order_id'] ) ? absint( $_POST['wcpay_order_id'] ) : null;
+			$order_id    = isset( $_POST['wcpay_order_id'] ) ? absint( $_POST['wcpay_order_id'] ) : null;
+			$fingerprint = isset( $_POST['wcpay-fingerprint'] ) ? wc_clean( wp_unslash( $_POST['wcpay-fingerprint'] ) ) : '';
 
-			$response = $this->create_payment_intent( $order_id );
+			$response = $this->create_payment_intent( $order_id, $fingerprint );
+
+			// Encrypt client secret before exposing it to the browser.
+			if ( $response['client_secret'] ) {
+				$response['client_secret'] = WC_Payments_Utils::encrypt_client_secret( $this->account->get_stripe_account_id(), $response['client_secret'] );
+			}
 
 			if ( strpos( $response['id'], 'pi_' ) === 0 ) { // response is a payment intent (could possibly be a setup intent).
 				$this->add_upe_payment_intent_to_session( $response['id'], $response['client_secret'] );
@@ -267,11 +289,12 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	/**
 	 * Creates payment intent using current cart or order and store details.
 	 *
-	 * @param int $order_id The id of the order if intent created from Order.
+	 * @param int|null $order_id The id of the order if intent created from Order.
+	 * @param string   $fingerprint User fingerprint.
 	 *
 	 * @return array
 	 */
-	public function create_payment_intent( $order_id = null ) {
+	public function create_payment_intent( $order_id = null, $fingerprint = '' ) {
 		$amount   = WC()->cart->get_total( '' );
 		$currency = get_woocommerce_currency();
 		$number   = 0;
@@ -302,7 +325,8 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 				strtolower( $currency ),
 				array_values( $enabled_payment_methods ),
 				$number,
-				$capture_method
+				$capture_method,
+				[ 'fingerprint' => $fingerprint ]
 			);
 		} catch ( Amount_Too_Small_Exception $e ) {
 			$minimum_amount = $e->get_minimum_amount();
@@ -321,7 +345,8 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 				strtolower( $currency ),
 				array_values( $enabled_payment_methods ),
 				$number,
-				$capture_method
+				$capture_method,
+				[ 'fingerprint' => $fingerprint ]
 			);
 		}
 
@@ -347,6 +372,11 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 			}
 
 			$response = $this->create_setup_intent();
+
+			// Encrypt client secret before exposing it to the browser.
+			if ( $response['client_secret'] ) {
+				$response['client_secret'] = WC_Payments_Utils::encrypt_client_secret( $this->account->get_stripe_account_id(), $response['client_secret'] );
+			}
 
 			$this->add_upe_setup_intent_to_session( $response['id'], $response['client_secret'] );
 
@@ -401,6 +431,15 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	}
 
 	/**
+	 * Renders the credit card input fields needed to get the user's payment information on the checkout page.
+	 *
+	 * We also add the JavaScript which drives the UI.
+	 */
+	public function payment_fields() {
+		do_action( 'wc_payments_add_upe_payment_fields' );
+	}
+
+	/**
 	 * Update payment intent for completed checkout and return redirect URL for Stripe to confirm payment.
 	 *
 	 * @param int $order_id Order ID to process the payment for.
@@ -446,6 +485,19 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 					throw new Exception( WC_Payments_Utils::get_filtered_error_message( $exception ) );
 				}
 
+				$check_session_order = $this->check_against_session_processing_order( $order );
+				if ( is_array( $check_session_order ) ) {
+					return $check_session_order;
+				}
+				$this->maybe_update_session_processing_order( $order_id );
+
+				$check_existing_intention = $this->check_payment_intent_attached_to_order_succeeded( $order );
+				if ( is_array( $check_existing_intention ) ) {
+					return $check_existing_intention;
+				}
+
+				$additional_api_parameters = $this->get_mandate_params_for_order( $order );
+
 				try {
 					$updated_payment_intent = $this->payments_api_client->update_intention(
 						$payment_intent_id,
@@ -456,7 +508,8 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 						$this->get_metadata_from_order( $order, $payment_type ),
 						$this->get_level3_data_from_order( $order ),
 						$selected_upe_payment_type,
-						$payment_country
+						$payment_country,
+						$additional_api_parameters
 					);
 				} catch ( Amount_Too_Small_Exception $e ) {
 					// This code would only be reached if the cache has already expired.
@@ -586,7 +639,13 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 				return;
 			}
 
-			if ( $order->has_status( [ 'processing', 'completed', 'on-hold' ] ) ) {
+			if ( $order->has_status(
+				[
+					Order_Status::PROCESSING,
+					Order_Status::COMPLETED,
+					Order_Status::ON_HOLD,
+				]
+			) ) {
 				return;
 			}
 
@@ -651,7 +710,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 
 				self::remove_upe_payment_intent_from_session();
 
-				if ( 'requires_action' === $status ) {
+				if ( Payment_Intent_Status::REQUIRES_ACTION === $status ) {
 					// I don't think this case should be possible, but just in case...
 					$next_action = $intent->get_next_action();
 					if ( isset( $next_action['type'] ) && 'redirect_to_url' === $next_action['type'] && ! empty( $next_action['redirect_to_url']['url'] ) ) {
@@ -662,7 +721,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 							'#wcpay-confirm-%s:%s:%s:%s',
 							$payment_needed ? 'pi' : 'si',
 							$order_id,
-							$client_secret,
+							WC_Payments_Utils::encrypt_client_secret( $this->account->get_stripe_account_id(), $client_secret ),
 							wp_create_nonce( 'wcpay_update_order_status_nonce' )
 						);
 						wp_safe_redirect( $redirect_url );
@@ -692,67 +751,13 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	/**
 	 * Generates the configuration values, needed for UPE payment fields.
 	 *
+	 * @deprecated 5.0.0
+	 *
 	 * @return array
 	 */
 	public function get_payment_fields_js_config() {
-		$payment_fields                             = parent::get_payment_fields_js_config();
-		$payment_fields['accountDescriptor']        = $this->get_account_statement_descriptor();
-		$payment_fields['addPaymentReturnURL']      = wc_get_account_endpoint_url( 'payment-methods' );
-		$payment_fields['gatewayId']                = self::GATEWAY_ID;
-		$payment_fields['isCheckout']               = is_checkout();
-		$payment_fields['paymentMethodsConfig']     = $this->get_enabled_payment_method_config();
-		$payment_fields['saveUPEAppearanceNonce']   = wp_create_nonce( 'wcpay_save_upe_appearance_nonce' );
-		$payment_fields['testMode']                 = $this->is_in_test_mode();
-		$payment_fields['upeAppearance']            = get_transient( self::UPE_APPEARANCE_TRANSIENT );
-		$payment_fields['wcBlocksUPEAppearance']    = get_transient( self::WC_BLOCKS_UPE_APPEARANCE_TRANSIENT );
-		$payment_fields['checkoutTitle']            = $this->checkout_title;
-		$payment_fields['cartContainsSubscription'] = $this->is_subscription_item_in_cart();
-		$payment_fields['logPaymentErrorNonce']     = wp_create_nonce( 'wcpay_log_payment_error_nonce' );
-		$payment_fields['upePaymentIntentData']     = WC()->session->get( self::KEY_UPE_PAYMENT_INTENT );
-		$payment_fields['upeSetupIntentData']       = WC()->session->get( self::KEY_UPE_SETUP_INTENT );
-
-		$enabled_billing_fields = [];
-		foreach ( WC()->checkout()->get_checkout_fields( 'billing' ) as $billing_field => $billing_field_options ) {
-			if ( ! isset( $billing_field_options['enabled'] ) || $billing_field_options['enabled'] ) {
-				$enabled_billing_fields[] = $billing_field;
-			}
-		}
-		$payment_fields['enabledBillingFields'] = $enabled_billing_fields;
-
-		if ( is_wc_endpoint_url( 'order-pay' ) ) {
-			if ( $this->is_subscriptions_enabled() && $this->is_changing_payment_method_for_subscription() ) {
-				$payment_fields['isChangingPayment']   = true;
-				$payment_fields['addPaymentReturnURL'] = esc_url_raw( home_url( add_query_arg( [] ) ) );
-
-				if ( $this->is_setup_intent_success_creation_redirection() && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( wc_clean( wp_unslash( $_GET['_wpnonce'] ) ) ) ) {
-					$setup_intent_id = isset( $_GET['setup_intent'] ) ? wc_clean( wp_unslash( $_GET['setup_intent'] ) ) : '';
-					$token           = $this->create_token_from_setup_intent( $setup_intent_id, wp_get_current_user() );
-					if ( null !== $token ) {
-						$payment_fields['newTokenFormId'] = '#wc-' . $token->get_gateway_id() . '-payment-token-' . $token->get_id();
-					}
-				}
-				return $payment_fields;
-			}
-
-			$payment_fields['isOrderPay'] = true;
-			$order_id                     = absint( get_query_var( 'order-pay' ) );
-			$payment_fields['orderId']    = $order_id;
-			$order                        = wc_get_order( $order_id );
-
-			if ( is_a( $order, 'WC_Order' ) ) {
-				$payment_fields['orderReturnURL'] = esc_url_raw(
-					add_query_arg(
-						[
-							'order_id'          => $order_id,
-							'wc_payment_method' => self::GATEWAY_ID,
-							'_wpnonce'          => wp_create_nonce( 'wcpay_process_redirect_order_nonce' ),
-						],
-						$this->get_return_url( $order )
-					)
-				);
-			}
-		}
-		return $payment_fields;
+		wc_deprecated_function( __FUNCTION__, '5.0.0', 'WC_Payments_UPE_Checkout::get_payment_fields_js_config' );
+		return WC_Payments::get_wc_payments_checkout()->get_payment_fields_js_config();
 	}
 
 	/**
@@ -811,110 +816,6 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	}
 
 	/**
-	 * Renders the UPE input fields needed to get the user's payment information on the checkout page.
-	 *
-	 * We also add the JavaScript which drives the UI.
-	 */
-	public function payment_fields() {
-		try {
-			$display_tokenization = $this->supports( 'tokenization' ) && ( is_checkout() || is_add_payment_method_page() );
-
-			/**
-			 * Localizing scripts within shortcodes does not work in WP 5.9,
-			 * but we need `$this->get_payment_fields_js_config` to be called
-			 * before `$this->saved_payment_methods()`.
-			 */
-			$payment_fields = $this->get_payment_fields_js_config();
-			wp_enqueue_script( 'wcpay-upe-checkout' );
-			add_action(
-				'wp_footer',
-				function() use ( $payment_fields ) {
-					wp_localize_script( 'wcpay-upe-checkout', 'wcpay_config', $payment_fields );
-				}
-			);
-
-			$prepared_customer_data = $this->get_prepared_customer_data();
-			if ( ! empty( $prepared_customer_data ) ) {
-				wp_localize_script( 'wcpay-upe-checkout', 'wcpayCustomerData', $prepared_customer_data );
-			}
-
-			wp_enqueue_style(
-				'wcpay-upe-checkout',
-				plugins_url( 'dist/checkout.css', WCPAY_PLUGIN_FILE ),
-				[],
-				WC_Payments::get_file_version( 'dist/checkout.css' )
-			);
-
-			// Output the form HTML.
-			?>
-			<?php if ( ! empty( $this->get_description() ) ) : ?>
-				<p><?php echo wp_kses_post( $this->get_description() ); ?></p>
-			<?php endif; ?>
-
-			<?php if ( $this->is_in_test_mode() ) : ?>
-				<p class="testmode-info">
-				<?php
-					echo WC_Payments_Utils::esc_interpolated_html(
-						/* translators: link to Stripe testing page */
-						__( '<strong>Test mode:</strong> use the test VISA card 4242424242424242 with any expiry date and CVC. Other payment methods may redirect to a Stripe test page to authorize payment. More test card numbers are listed <a>here</a>.', 'woocommerce-payments' ),
-						[
-							'strong' => '<strong>',
-							'a'      => '<a href="https://woocommerce.com/document/payments/testing/#test-cards" target="_blank">',
-						]
-					);
-				?>
-				</p>
-			<?php endif; ?>
-
-			<?php
-
-			if ( $display_tokenization ) {
-				$this->tokenization_script();
-				$this->saved_payment_methods();
-			}
-			?>
-
-			<fieldset id="wc-<?php echo esc_attr( $this->id ); ?>-upe-form" class="wc-upe-form wc-payment-form">
-				<div id="wcpay-upe-element"></div>
-				<div id="wcpay-upe-errors" role="alert"></div>
-				<input id="wcpay-payment-method-upe" type="hidden" name="wcpay-payment-method-upe" />
-				<input id="wcpay_selected_upe_payment_type" type="hidden" name="wcpay_selected_upe_payment_type" />
-				<input id="wcpay_payment_country" type="hidden" name="wcpay_payment_country" />
-
-			<?php
-			$methods_enabled_for_saved_payments = array_filter( $this->get_upe_enabled_payment_method_ids(), [ $this, 'is_enabled_for_saved_payments' ] );
-			if ( $this->is_saved_cards_enabled() && ! empty( $methods_enabled_for_saved_payments ) ) {
-				$force_save_payment = ( $display_tokenization && ! apply_filters( 'wc_payments_display_save_payment_method_checkbox', $display_tokenization ) ) || is_add_payment_method_page();
-				if ( is_user_logged_in() || $force_save_payment ) {
-					$this->save_payment_method_checkbox( $force_save_payment );
-				}
-			}
-			?>
-
-			</fieldset>
-
-			<?php if ( Fraud_Prevention_Service::get_instance()->is_enabled() ) : ?>
-				<input type="hidden" name="wcpay-fraud-prevention-token" value="<?php echo esc_attr( Fraud_Prevention_Service::get_instance()->get_token() ); ?>">
-			<?php endif; ?>
-
-			<?php
-
-			do_action( 'wcpay_payment_fields_upe', $this->id );
-
-		} catch ( Exception $e ) {
-			// Output the error message.
-			Logger::log( 'Error: ' . $e->getMessage() );
-			?>
-			<div>
-				<?php
-				echo esc_html__( 'An error was encountered when preparing the payment form. Please try again later.', 'woocommerce-payments' );
-				?>
-			</div>
-			<?php
-		}
-	}
-
-	/**
 	 * Returns the list of enabled payment method types that will function with the current checkout.
 	 *
 	 * @param string $order_id optional Order ID.
@@ -923,11 +824,16 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	 * @return string[]
 	 */
 	public function get_payment_method_ids_enabled_at_checkout( $order_id = null, $force_currency_check = false ) {
-		$capture                    = empty( $this->get_option( 'manual_capture' ) ) || $this->get_option( 'manual_capture' ) === 'no';
-		$capturable_payment_methods = $capture ? $this->get_upe_enabled_payment_method_ids() : [ 'card' ];
-		$enabled_payment_methods    = [];
-		$active_payment_methods     = $this->get_upe_enabled_payment_method_statuses();
-		foreach ( $capturable_payment_methods as $payment_method_id ) {
+		$automatic_capture = empty( $this->get_option( 'manual_capture' ) ) || $this->get_option( 'manual_capture' ) === 'no';
+		if ( $automatic_capture ) {
+			$upe_enabled_payment_methods = $this->get_upe_enabled_payment_method_ids();
+		} else {
+			$upe_enabled_payment_methods = array_intersect( $this->get_upe_enabled_payment_method_ids(), [ Payment_Method::CARD, Payment_Method::LINK ] );
+		}
+
+		$enabled_payment_methods = [];
+		$active_payment_methods  = $this->get_upe_enabled_payment_method_statuses();
+		foreach ( $upe_enabled_payment_methods as $payment_method_id ) {
 			$payment_method_capability_key = $this->payment_method_capability_key_map[ $payment_method_id ] ?? 'undefined_capability_key';
 			if ( isset( $this->payment_methods[ $payment_method_id ] ) ) {
 				// When creating a payment intent, we need to ensure the currency is matching
@@ -963,6 +869,21 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 		}
 
 		return $enabled_payment_methods;
+	}
+
+	/**
+	 * Returns the list of enabled payment method types that will function with the current checkout filtered by fees.
+	 *
+	 * @param string $order_id optional Order ID.
+	 * @param bool   $force_currency_check optional Whether the currency check is required even if is_admin().
+	 *
+	 * @return string[]
+	 */
+	public function get_payment_method_ids_enabled_at_checkout_filtered_by_fees( $order_id = null, $force_currency_check = false ) {
+		$enabled_payment_methods = $this->get_payment_method_ids_enabled_at_checkout( $order_id, $force_currency_check );
+		$methods_with_fees       = array_keys( $this->account->get_fees() );
+
+		return array_values( array_intersect( $enabled_payment_methods, $methods_with_fees ) );
 	}
 
 	/**
@@ -1068,24 +989,13 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	/**
 	 * Gets payment method settings to pass to client scripts
 	 *
+	 * @deprecated 5.0.0
+	 *
 	 * @return array
 	 */
 	private function get_enabled_payment_method_config() {
-		$settings                = [];
-		$enabled_payment_methods = $this->get_payment_method_ids_enabled_at_checkout();
-
-		if ( $this->is_subscriptions_enabled() && $this->is_changing_payment_method_for_subscription() ) {
-			$enabled_payment_methods = array_filter( $enabled_payment_methods, [ $this, 'is_enabled_for_saved_payments' ] );
-		}
-
-		foreach ( $enabled_payment_methods as $payment_method ) {
-			$settings[ $payment_method ] = [
-				'isReusable' => $this->payment_methods[ $payment_method ]->is_reusable(),
-				'title'      => $this->payment_methods[ $payment_method ]->get_title(),
-			];
-		}
-
-		return $settings;
+		wc_deprecated_function( __FUNCTION__, '5.0.0', 'WC_Payments_UPE_Checkout::get_enabled_payment_method_config' );
+		return WC_Payments::get_wc_payments_checkout()->get_enabled_payment_method_config();
 	}
 
 	/**
@@ -1096,7 +1006,7 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	 *
 	 * @return bool
 	 */
-	private function is_enabled_for_saved_payments( $payment_method_id ) {
+	public function is_enabled_for_saved_payments( $payment_method_id ) {
 		if ( ! isset( $this->payment_methods[ $payment_method_id ] ) ) {
 			return false;
 		}
@@ -1198,5 +1108,23 @@ class UPE_Payment_Gateway extends WC_Payment_Gateway_WCPay {
 	 */
 	public function remove_upe_setup_intent_from_session() {
 		WC()->session->__unset( self::KEY_UPE_SETUP_INTENT );
+	}
+
+	/**
+	 * Returns the checkout tile.
+	 *
+	 * @return string Checkout title.
+	 */
+	public function get_checkout_title() {
+		return $this->checkout_title;
+	}
+
+	/**
+	 * Returns the payment methods for this gateway.
+	 *
+	 * @return array|UPE_Payment_Method[]
+	 */
+	public function get_payment_methods() {
+		return $this->payment_methods;
 	}
 }

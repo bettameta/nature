@@ -4,7 +4,7 @@ Donate link: https://www.wpdesk.net/flexible-checkout-fields-woocommerce/
 Tags: woocommerce checkout fields, woocommerce custom fields, woocommerce checkout manager, woocommerce checkout editor, woocommerce fields manager, woocommerce fields editor, woocommerce custom checkout fields, woocommerce checkout options, woocommerce checkout pro, woocommerce custom sections, woocommerce file upload
 Requires at least: 4.9
 Tested up to: 6.1
-Stable tag: 3.4.3
+Stable tag: 3.5.4
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -224,6 +224,22 @@ Our plugin uses the Checkout subpage environment and WooCommerce purchasing mech
 If you are upgrading from the old WooCommerce Checkout Fields version (1.1, woocommerce-checkout-fields) make sure to completely delete the old version first. Your settings will be kept. If you install the new version without deleting the old one you may break your WordPress installation.
 
 == Changelog ==
+
+= 3.5.4 – 2022-11-24 =
+* Removed notifications about promotions
+
+= 3.5.3 – 2022-11-15 =
+* Changed readme
+
+= 3.5.2 – 2022-11-14 =
+* Changed readme
+
+= 3.5.1 – 2022-11-09 =
+* Added promotion notices
+
+= 3.5.0 - 2022-11-04 =
+* Added support for WooCommerce 7.1
+* Added support for High-Performance Order Storage
 
 = 3.4.3 - 2022-10-13 =
 * Fixed settings for Number field

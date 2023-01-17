@@ -19,6 +19,7 @@ class WC_Stripe_Inbox_Notes {
 	public function __construct() {
 		add_action( self::POST_SETUP_SUCCESS_ACTION, [ self::class, 'create_marketing_note' ] );
 		add_action( self::CAMPAIGN_2020_CLEANUP_ACTION, [ self::class, 'cleanup_campaign_2020' ] );
+		add_action( 'admin_init', [ self::class, 'create_upe_notes' ] );
 
 		// Schedule a 2020 holiday campaign cleanup action if needed.
 		// First, check to see if we are still before the cutoff.
@@ -29,6 +30,32 @@ class WC_Stripe_Inbox_Notes {
 				wp_schedule_single_event( self::get_campaign_2020_cutoff(), self::CAMPAIGN_2020_CLEANUP_ACTION );
 			}
 		}
+	}
+
+	public static function are_inbox_notes_supported() {
+		if ( ! class_exists( 'WC_Data_Store' ) ) {
+			return false;
+		}
+
+		try {
+			WC_Data_Store::load( 'admin-note' );
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		return trait_exists( 'Automattic\WooCommerce\Admin\Notes\NoteTraits' ) && class_exists( 'Automattic\WooCommerce\Admin\Notes\Note' );
+	}
+
+	public static function create_upe_notes() {
+		if ( ! self::are_inbox_notes_supported() ) {
+			return;
+		}
+
+		require_once WC_STRIPE_PLUGIN_PATH . '/includes/notes/class-wc-stripe-upe-availability-note.php';
+		WC_Stripe_UPE_Availability_Note::init();
+
+		require_once WC_STRIPE_PLUGIN_PATH . '/includes/notes/class-wc-stripe-upe-stripelink-note.php';
+		WC_Stripe_UPE_StripeLink_Note::init( WC_Stripe::get_instance()->get_main_stripe_gateway() );
 	}
 
 	public static function get_campaign_2020_cutoff() {
@@ -111,7 +138,7 @@ class WC_Stripe_Inbox_Notes {
 	 */
 	public static function create_marketing_note() {
 		// Make sure conditions for this note still hold.
-		if ( ! self::should_show_marketing_note() ) {
+		if ( ! self::should_show_marketing_note() || ! self::are_inbox_notes_supported() ) {
 			return;
 		}
 
@@ -147,7 +174,7 @@ class WC_Stripe_Inbox_Notes {
 			$note->add_action(
 				'learn-more',
 				__( 'Learn more', 'woocommerce-gateway-stripe' ),
-				'https://docs.woocommerce.com/document/stripe/#apple-pay'
+				'https://woocommerce.com/document/stripe/#apple-pay'
 			);
 			$note->save();
 		} catch ( Exception $e ) {} // @codingStandardsIgnoreLine.
@@ -159,6 +186,10 @@ class WC_Stripe_Inbox_Notes {
 	 * on/about 2020 Dec 22.
 	 */
 	public static function cleanup_campaign_2020() {
+		if ( ! self::are_inbox_notes_supported() ) {
+			return;
+		}
+
 		$admin_notes_class = WC_Stripe_Woo_Compat_Utils::get_notes_class();
 		if ( ! class_exists( $admin_notes_class ) || ! class_exists( 'WC_Data_Store' ) ) {
 			return;
