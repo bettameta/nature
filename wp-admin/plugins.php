@@ -1,4 +1,4 @@
-<?php
+git push --force<?php
 /**
  * Plugins administration panel.
  *
