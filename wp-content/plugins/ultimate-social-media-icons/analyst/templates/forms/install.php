@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="analyst-modal-def-top-padding">
-			<button class="analyst-btn-success" id="analyst-install-action">Allow & Continue &lt;</button>
+			<button class="analyst-btn-success" id="analyst-install-action">Allow & Continue &gt;</button>
 		</div>
 		<div class="analyst-modal-def-top-padding" id="analyst-permissions-block" style="display: none">
 			<span>You’re granting these permissions:</span>

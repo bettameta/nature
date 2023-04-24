@@ -14,7 +14,7 @@ use function Kadence\kadence;
 use function get_template_part;
 
 kadence()->print_styles( 'kadence-related-posts' );
-kadence()->print_styles( 'kadence-splide' );
+kadence()->print_styles( 'kad-splide' );
 wp_enqueue_script( 'kadence-slide-init' );
 
 $args          = get_related_posts_args( $post->ID );

@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
-const { Component } = wp.element;
+/**
+ * WordPress dependencies
+ */
+import { createRef, Component, Fragment } from '@wordpress/element';
 import map from 'lodash/map';
 import ColorControl from '../common/color.js';
-import { Fragment } from 'react';
 const { ButtonGroup, Dashicon, Tooltip, Button, Popover, TabPanel, TextareaControl } = wp.components;
 class ColorComponent extends Component {
 	constructor(props) {
@@ -88,6 +90,7 @@ class ColorComponent extends Component {
 			textImport: '',
 			importError: false,
 		};
+		this.anchorNodeRef = createRef();
 	}
 	handleChangePalette( active ) {
 		let value = this.state.value;
@@ -223,7 +226,7 @@ class ColorComponent extends Component {
 							</div>
 						}
 					</div>
-					<div className="kadence-palette-colors">
+					<div ref={ this.anchorNodeRef } className="kadence-palette-colors">
 						{ 'start' === this.state.fresh && (
 							<Fragment>
 								{ Object.keys( this.controlParams.colors ).map( ( item, index ) => {
@@ -236,6 +239,7 @@ class ColorComponent extends Component {
 												usePalette={ false }
 												tooltip={ ( undefined !== this.controlParams.colors[ item ].tooltip ? this.controlParams.colors[ item ].tooltip : '' ) }
 												onChangeComplete={ ( color, isPalette ) => this.handleChangeComplete( color, isPalette, item, index ) }
+												controlRef={ this.anchorNodeRef }
 											/>
 										)
 								} ) }
@@ -264,14 +268,14 @@ class ColorComponent extends Component {
 							<Dashicon icon="portfolio" />
 						</Button>
 						{ this.state.isVisible && (
-							<Popover position="bottom right" className="kadence-palette-popover-copy-paste" onClose={ toggleClose }>
+							<Popover position="bottom right" className="kadence-palette-popover-copy-paste kadence-customizer-popover" onClose={ toggleClose }>
 								<TabPanel className="kadence-palette-popover-tabs"
 									activeClass="active-tab"
 									initialTabName={ 'import'}
 									tabs={ [
 										{
 											name: 'import',
-											title: __( 'Select a Color Set', 'kadence' ),
+											title: __( 'Select Palette', 'kadence' ),
 											className: 'kadence-color-presets',
 										},
 										{
@@ -301,8 +305,8 @@ class ColorComponent extends Component {
 																		{ Object.keys( presetPalettes[item] ).map( ( color, subIndex ) => {
 																			return (
 																				<div key={ subIndex } style={ {
-																					width: 30,
-																					height: 30,
+																					width: 26,
+																					height: 26,
 																					marginBottom: 0,
 																					transform: 'scale(1)',
 																					transition: '100ms transform ease',

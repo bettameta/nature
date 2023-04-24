@@ -2,9 +2,9 @@
 Contributors: wpdesk,dyszczo,grola,piotrpo,marcinkolanko,mateuszgbiorczyk,sebastianpisula,bartj
 Donate link: https://www.wpdesk.net/flexible-checkout-fields-woocommerce/
 Tags: woocommerce checkout fields, woocommerce custom fields, woocommerce checkout manager, woocommerce checkout editor, woocommerce fields manager, woocommerce fields editor, woocommerce custom checkout fields, woocommerce checkout options, woocommerce checkout pro, woocommerce custom sections, woocommerce file upload
-Requires at least: 4.9
+Requires at least: 5.2
 Tested up to: 6.1
-Stable tag: 3.5.4
+Stable tag: 3.5.7
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,8 +21,7 @@ We think WooCommerce is the best ecommerce plugin for WordPress. But it lacks so
 
 Flexible Checkout Fields beautifully integrates with the WordPress dashboard. It is probably the best looking checkout field editor for WooCommerce on the market. And you can do some powerful stuff with it too. [See some screenshots →](https://wordpress.org/plugins/flexible-checkout-fields/screenshots/)
 
-* [>>> Go to the FCF client area demo <<<](https://wpde.sk/fcf-demo-repo) - here you can test the product configured with the **Flexible Checkout Fields** plugin (no registration needed)
-* [>>> Go to the FCF admin demo <<<](https://demo.wpdesk.org/?utm_source=wordpress-repository&utm_medium=demo-link&utm_campaign=demo-flexible-checkout-fields) - here you can test the admin panel of all WP Desk plugins including **Flexible Checkout Fields**
+[>>> Go to the FCF admin demo <<<](https://demo.wpdesk.org/?utm_source=wordpress-repository&utm_medium=demo-link&utm_campaign=demo-flexible-checkout-fields) - here you can test the admin panel of all WP Desk plugins including **Flexible Checkout Fields**
 
 = Fields Order =
 
@@ -224,6 +223,16 @@ Our plugin uses the Checkout subpage environment and WooCommerce purchasing mech
 If you are upgrading from the old WooCommerce Checkout Fields version (1.1, woocommerce-checkout-fields) make sure to completely delete the old version first. Your settings will be kept. If you install the new version without deleting the old one you may break your WordPress installation.
 
 == Changelog ==
+
+= 3.5.7 - 2023-03-13 =
+* Added support for WooCommerce 7.5
+
+= 3.5.6 – 2023-02-27 =
+* Fixed missing stylesheets in frontend
+
+= 3.5.5 – 2023-02-21 =
+* Added support for WooCommerce 7.4.
+* Minor changes in readme description.
 
 = 3.5.4 – 2022-11-24 =
 * Removed notifications about promotions

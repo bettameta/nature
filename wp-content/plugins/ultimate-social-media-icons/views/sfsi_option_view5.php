@@ -38,6 +38,9 @@
 	if(!isset($option5['sfsi_tiktokIcon_order'])){
 		$option5['sfsi_tiktokIcon_order']    = '20';
     }
+	if(!isset($option5['sfsi_mastodonIcon_order'])){
+		$option5['sfsi_mastodonIcon_order']    = '21';
+	}
 
 	$icons_order = array(
 		$option5['sfsi_rssIcon_order']		=> 'rss',
@@ -58,6 +61,7 @@
 		$option5['sfsi_redditIcon_order']=> 'reddit',
 		$option5['sfsi_fbmessengerIcon_order']=> 'fbmessenger',
 		$option5['sfsi_tiktokIcon_order']=> 'tiktok',
+		$option5['sfsi_mastodonIcon_order']=> 'mastodon',
 
 	);
 
@@ -133,12 +137,37 @@
 	$option5['sfsi_whatsapp_MouseOverText']		= 	(isset($option5['sfsi_whatsapp_MouseOverText']))
 														? sanitize_text_field($option5['sfsi_whatsapp_MouseOverText'])
 														: '';
+
+	$option5['sfsi_reddit_MouseOverText']		= 	(isset($option5['sfsi_reddit_MouseOverText']))
+														? sanitize_text_field($option5['sfsi_reddit_MouseOverText'])
+														: '';
+
+	$option5['sfsi_fbmessenger_MouseOverText']		= 	(isset($option5['sfsi_fbmessenger_MouseOverText']))
+														? sanitize_text_field($option5['sfsi_fbmessenger_MouseOverText'])
+														: '';
+
+	$option5['sfsi_tiktok_MouseOverText']		= 	(isset($option5['sfsi_tiktok_MouseOverText']))
+														? sanitize_text_field($option5['sfsi_tiktok_MouseOverText'])
+														: '';
+
+	$option5['sfsi_mastodon_MouseOverText']		= 	(isset($option5['sfsi_mastodon_MouseOverText']))
+														? sanitize_text_field($option5['sfsi_mastodon_MouseOverText'])
+														: '';
+
+	$option5['sfsi_snapchat_MouseOverText']		= 	(isset($option5['sfsi_snapchat_MouseOverText']))
+														? sanitize_text_field($option5['sfsi_snapchat_MouseOverText'])
+														: '';
+
 	$sfsi_icons_suppress_errors 				=   (isset($option5['sfsi_icons_suppress_errors']))
 														? sanitize_text_field($option5['sfsi_icons_suppress_errors'])
 														: 'no';
+	$sfsi_show_admin_popup 					=   (isset($option5['sfsi_show_admin_popup']))
+														? sanitize_text_field($option5['sfsi_show_admin_popup'])
+														: 'yes';
 	$sfsi_icons_sharing_and_traffic_tips 				=   (isset($option5['sfsi_icons_sharing_and_traffic_tips']))
-	? sanitize_text_field($option5['sfsi_icons_sharing_and_traffic_tips'])
-	: 'yes';
+															? sanitize_text_field($option5['sfsi_icons_sharing_and_traffic_tips'])
+															: 'yes';
+	
 	if(is_array($custom_icons_order) )
 	{
 		foreach($custom_icons_order as $data)
@@ -231,6 +260,10 @@
           		<li class="tiktok_section " data-index="<?php echo $index; ?>" id="sfsi_tiktokIcon_order">
                 	<a href="#" title="tiktok" ><img src="<?php echo SFSI_PLUGURL; ?>images/icons_theme/default/default_tiktok.png" height="54px;" alt="tiktok" /></a>
                 </li>
+		  <?php break; ?><?php case 'mastodon' :?>
+			<li class="mastodon_section " data-index="<?php echo $index; ?>" id="sfsi_mastodonIcon_order">
+				<a href="#" title="mastodon" ><img src="<?php echo SFSI_PLUGURL; ?>images/icons_theme/default/default_mastodon.png" height="54px;" alt="mastodon" /></a>
+			</li>
 		  <?php break; ?><?php default   :?><?php if(isset($icons[$icn['ele']]) && !empty($icons[$icn['ele']]) && filter_var($icons[$icn['ele']], FILTER_VALIDATE_URL) ): ?>
           		<li class="custom_iconOrder sfsiICON_<?php echo $icn['ele']; ?>" data-index="<?php echo $index; ?>" element-id="<?php echo $icn['ele']; ?>" >
                 	<a href="#" title="Custom Icon" ><img src="<?php echo $icons[$icn['ele']]; ?>" alt="Linked In" class="sfcm" /></a>
@@ -1365,17 +1398,21 @@
 				<label><?php _e("WhatsApp:",'ultimate-social-media-icons' ) ?></label>
 				<input name="sfsi_whatsapp_MouseOverText" value="<?php echo ( $option5['sfsi_whatsapp_MouseOverText']!='' ) ?  $option5['sfsi_whatsapp_MouseOverText'] : '' ;?>" type="text" />
 	    	</div>
+			<div class="mouseover_field weibo_section">
+				<label><?php _e("Weibo:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_weibo_MouseOverText" value="<?php echo ( $option5['sfsi_weibo_MouseOverText']!='' ) ?  $option5['sfsi_weibo_MouseOverText'] : '' ;?>" type="text" />
+			</div>
 		</div>
 
 		<div class="clear">
-		<div class="mouseover_field pinterest_section">
-			<label><?php _e("Pinterest:",'ultimate-social-media-icons' ) ?></label>
-			<input name="sfsi_pinterest_MouseOverText" value="<?php echo ( $option5['sfsi_pinterest_MouseOverText']!='' ) ?  $option5['sfsi_pinterest_MouseOverText'] : '' ;?>" type="text" />
-		</div>
-		<div class="mouseover_field youtube_section">
-			<label><?php _e("Youtube:",'ultimate-social-media-icons' ) ?></label>
-			<input name="sfsi_youtube_MouseOverText" value="<?php echo ( $option5['sfsi_youtube_MouseOverText']!='' ) ?  $option5['sfsi_youtube_MouseOverText'] : '' ;?>" type="text" />
-		</div>
+			<div class="mouseover_field pinterest_section">
+				<label><?php _e("Pinterest:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_pinterest_MouseOverText" value="<?php echo ( $option5['sfsi_pinterest_MouseOverText']!='' ) ?  $option5['sfsi_pinterest_MouseOverText'] : '' ;?>" type="text" />
+			</div>
+			<div class="mouseover_field youtube_section">
+				<label><?php _e("Youtube:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_youtube_MouseOverText" value="<?php echo ( $option5['sfsi_youtube_MouseOverText']!='' ) ?  $option5['sfsi_youtube_MouseOverText'] : '' ;?>" type="text" />
+			</div>
 		</div>
 		<div class="clear">
 		    <div class="mouseover_field instagram_section">
@@ -1397,31 +1434,58 @@
 				<input name="sfsi_ok_MouseOverText" value="<?php echo ( $option5['sfsi_ok_MouseOverText']!='' ) ?  $option5['sfsi_ok_MouseOverText'] : '' ;?>" type="text" />
 		    </div>
 		</div>
-		<div class="clear">
-		    <div class="mouseover_field weibo_section">
-				<label><?php _e("Weibo:",'ultimate-social-media-icons' ) ?></label>
-				<input name="sfsi_weibo_MouseOverText" value="<?php echo ( $option5['sfsi_weibo_MouseOverText']!='' ) ?  $option5['sfsi_weibo_MouseOverText'] : '' ;?>" type="text" />
-			</div>
 
+		<div class="clear">
+			<div class="mouseover_field reddit_section">
+				<label><?php _e("Reddit:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_reddit_MouseOverText" value="<?php echo ( $option5['sfsi_reddit_MouseOverText']!='' ) ?  $option5['sfsi_reddit_MouseOverText'] : '' ;?>" type="text" />
+			</div>
+			<div class="mouseover_field fbmessenger_section">
+				<label><?php _e("Fb Messenger:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_fbmessenger_MouseOverText" value="<?php echo ( $option5['sfsi_fbmessenger_MouseOverText']!='' ) ?  $option5['sfsi_fbmessenger_MouseOverText'] : '' ;?>" type="text" />
+			</div>
 		</div>
-        <div class="clear"> </div>
+
+		<div class="clear">
+			<div class="mouseover_field viber_section">
+				<label><?php _e("Tiktok:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_tiktok_MouseOverText" value="<?php echo ( $option5['sfsi_tiktok_MouseOverText']!='' ) ?  $option5['sfsi_tiktok_MouseOverText'] : '' ;?>" type="text" />
+			</div>
+			<div class="mouseover_field xing_section">
+				<label><?php _e("Snapchat:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_snapchat_MouseOverText" value="<?php echo ( $option5['sfsi_snapchat_MouseOverText']!='' ) ?  $option5['sfsi_snapchat_MouseOverText'] : '' ;?>" type="text" />
+			</div>
+		</div>
+
+		<div class="clear">
+			<div class="mouseover_field mastodon_section">
+				<label><?php _e("Mastodon:",'ultimate-social-media-icons' ) ?></label>
+				<input name="sfsi_mastodon_MouseOverText" value="<?php echo ( $option5['sfsi_mastodon_MouseOverText']!='' ) ?  $option5['sfsi_mastodon_MouseOverText'] : '' ;?>" type="text" />
+			</div>
+		</div>
+
 		<div class="custom_m">
         	<?php
                 $sfsiMouseOverTexts =  unserialize($option5['sfsi_custom_MouseOverTexts']);
-                $count = 1; for($i=$first_key; $i <= $endkey; $i++) :
+                $count = 1; 
+			for($i=$first_key; $i <= $endkey; $i++) :
             ?><?php if(!empty( $icons[$i])) : ?>
 
+				<?php if($count === 1 || $count - 1 % 2==0): ?>
+					<div class="clear">
+				<?php endif; ?>
+                
                 <div class="mouseover_field custom_section sfsiICON_<?php echo $i; ?>">
                     <label><?php _e("Custom",'ultimate-social-media-icons' ) ?> <?php echo $count; ?>:</label>
                     <input name="sfsi_custom_MouseOverTexts[]" value="<?php echo (isset($sfsiMouseOverTexts[$i]) && $sfsiMouseOverTexts[$i]!='' ) ?sanitize_text_field($sfsiMouseOverTexts[$i]) : '' ;?>" type="text" file-id="<?php echo $i; ?>" />
                 </div>
 
                 <?php if($count%2==0): ?>
+                	</div>  
+            	<?php endif; ?>
 
-                <div class="clear"> </div>
-            <?php endif; ?><?php $count++; endif; endfor; ?>
+			<?php $count++; endif; endfor; ?>
 		</div>
-
 	</div>
 
 	</div>
@@ -1437,6 +1501,22 @@
 				<li>
 					<input name="sfsi_icons_suppress_errors" <?php echo ($sfsi_icons_suppress_errors=='no' ) ? 'checked="true"' : '' ;?> type="radio" value="no" class="styled" />
 					<label><?php _e( 'No', 'ultimate-social-media-icons' ) ?></label>
+				</li>
+	      	</ul>
+      	</div>
+	</div>
+
+	<div class="row new_wind">
+		<h4><?php _e( 'Support widget', 'ultimate-social-media-icons' ); ?></h4>
+		<div class="row_onl"><p><?php _e( 'Show USM support widget on front end?', 'ultimate-social-media-icons' ) ?></p>
+			<ul class="enough_waffling">
+		    	<li>
+		    		<input name="sfsi_show_admin_popup" <?php echo ( $sfsi_show_admin_popup == 'yes' ) ? 'checked="true"' : '' ;?> type="radio" value="yes" class="styled" />
+		    		<label><?php _e( 'Yes', 'ultimate-social-media-icons' ); ?></label>
+		    	</li>
+				<li>
+					<input name="sfsi_show_admin_popup" <?php echo ( $sfsi_show_admin_popup == 'no' ) ? 'checked="true"' : '' ;?> type="radio" value="no" class="styled" />
+					<label><?php _e( 'No', 'ultimate-social-media-icons' ); ?></label>
 				</li>
 	      	</ul>
       	</div>

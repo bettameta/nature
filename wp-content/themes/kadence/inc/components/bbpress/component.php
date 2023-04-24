@@ -154,6 +154,12 @@ class Component implements Component_Interface {
 			echo '<div class="bbpress-topic-meta entry-meta">';
 			echo '<span class="bbpress-back-to-forum-wrap"><a href="' . esc_url( bbp_get_forum_permalink( bbp_get_topic_forum_id() ) ) . '" class="bbpress-back-to-forum">' . kadence()->get_icon( 'arrow-left-alt', '', true ) . ' ' . __( 'Back to:', 'kadence' ) . ' ' . bbp_get_forum_title( bbp_get_topic_forum_id() ) . '</a></span>';
 			echo '<span class="bbpress-meta-replies-wrap"><span class="bbpress-meta-replies">' . bbp_get_topic_reply_count() . ' ' . esc_html__( 'Replies', 'kadence' ) . '</span></span>';
+			echo '<span class="bbpress-meta-subscribe-wrap">';
+			bbp_topic_subscription_link( array( 'before' => '' ) );
+			echo '</span>';
+			echo '<span class="bbpress-meta-favorite-wrap">';
+			bbp_topic_favorite_link( array( 'before' => '' ) );
+			echo '</span>';
 			do_action( 'kadence_bbpress_single_topic_meta' );
 			echo '</div>';
 		}
@@ -667,7 +673,7 @@ class Component implements Component_Interface {
 			$css->set_selector( '.entry-hero.forum-hero-section .entry-header' );
 			$css->add_property( 'min-height', $css->render_range( kadence()->option( 'forum_title_height' ), 'desktop' ) );
 			$css->set_selector( '.forum-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $css->render_color( kadence()->sub_option( 'forum_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'forum_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.forum-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'forum_title_background', 'tablet' ), $css );
@@ -798,7 +804,7 @@ class Component implements Component_Interface {
 			$css->set_selector( '.entry-hero.forum-archive-hero-section .entry-header' );
 			$css->add_property( 'min-height', $css->render_range( kadence()->option( 'forum_archive_title_height' ), 'desktop' ) );
 			$css->set_selector( '.forum-archive-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $css->render_color( kadence()->sub_option( 'forum_archive_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'forum_archive_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.forum-archive-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'forum_archive_title_background', 'tablet' ), $css );
@@ -931,7 +937,7 @@ class Component implements Component_Interface {
 			$css->set_selector( '.entry-hero.topic-hero-section .entry-header' );
 			$css->add_property( 'min-height', $css->render_range( kadence()->option( 'topic_title_height' ), 'desktop' ) );
 			$css->set_selector( '.topic-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $css->render_color( kadence()->sub_option( 'topic_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'topic_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.topic-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'topic_title_background', 'tablet' ), $css );

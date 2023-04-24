@@ -99,7 +99,7 @@ $sfsi_responsive_icon_dummy = array(
  
 <!-- Section 6 "Do you want to display icons at the end of every post?" main div Start -->
 <div>
-<p class="clear" style="margin-top:16px !important"><?php _e( 'Here you have two options:', 'ultimate-social-media-icons' ); ?></span></p>
+<p class="clear"><?php _e( 'Here you have two options:', 'ultimate-social-media-icons' ); ?></span></p>
 
   <div class="tab6">
     <ul class="sfsi_icn_listing8 sfsi_overflow_visible">
@@ -146,7 +146,7 @@ $sfsi_responsive_icon_dummy = array(
               <ul class="sfsi_responsive_default_icon_container_wrapper">
                 <li class="sfsi_responsive_default_icon_container sfsi_border_left_0 " style="margin: 10px 0px">
                   <label class="heading-label select-icons">
-                    <?php _e( 'Select Icons', 'ultimate-social-media-icons' ); ?>
+                    <?php _e( 'Select Icons', 'ultimate-social-media-icons' ); ?>:
                   </label>
                 </li>
 
@@ -380,7 +380,7 @@ $sfsi_responsive_icon_dummy = array(
             <?php $display2 = ($option6['sfsi_display_button_type'] == 'responsive_button') ? "display:block;border-left:0!important":"display:none;border-left:0!important"; ?>
 
             <li class="sfsi_responsive_icon_option_li sfsi_responsive_show sfsi_responsive_icon_option_additional_li" style="margin-left:20px;border-left:0;<?php echo $display2 ?>">
-                <label class="heading-label"><?php _e( 'Display options', 'ultimate-social-media-icons' ); ?></label>
+                <label class="heading-label select-icons"><?php _e( 'Display options', 'ultimate-social-media-icons' ); ?>:</label>
                 <div class="options">
                     <label class="first" style="margin-top:3px; color: #555555;"><?php _e( 'Pages to show icons:', 'ultimate-social-media-icons' ); ?></label>
                     <div class="field">

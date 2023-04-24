@@ -278,6 +278,13 @@ $option7['sfsi_Shown_pop'] 				= (isset($option7['sfsi_Shown_pop'])) ? sanitize_
 
 			</li>
 
+			<li class="mastodon_section">
+				<div>
+					<img src="<?php echo SFSI_PLUGURL ?>images/icons_theme/default/default_mastodon.png" height="50px" alt="mastodon" />
+					<span class="sfsi_Cdisplay" id="sfsi_mastodon_countsDisplay"><?php _e("12k",'ultimate-social-media-icons') ?></span>
+				</div>
+			</li>
+
 			<?php
 
 			if (isset($icons) && !empty($icons)) {

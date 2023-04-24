@@ -10,6 +10,13 @@ namespace Kadence;
 use Kadence\Theme_Customizer;
 use function Kadence\kadence;
 
+ob_start(); ?>
+<div class="kadence-compontent-description">
+	<p style="margin:0"><?php echo esc_html__( 'Title and Content settings affect legacy widgets. For block editor widgets use settings in the editor.', 'kadence' ); ?></p>
+</div>
+<?php
+$component_description = ob_get_clean();
+
 Theme_Customizer::add_settings(
 	array(
 		'sidebar_tabs' => array(
@@ -136,6 +143,13 @@ Theme_Customizer::add_settings(
 				),
 				'units'   => array( 'px', 'em', 'rem' ),
 			),
+		),
+		'sidebar_widget_settings' => array(
+			'control_type' => 'kadence_blank_control',
+			'section'      => 'sidebar_design',
+			'settings'     => false,
+			'priority'     => 1,
+			'description'  => $component_description,
 		),
 		'sidebar_widget_title' => array(
 			'control_type' => 'kadence_typography_control',

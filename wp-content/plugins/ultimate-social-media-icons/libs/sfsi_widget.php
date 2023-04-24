@@ -283,6 +283,9 @@ class Sfsi_Widget extends WP_Widget
 			if (!isset($sfsi_section5['sfsi_tiktokIcon_order'])) {
 				$sfsi_section5['sfsi_tiktokIcon_order']    = '20';
 			}
+			if (!isset($sfsi_section5['sfsi_mastodonIcon_order'])) {
+				$sfsi_section5['sfsi_mastodonIcon_order']    = '21';
+			}
 
 			$icons_order = array(
 				'0' => '',
@@ -304,6 +307,7 @@ class Sfsi_Widget extends WP_Widget
 				$sfsi_section5['sfsi_redditIcon_order'] => 'reddit',
 				$sfsi_section5['sfsi_fbmessengerIcon_order'] => 'fbmessenger',
 				$sfsi_section5['sfsi_tiktokIcon_order'] => 'tiktok',
+				$sfsi_section5['sfsi_mastodonIcon_order'] => 'mastodon',
 			);
 			if (is_array($custom_icons_order)) {
 				foreach ($custom_icons_order as $data) {
@@ -403,6 +407,9 @@ class Sfsi_Widget extends WP_Widget
 						break;
 					case 'tiktok':
 						if ( isset( $sfsi_section1_options['sfsi_tiktok_display'] ) && $sfsi_section1_options['sfsi_tiktok_display'] == 'yes')    $icons .= sfsi_prepairIcons('tiktok');
+						break;
+					case 'mastodon':
+						if ( isset( $sfsi_section1_options['sfsi_mastodon_display'] ) && $sfsi_section1_options['sfsi_mastodon_display'] == 'yes')    $icons .= sfsi_prepairIcons('mastodon');
 						break;
 					case 'custom':
 						$icons .= sfsi_prepairIcons($icon_arry['ele']);
@@ -1888,6 +1895,48 @@ class Sfsi_Widget extends WP_Widget
 						}
 					}
 
+				break;
+				case "mastodon":
+					$url = ($sfsi_section2_options['sfsi_mastodon_pageURL']) ? $sfsi_section2_options['sfsi_mastodon_pageURL'] : '';
+					$toolClass = "rss_tool_bdr";
+					$hoverdiv = '';
+					$arsfsiplus_row_class = "bot_rss_arow";
+
+					/* fecth no of counts if active in admin section */
+					if (
+						isset($sfsi_section4_options['sfsi_mastodon_countsDisplay']) &&
+						$sfsi_section4_options['sfsi_mastodon_countsDisplay'] == "yes" &&
+						$sfsi_section4_options['sfsi_display_counts'] == "yes"
+					) {
+						$counts = $sfsi_section4_options['sfsi_tiktok_manualCounts'];
+					}
+
+					if (isset($sfsi_section5_options['sfsi_mastodon_MouseOverText']) && !empty($sfsi_section5_options['sfsi_mastodon_MouseOverText'])) {
+						$alt_text = $sfsi_section5_options['sfsi_mastodon_MouseOverText'];
+					} else {
+						$alt_text = "";
+					}
+
+					if ($active_theme == 'custom_support') {
+						if ( get_option( "mastodon_skin" ) ) {
+							$icon = get_option( "mastodon_skin" );
+						} else {
+							$active_theme = 'default';
+							$icons_baseUrl = SFSI_PLUGURL . "images/icons_theme/default/";
+							$icon = $icons_baseUrl . $active_theme . "_mastodon.png";
+						}
+					} else {
+						$icon = $icons_baseUrl . $active_theme . "_mastodon.png";
+					}
+
+					/* For Flat icons bg color */
+					if( $active_theme == 'flat' ) {
+						if ( isset( $sfsi_section3_options['sfsi_mastodon_bgColor'] ) && $sfsi_section3_options['sfsi_mastodon_bgColor'] != '' ) {
+							$sfsi_icon_bgColor = $sfsi_section3_options['sfsi_mastodon_bgColor'];
+						} else {
+							$sfsi_icon_bgColor = '#583ED1';
+						}
+					}
 				break;
 				default:
 					$border_radius = "";

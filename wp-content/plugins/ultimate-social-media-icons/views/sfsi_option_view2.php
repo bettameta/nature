@@ -143,7 +143,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
                         <a class="pop-up" href="javascript:" data-id="sfsi_feedClaimingOverlay"><?php _e( 'Get full access now.', 'ultimate-social-media-icons' ); ?></a>
                         <?php _e( 'It also makes sense if you already offer an email newsletter.', 'ultimate-social-media-icons' ); ?>
 
-                        <a href="http://api.follow.it/rss" target="_new"><?php _e( 'Learn more.', 'ultimate-social-media-icons' ); ?></a>
+                        <a href="https://follow.it/docs/publishers/introduction/what-is-follow-it-and-what-shall-i-use-it-for" target="_new"><?php _e( 'Learn more.', 'ultimate-social-media-icons' ); ?></a>
                     </p>
                 </li>
                 <li class="sfsi_show_via_onhover disabled_checkbox">
@@ -263,7 +263,11 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
             ?></p>
             <p><?php _e( 'The Facebook icon should allow users to...', 'ultimate-social-media-icons' ); ?></p>
 
-            <p class="radio_section fb_url" style="display:flow-root"><input name="sfsi_facebookPage_option" <?php echo ($option2['sfsi_facebookPage_option'] == 'yes') ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" /><label><?php _e( 'Visit my Facebook page at:', 'ultimate-social-media-icons' ); ?></label><input class="add" name="sfsi_facebookPage_url" type="url" value="<?php echo ($option2['sfsi_facebookPage_url'] != '') ?  $option2['sfsi_facebookPage_url'] : ''; ?>" placeholder="E.g https://www.facebook.com/your_page_name" /></p>
+            <p class="radio_section fb_url" style="display:flow-root">
+                <input name="sfsi_facebookPage_option" <?php echo ($option2['sfsi_facebookPage_option'] == 'yes') ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" />
+                <label><?php _e( 'Visit my Facebook page at:', 'ultimate-social-media-icons' ); ?></label>
+                <input class="add" name="sfsi_facebookPage_url" type="url" value="<?php echo ($option2['sfsi_facebookPage_url'] != '') ?  $option2['sfsi_facebookPage_url'] : ''; ?>" placeholder="E.g https://www.facebook.com/your_page_name" />
+            </p>
 
             <p class="radio_section fb_url extra_sp" style="display:flow-root;margin: 16px 0 23px;"><input name="sfsi_facebookLike_option" <?php echo ($option2['sfsi_facebookLike_option'] == 'yes') ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" /><label><?php _e( 'Like my blog on Facebook (+1)', 'ultimate-social-media-icons' ); ?></label></p>
 
@@ -338,13 +342,12 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
             <p><?php _e( 'The Youtube icon should allow users to... ', 'ultimate-social-media-icons' ); ?></p>
 
             <p class="radio_section fb_url"><input name="sfsi_youtube_page" <?php echo ($option2['sfsi_youtube_page'] == 'yes') ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" /><label><?php _e( 'Visit my Youtube page at:', 'ultimate-social-media-icons' ); ?></label><input name="sfsi_youtube_pageUrl" type="url" placeholder="http://" value="<?php echo ($option2['sfsi_youtube_pageUrl'] != '') ?  $option2['sfsi_youtube_pageUrl'] : ''; ?>" class="add" /></p>
-
             <p class="radio_section fb_url"><input name="sfsi_youtube_follow" <?php echo ($option2['sfsi_youtube_follow'] == 'yes') ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" /><label><?php _e( 'Subscribe to me on Youtube', 'ultimate-social-media-icons' ); ?> <span><?php _e( '(allows people to subscribe to you directly, without leaving your blog)', 'ultimate-social-media-icons' ); ?></span></label></p>
 
             <!--Adding Code for Channel Id and Channel Name-->
             <div class="cstmutbewpr">
                 <ul class="enough_waffling">
-                    <li onclick="showhideutube(this);"><input name="sfsi_youtubeusernameorid" <?php echo (isset($option2['sfsi_youtubeusernameorid']) && $option2['sfsi_youtubeusernameorid'] == 'name') ? 'checked="true"' : ''; ?> type="radio" value="name" class="styled" /><label>User Name</label></li>
+                    <li onclick="showhideutube(this);"><input name="sfsi_youtubeusernameorid" <?php echo (isset($option2['sfsi_youtubeusernameorid']) && $option2['sfsi_youtubeusernameorid'] == 'name') ? 'checked="true"' : ''; ?> type="radio" value="name" class="styled" /><label>User ID</label></li>
                     <li onclick="showhideutube(this);"><input name="sfsi_youtubeusernameorid" <?php echo (isset($option2['sfsi_youtubeusernameorid']) && $option2['sfsi_youtubeusernameorid'] == 'id') ? 'checked="true"' : ''; ?> type="radio" value="id" class="styled" /><label>Channel Id</label></li>
                 </ul>
                 <div class="cstmutbtxtwpr">
@@ -356,15 +359,15 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
                                                     } ?>>
                         <p class="extra_pp"><label><?php _e( 'UserName:', 'ultimate-social-media-icons' ); ?></label><input name="sfsi_ytube_user" type="url" value="<?php echo (isset($option2['sfsi_ytube_user']) && $option2['sfsi_ytube_user'] != '') ?  $option2['sfsi_ytube_user'] : ''; ?>" placeholder="Youtube username" class="add" /></p>
                         <div class="utbe_instruction">
-                            <?php _e( 'To find your User ID/Channel ID, login to your YouTube account, click the user icon at the top right corner and select "Settings", then click "Advanced" under "Name" and you will find both your "Channel ID" and "User ID" under "Account Information".:', 'ultimate-social-media-icons' ); ?>
+                            <?php _e( 'To find your User ID/Channel ID, login to your YouTube account, click the user icon at the top right corner and select "Settings", then click "Advanced" under "Name" and you will find both your "Channel ID" and "User ID" under "Account Information"', 'ultimate-social-media-icons' ); ?>
                         </div>
                     </div>
                     <div class="cstmutbchnlidwpr" <?php if ($sfsi_youtubeusernameorid == 'id') {
                                                         echo 'style="display: block;"';
                                                     } ?>>
-                        <p class="extra_pp"><label><?php _e( 'ChannelId::', 'ultimate-social-media-icons' ); ?></label><input name="sfsi_ytube_chnlid" type="url" value="<?php echo (isset($option2['sfsi_ytube_chnlid']) && $option2['sfsi_ytube_chnlid'] != '') ?  $option2['sfsi_ytube_chnlid'] : ''; ?>" placeholder="youtube_channel_id" class="add" /></p>
+                        <p class="extra_pp"><label><?php _e( 'ChannelId:', 'ultimate-social-media-icons' ); ?></label><input name="sfsi_ytube_chnlid" type="url" value="<?php echo (isset($option2['sfsi_ytube_chnlid']) && $option2['sfsi_ytube_chnlid'] != '') ?  $option2['sfsi_ytube_chnlid'] : ''; ?>" placeholder="youtube_channel_id" class="add" /></p>
                         <div class="utbe_instruction">
-                            <?php _e( 'To find your User ID/Channel ID, login to your YouTube account, click the user icon at the top right corner and select "Settings", then click "Advanced" under "Name" and you will find both your "Channel ID" and "User ID" under "Account Information".:', 'ultimate-social-media-icons' ); ?>
+                            <?php _e( 'To find your User ID/Channel ID, login to your YouTube account, click the user icon at the top right corner and select "Settings", then click "Advanced" under "Name" and you will find both your "Channel ID" and "User ID" under "Account Information"', 'ultimate-social-media-icons' ); ?>
                         </div>
                     </div>
                 </div>
@@ -435,7 +438,7 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
             <div class="radio_section fb_url link_4" style="margin: 10px 0 0px;"><input name="sfsi_linkedin_recommendBusines" <?php echo ($option2['sfsi_linkedin_recommendBusines'] == 'yes') ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" /><label class="anthr_labl"><?php _e( 'Recommend my business or product on Linkedin:', 'ultimate-social-media-icons' ); ?></label><input name="sfsi_linkedin_recommendProductId" type="text" value="<?php echo ($option2['sfsi_linkedin_recommendProductId'] != '') ?  $option2['sfsi_linkedin_recommendProductId'] : ''; ?>" class="add link_dbl" placeholder="Enter Product ID, e.g. 1441" /> <input name="sfsi_linkedin_recommendCompany" type="text" value="<?php echo ($option2['sfsi_linkedin_recommendCompany'] != '') ?  $option2['sfsi_linkedin_recommendCompany'] : ''; ?>" class="add" placeholder="Enter company name, e.g. Google”" /></div>
 
             <div class="lnkdin_instruction">
-                <?php _e( 'To find your Product or Company ID, you can use their ID lookup tool at', 'ultimate-social-media-icons' ); ?> <a target="_blank" href="https://developer.linkedin.com/apply-getting-started#company-lookup">https://developer.linkedin.com/apply-getting-started#company-lookup</a><?php _e( 'You need to be logged in to Linkedin to be able to use it.', 'ultimate-social-media-icons' ); ?>.
+                <?php _e( 'To find your Product or Company ID, you can use their ID lookup tool at', 'ultimate-social-media-icons' ); ?> <a target="_blank" href="https://developer.linkedin.com/apply-getting-started#company-lookup">https://developer.linkedin.com/apply-getting-started#company-lookup</a>. <?php _e( 'You need to be logged in to Linkedin to be able to use it.', 'ultimate-social-media-icons' ); ?>
             </div>
         </div>
     </div>
@@ -740,6 +743,35 @@ if (isset($option2['sfsi_youtubeusernameorid']) && "id" == $option2['sfsi_youtub
     </div>
     <!-- END TKTOK ICON -->
 
+    <!-- MASTODON ICON -->
+    <div class="row mastodon_section">
+        <h2 class="sfsicls_mastodon"><?php _e( 'Mastodon', 'ultimate-social-media-icons' ); ?></h2>
+        <div class="inr_cont mastodon_tab_2">
+            <p><?php _e( 'The Mastodon icon can perform two actions. Pick below which actions it should perform', 'ultimate-social-media-icons' ); ?></p>
+
+            <p class="radio_section mastdon_url fb_url" style="display:flow-root;">
+                <input name="sfsi_mastodon_page" <?php echo ( !isset( $option2['sfsi_mastodon_page'] ) || ( isset( $option2['sfsi_mastodon_page'] ) && $option2['sfsi_mastodon_page'] == 'yes' ) ) ? 'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" />
+                <label><?php _e( 'Visit my Mastodon profile at:', 'ultimate-social-media-icons' ); ?></label>
+                <input class="add" name="sfsi_mastodon_pageURL" type="url" placeholder="http://" value="<?php echo ( isset( $option2['sfsi_mastodon_pageURL'] ) && $option2['sfsi_mastodon_pageURL'] != '' ) ? esc_url( $option2['sfsi_mastodon_pageURL'] ) : ''; ?>" />
+            </p>
+            
+            <div class="radio_section extra_sp sfsi-max-content clear" style="display:flow-root;padding-top: 23px;margin-top: 6px;">
+                <label class="sfsi_tooltip_premium d-flex flex-row">
+                    <div class="sfsiicnsdvwrp" style="margin-right: 15px; width: auto;">
+                        <span class="checkbox" style="background-position:0px 0px!important;width:31px"></span>
+                    </div>
+                    <div class="sfsicnwrp" style="margin: auto;">
+                        <?php
+                            _e( 'Share my blog on Mastodon', 'ultimate-social-media-icons' );
+                            echo sfsi_premium_tooltip_content( 'tp-checkbox-link' );
+                        ?>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- END MASTODON ICON -->
+    
     <!-- Custom icon section start here -->
     <div class="custom-links custom_section">
         <?php

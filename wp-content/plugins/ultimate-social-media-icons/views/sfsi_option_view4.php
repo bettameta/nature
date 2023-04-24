@@ -119,6 +119,8 @@ $option4['sfsi_fbmessenger_manualCounts']         = (isset($option4['sfsi_fbmess
 $option4['sfsi_tiktok_countsDisplay']         = (isset($option4['sfsi_tiktok_countsDisplay'])) ? sanitize_text_field($option4['sfsi_tiktok_countsDisplay']) : '';
 $option4['sfsi_tiktok_manualCounts']         = (isset($option4['sfsi_tiktok_manualCounts'])) ? intval($option4['sfsi_tiktok_manualCounts']) : '20';
 
+$option4['sfsi_mastodon_countsDisplay']         = (isset($option4['sfsi_mastodon_countsDisplay'])) ? sanitize_text_field($option4['sfsi_mastodon_countsDisplay']) : '';
+$option4['sfsi_mastodon_manualCounts']         = (isset($option4['sfsi_mastodon_manualCounts'])) ? intval($option4['sfsi_mastodon_manualCounts']) : '20';
 
 $option4['sfsi_whatsapp_countsDisplay']         = (isset($option4['sfsi_whatsapp_countsDisplay'])) ? sanitize_text_field($option4['sfsi_whatsapp_countsDisplay']) : '';
 $option4['sfsi_whatsapp_manualCounts']         = (isset($option4['sfsi_whatsapp_manualCounts'])) ? intval($option4['sfsi_whatsapp_manualCounts']) : '';
@@ -283,6 +285,12 @@ $hide = "display:none;";
         <li class="tiktok_section">
             <a href="#" title="tiktok">
                 <img src="<?php echo SFSI_PLUGURL ?>images/icons_theme/default/default_tiktok.png" height="50px" alt="tiktok" />
+            </a>
+            <span>12k</span>
+        </li>
+        <li class="mastodon_section">
+            <a href="#" title="mastodon">
+                <img src="<?php echo SFSI_PLUGURL ?>images/icons_theme/default/default_mastodon.png" height="50px" alt="mastodon" />
             </a>
             <span>12k</span>
         </li>
@@ -933,6 +941,28 @@ $hide = "display:none;";
             <div class="listing">
                 <ul>
                     <li><?php _e( 'We cannot track this. So enter the figure here:', 'ultimate-social-media-icons' ); ?> <input name="sfsi_tiktok_manualCounts" type="text" class="input" value="<?php echo ($option4['sfsi_tiktok_manualCounts'] != '') ? $option4['sfsi_tiktok_manualCounts'] : ''; ?>" /></li>
+                </ul>
+            </div>
+        </div>
+        <!-- END ICON COUNT SECTION-->
+        <!-- FB Mastodon ICON COUNT SECTION-->
+        <div class="specify_counts mastodon_section">
+            <div class="radio_section">
+                <input name="sfsi_mastodon_countsDisplay" <?php echo (isset($option4['sfsi_mastodon_countsDisplay']) && $option4['sfsi_mastodon_countsDisplay'] == 'yes') ?  'checked="true"' : ''; ?> type="checkbox" value="yes" class="styled" />
+            </div>
+            <div class="social_icon_like">
+                <ul class="like_icon">
+                    <li>
+                        <a title="mastodon">
+                            <img src="<?php echo SFSI_PLUGURL ?>images/icons_theme/default/default_mastodon.png" height="50px" alt="tiktok" />
+                            <span><?php echo ( isset( $counts['mastodon_count'] ) ) ? $counts['mastodon_count'] : '20'; ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="listing">
+                <ul>
+                    <li><?php _e( 'We cannot track this. So enter the figure here:', 'ultimate-social-media-icons' ); ?> <input name="sfsi_mastodon_manualCounts" type="text" class="input" value="<?php echo ($option4['sfsi_mastodon_manualCounts'] != '') ? $option4['sfsi_mastodon_manualCounts'] : ''; ?>" /></li>
                 </ul>
             </div>
         </div>

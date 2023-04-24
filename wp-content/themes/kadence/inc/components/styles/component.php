@@ -91,11 +91,11 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		add_action( 'after_setup_theme', array( $this, 'action_add_editor_styles' ) );
 		add_filter( 'wp_resource_hints', array( $this, 'filter_resource_hints' ), 10, 2 );
 		add_filter( 'kadence_dynamic_css', array( $this, 'dynamic_css' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'action_add_gutenberg_styles' ), 90 );
 		add_filter( 'tiny_mce_before_init', array( $this, 'filter_add_tinymce_editor_styles' ) );
 		add_filter( 'kadence_editor_dynamic_css', array( $this, 'editor_dynamic_css' ) );
 		add_action( 'wp_head', array( $this, 'frontend_gfonts' ), 89 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'update_block_style_dependencies' ), 20 );
+		add_action( 'admin_init', array( $this, 'action_add_gutenberg_styles' ), 1 );
+		add_action( 'admin_init', array( $this, 'update_block_style_dependencies' ), 2 );
 	}
 
 	/**
@@ -542,14 +542,14 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->add_property( 'letter-spacing', $this->render_font_spacing( kadence()->option( 'brand_tag_typography' ), 'mobile' ) );
 		$css->stop_media_query();
 		// Header.
-		$css->set_selector( '#masthead, #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start) > .site-header-row-container-inner' );
+		$css->set_selector( '#masthead, #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.site-main-header-wrap), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start) > .site-header-row-container-inner' );
 		$css->render_background( kadence()->sub_option( 'header_wrap_background', 'desktop' ), $css );
 		$css->start_media_query( ( kadence()->sub_option( 'header_mobile_switch', 'size' ) ? '(max-width: ' . kadence()->sub_option( 'header_mobile_switch', 'size' ) . 'px)' : $media_query['tablet'] ) );
-		$css->set_selector( '#masthead, #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start) > .site-header-row-container-inner' );
+		$css->set_selector( '#masthead, #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.site-main-header-wrap), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start) > .site-header-row-container-inner' );
 		$css->render_background( kadence()->sub_option( 'header_wrap_background', 'tablet' ), $css );
 		$css->stop_media_query();
 		$css->start_media_query( $media_query['mobile'] );
-		$css->set_selector( '#masthead, #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start) > .site-header-row-container-inner' );
+		$css->set_selector( '#masthead, #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.site-main-header-wrap), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start) > .site-header-row-container-inner' );
 		$css->render_background( kadence()->sub_option( 'header_wrap_background', 'mobile' ), $css );
 		$css->stop_media_query();
 		// Header Main.
@@ -688,16 +688,16 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->stop_media_query();
 
 		// Sticky Header.
-		$css->set_selector( '#masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.item-hidden-above), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.item-hidden-above) > .site-header-row-container-inner' );
+		$css->set_selector( '#masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.item-hidden-above):not(.site-main-header-wrap), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.item-hidden-above) > .site-header-row-container-inner' );
 		$css->render_background( kadence()->sub_option( 'header_sticky_background', 'desktop' ), $css );
 		$css->add_property( 'border-bottom', $css->render_border( kadence()->sub_option( 'header_sticky_bottom_border', 'desktop' ) ) );
 		$css->start_media_query( ( kadence()->sub_option( 'header_mobile_switch', 'size' ) ? '(max-width: ' . kadence()->sub_option( 'header_mobile_switch', 'size' ) . 'px)' : $media_query['tablet'] ) );
-		$css->set_selector( '#masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.item-hidden-above), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.item-hidden-above) > .site-header-row-container-inner' );
+		$css->set_selector( '#masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.item-hidden-above):not(.site-main-header-wrap), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.item-hidden-above) > .site-header-row-container-inner' );
 		$css->render_background( kadence()->sub_option( 'header_sticky_background', 'tablet' ), $css );
 		$css->add_property( 'border-bottom', $css->render_border( kadence()->sub_option( 'header_sticky_bottom_border', 'tablet' ) ) );
 		$css->stop_media_query();
 		$css->start_media_query( $media_query['mobile'] );
-		$css->set_selector( '#masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.item-hidden-above), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.item-hidden-above) > .site-header-row-container-inner' );
+		$css->set_selector( '#masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.site-header-row-container):not(.item-hidden-above):not(.site-main-header-wrap), #masthead .kadence-sticky-header.item-is-fixed:not(.item-at-start):not(.item-hidden-above) > .site-header-row-container-inner' );
 		$css->render_background( kadence()->sub_option( 'header_sticky_background', 'mobile' ), $css );
 		$css->add_property( 'border-bottom', $css->render_border( kadence()->sub_option( 'header_sticky_bottom_border', 'mobile' ) ) );
 		$css->stop_media_query();
@@ -867,6 +867,8 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->add_property( 'color', $this->render_color( kadence()->sub_option( 'primary_navigation_color', 'hover' ) ) );
 		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'primary_navigation_background', 'hover' ) ) );
 		if ( kadence()->option( 'primary_navigation_parent_active' ) ) {
+			$css->set_selector( '.header-navigation[class*="header-navigation-style-underline"] .header-menu-container.primary-menu-container>ul>li.current-menu-ancestor>a:after' );
+			$css->add_property( 'transform', 'scale(1, 1) translate(50%, 0)' );
 			$css->set_selector( '.main-navigation .primary-menu-container > ul > li.menu-item.current-menu-item > a, .main-navigation .primary-menu-container > ul > li.menu-item.current-menu-ancestor > a' );
 		} else {
 			$css->set_selector( '.main-navigation .primary-menu-container > ul > li.menu-item.current-menu-item > a' );
@@ -893,6 +895,8 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->add_property( 'color', $this->render_color( kadence()->sub_option( 'secondary_navigation_color', 'hover' ) ) );
 		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'secondary_navigation_background', 'hover' ) ) );
 		if ( kadence()->option( 'secondary_navigation_parent_active' ) ) {
+			$css->set_selector( '..header-navigation[class*="header-navigation-style-underline"] .header-menu-container.secondary-menu-container>ul>li.current-menu-ancestor>a:after' );
+			$css->add_property( 'transform', 'scale(1, 1) translate(50%, 0)' );
 			$css->set_selector( '.secondary-navigation .secondary-menu-container > ul > li.menu-item.current-menu-item > a, .secondary-navigation .secondary-menu-container > ul > li.menu-item.current-menu-ancestor > a' );
 		} else {
 			$css->set_selector( '.secondary-navigation .secondary-menu-container > ul > li.menu-item.current-menu-item > a' );
@@ -1650,9 +1654,9 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.primary-sidebar.widget-area' );
 		$css->render_background( kadence()->sub_option( 'sidebar_background', 'desktop' ), $css );
 		$css->add_property( 'padding', $this->render_responsive_measure( kadence()->option( 'sidebar_padding' ), 'desktop' ) );
-		$css->set_selector( '.has-sidebar.has-left-sidebar .primary-sidebar.widget-area' );
+		$css->set_selector( '.has-sidebar.has-left-sidebar:not(.rtl) .primary-sidebar.widget-area, .rtl.has-sidebar:not(.has-left-sidebar) .primary-sidebar.widget-area' );
 		$css->add_property( 'border-right', $css->render_border( kadence()->sub_option( 'sidebar_divider_border', 'desktop' ) ) );
-		$css->set_selector( '.has-sidebar:not(.has-left-sidebar) .primary-sidebar.widget-area' );
+		$css->set_selector( '.has-sidebar:not(.has-left-sidebar):not(.rtl) .primary-sidebar.widget-area, .rtl.has-sidebar.has-left-sidebar .primary-sidebar.widget-area' );
 		$css->add_property( 'border-left', $css->render_border( kadence()->sub_option( 'sidebar_divider_border', 'desktop' ) ) );
 		$css->start_media_query( $media_query['tablet'] );
 		$css->set_selector( '.primary-sidebar.widget-area .widget' );
@@ -1734,6 +1738,17 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.wp-block-button.is-style-outline .wp-block-button__link' );
 		$css->add_property( 'padding', $this->render_responsive_measure( kadence()->option( 'buttons_padding' ), 'mobile' ) );
 		$css->stop_media_query();
+		// Image.
+		$css->set_selector( '.entry-content :where(.wp-block-image) img, .entry-content :where(.wp-block-kadence-image) img' );
+		$css->add_property( 'border-radius', $this->render_range( kadence()->option( 'image_border_radius' ), 'desktop' ) );
+		$css->start_media_query( $media_query['tablet'] );
+		$css->set_selector( '.entry-content :where(.wp-block-image) img, .entry-content :where(.wp-block-kadence-image) img' );
+		$css->add_property( 'border-radius', $this->render_range( kadence()->option( 'image_border_radius' ), 'tablet' ) );
+		$css->stop_media_query();
+		$css->start_media_query( $media_query['mobile'] );
+		$css->set_selector( '.entry-content :where(.wp-block-image) img, .entry-content :where(.wp-block-kadence-image) img' );
+		$css->add_property( 'border-radius', $this->render_range( kadence()->option( 'image_border_radius' ), 'mobile' ) );
+		$css->stop_media_query();
 		// Padding for transparent header.
 		if ( kadence()->has_header() ) {
 			$css->start_media_query( $media_query['desktop'] );
@@ -1753,7 +1768,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.wp-site-blocks .entry-hero-container-inner' );
 		$css->render_background( kadence()->sub_option( 'above_title_background', 'desktop' ), $css );
 		$css->set_selector( '.wp-site-blocks .hero-section-overlay' );
-		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'above_title_overlay_color', 'color' ) ) );
+		$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'above_title_overlay_color', 'color' ) ) );
 		$css->start_media_query( $media_query['tablet'] );
 		$css->set_selector( '.wp-site-blocks .entry-hero-container-inner' );
 		$css->render_background( kadence()->sub_option( 'above_title_background', 'tablet' ), $css );
@@ -2078,6 +2093,8 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '#colophon .footer-navigation .footer-menu-container > ul > li > a' );
 		$css->add_property( 'padding-left', $this->render_half_size( kadence()->option( 'footer_navigation_spacing' ) ) );
 		$css->add_property( 'padding-right', $this->render_half_size( kadence()->option( 'footer_navigation_spacing' ) ) );
+		$css->add_property( 'padding-top', $this->render_half_size( kadence()->option( 'footer_navigation_vertical_spacing' ) ) );
+		$css->add_property( 'padding-bottom', $this->render_half_size( kadence()->option( 'footer_navigation_vertical_spacing' ) ) );
 		$css->add_property( 'color', $this->render_color( kadence()->sub_option( 'footer_navigation_color', 'color' ) ) );
 		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'footer_navigation_background', 'color' ) ) );
 		$css->set_selector( '#colophon .footer-navigation .footer-menu-container > ul li a' );
@@ -2176,7 +2193,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.entry-hero.page-hero-section .entry-header' );
 		$css->add_property( 'min-height', $this->render_range( kadence()->option( 'page_title_height' ), 'desktop' ) );
 		$css->set_selector( '.page-hero-section .hero-section-overlay' );
-		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'page_title_overlay_color', 'color' ) ) );
+		$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'page_title_overlay_color', 'color' ) ) );
 		$css->start_media_query( $media_query['tablet'] );
 		$css->set_selector( '.page-hero-section .entry-hero-container-inner' );
 		$css->render_background( kadence()->sub_option( 'page_title_background', 'tablet' ), $css );
@@ -2368,7 +2385,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.post-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'post_title_height' ), 'desktop' ) );
 			$css->set_selector( '.post-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'post_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'post_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.post-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'post_title_background', 'tablet' ), $css );
@@ -2394,7 +2411,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.entry-hero.post-archive-hero-section .entry-header' );
 		$css->add_property( 'min-height', $this->render_range( kadence()->option( 'post_archive_title_height' ), 'desktop' ) );
 		$css->set_selector( '.post-archive-hero-section .hero-section-overlay' );
-		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'post_archive_title_overlay_color', 'color' ) ) );
+		$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'post_archive_title_overlay_color', 'color' ) ) );
 		$css->start_media_query( $media_query['tablet'] );
 		$css->set_selector( '.post-archive-hero-section .entry-hero-container-inner' );
 		$css->render_background( kadence()->sub_option( 'post_archive_title_background', 'tablet' ), $css );
@@ -2503,7 +2520,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.entry-hero.search-archive-hero-section .entry-header' );
 		$css->add_property( 'min-height', $this->render_range( kadence()->option( 'search_archive_title_height' ), 'desktop' ) );
 		$css->set_selector( '.search-archive-hero-section .hero-section-overlay' );
-		$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'search_archive_title_overlay_color', 'color' ) ) );
+		$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'search_archive_title_overlay_color', 'color' ) ) );
 		$css->start_media_query( $media_query['tablet'] );
 		$css->set_selector( '.search-archive-hero-section .entry-hero-container-inner' );
 		$css->render_background( kadence()->sub_option( 'search_archive_title_background', 'tablet' ), $css );
@@ -2626,7 +2643,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.product-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'product_title_height' ), 'desktop' ) );
 			$css->set_selector( '.product-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'product_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'product_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.product-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'product_title_background', 'tablet' ), $css );
@@ -2771,7 +2788,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.product-archive-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'product_archive_title_height' ), 'desktop' ) );
 			$css->set_selector( '.product-archive-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'product_archive_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'product_archive_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.product-archive-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'product_archive_title_background', 'tablet' ), $css );
@@ -2788,17 +2805,17 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.product-archive-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'product_archive_title_height' ), 'mobile' ) );
 			$css->stop_media_query();
-			$css->set_selector( '.product-archive-title h1' );
+			$css->set_selector( '.wp-site-blocks .product-archive-title h1' );
 			$css->render_font( kadence()->option( 'product_archive_title_heading_font' ), $css, 'heading' );
 			$css->add_property( 'color', $this->render_color( kadence()->sub_option( 'product_archive_title_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
-			$css->set_selector( '.product-archive-title h1' );
+			$css->set_selector( '.wp-site-blocks .product-archive-title h1' );
 			$css->add_property( 'font-size', $this->render_font_size( kadence()->option( 'product_archive_title_heading_font' ), 'tablet' ) );
 			$css->add_property( 'line-height', $this->render_font_height( kadence()->option( 'product_archive_title_heading_font' ), 'tablet' ) );
 			$css->add_property( 'letter-spacing', $this->render_font_spacing( kadence()->option( 'product_archive_title_heading_font' ), 'tablet' ) );
 			$css->stop_media_query();
 			$css->start_media_query( $media_query['mobile'] );
-			$css->set_selector( '.product-archive-title h1' );
+			$css->set_selector( '.wp-site-blocks .product-archive-title h1' );
 			$css->add_property( 'font-size', $this->render_font_size( kadence()->option( 'product_archive_title_heading_font' ), 'mobile' ) );
 			$css->add_property( 'line-height', $this->render_font_height( kadence()->option( 'product_archive_title_heading_font' ), 'mobile' ) );
 			$css->add_property( 'letter-spacing', $this->render_font_spacing( kadence()->option( 'product_archive_title_heading_font' ), 'mobile' ) );
@@ -2895,7 +2912,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.sfwd-courses-archive-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'sfwd-courses_archive_title_height' ), 'desktop' ) );
 			$css->set_selector( '.sfwd-courses-archive-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'sfwd-courses_archive_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'sfwd-courses_archive_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.sfwd-courses-archive-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'sfwd-courses_archive_title_background', 'tablet' ), $css );
@@ -2963,7 +2980,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.sfwd-courses-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'sfwd-courses_title_height' ), 'desktop' ) );
 			$css->set_selector( '.sfwd-courses-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'sfwd-courses_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'sfwd-courses_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.sfwd-courses-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'sfwd-courses_title_background', 'tablet' ), $css );
@@ -3041,7 +3058,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 					$css->set_selector( '.entry-hero.sfwd-lessons-hero-section .entry-header' );
 					$css->add_property( 'min-height', $this->render_range( kadence()->option( 'sfwd-lessons_title_height' ), 'desktop' ) );
 					$css->set_selector( '.sfwd-lessons-hero-section .hero-section-overlay' );
-					$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'sfwd-lessons_title_overlay_color', 'color' ) ) );
+					$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'sfwd-lessons_title_overlay_color', 'color' ) ) );
 					$css->start_media_query( $media_query['tablet'] );
 					$css->set_selector( '.sfwd-lessons-hero-section .entry-hero-container-inner' );
 					$css->render_background( kadence()->sub_option( 'sfwd-lessons_title_background', 'tablet' ), $css );
@@ -3116,7 +3133,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 					$css->set_selector( '.entry-hero.sfwd-quiz-hero-section .entry-header' );
 					$css->add_property( 'min-height', $this->render_range( kadence()->option( 'sfwd-quiz_title_height' ), 'desktop' ) );
 					$css->set_selector( '.sfwd-quiz-hero-section .hero-section-overlay' );
-					$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'sfwd-quiz_title_overlay_color', 'color' ) ) );
+					$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'sfwd-quiz_title_overlay_color', 'color' ) ) );
 					$css->start_media_query( $media_query['tablet'] );
 					$css->set_selector( '.sfwd-quiz-hero-section .entry-hero-container-inner' );
 					$css->render_background( kadence()->sub_option( 'sfwd-quiz_title_background', 'tablet' ), $css );
@@ -3191,7 +3208,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 					$css->set_selector( '.entry-hero.sfwd-topic-hero-section .entry-header' );
 					$css->add_property( 'min-height', $this->render_range( kadence()->option( 'sfwd-topic_title_height' ), 'desktop' ) );
 					$css->set_selector( '.sfwd-topic-hero-section .hero-section-overlay' );
-					$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'sfwd-topic_title_overlay_color', 'color' ) ) );
+					$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'sfwd-topic_title_overlay_color', 'color' ) ) );
 					$css->start_media_query( $media_query['tablet'] );
 					$css->set_selector( '.sfwd-topic-hero-section .entry-hero-container-inner' );
 					$css->render_background( kadence()->sub_option( 'sfwd-topic_title_background', 'tablet' ), $css );
@@ -3268,7 +3285,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.groupe-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'groupe_title_height' ), 'desktop' ) );
 			$css->set_selector( '.groupe-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'groupe_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'groupe_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.groupe-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'groupe_title_background', 'tablet' ), $css );
@@ -3326,7 +3343,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.sfwd-essays-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'sfwd-essays_title_height' ), 'desktop' ) );
 			$css->set_selector( '.sfwd-essays-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'sfwd-essays_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'sfwd-essays_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.sfwd-essays-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'sfwd-essays_title_background', 'tablet' ), $css );
@@ -3470,7 +3487,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.course-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'course_title_height' ), 'desktop' ) );
 			$css->set_selector( '.course-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'course_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'course_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.course-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'course_title_background', 'tablet' ), $css );
@@ -3528,7 +3545,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.lesson-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'lesson_title_height' ), 'desktop' ) );
 			$css->set_selector( '.lesson-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'lesson_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'lesson_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.lesson-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'lesson_title_background', 'tablet' ), $css );
@@ -3553,7 +3570,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.course-archive-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'course_archive_title_height' ), 'desktop' ) );
 			$css->set_selector( '.course-archive-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'course_archive_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'course_archive_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.course-archive-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'course_archive_title_background', 'tablet' ), $css );
@@ -3588,7 +3605,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			$css->set_selector( '.entry-hero.llms_membership-archive-hero-section .entry-header' );
 			$css->add_property( 'min-height', $this->render_range( kadence()->option( 'llms_membership_archive_title_height' ), 'desktop' ) );
 			$css->set_selector( '.llms_membership-archive-hero-section .hero-section-overlay' );
-			$css->add_property( 'background', $this->render_color( kadence()->sub_option( 'llms_membership_archive_title_overlay_color', 'color' ) ) );
+			$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( 'llms_membership_archive_title_overlay_color', 'color' ) ) );
 			$css->start_media_query( $media_query['tablet'] );
 			$css->set_selector( '.llms_membership-archive-hero-section .entry-hero-container-inner' );
 			$css->render_background( kadence()->sub_option( 'llms_membership_archive_title_background', 'tablet' ), $css );
@@ -3741,7 +3758,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 					$css->set_selector( '.entry-hero.' . $post_type_name . '-hero-section .entry-header' );
 					$css->add_property( 'min-height', $this->render_range( kadence()->option( $post_type_name . '_title_height' ), 'desktop' ) );
 					$css->set_selector( '.' . $post_type_name . '-hero-section .hero-section-overlay' );
-					$css->add_property( 'background', $this->render_color( kadence()->sub_option( $post_type_name . '_title_overlay_color', 'color' ) ) );
+					$css->add_property( 'background', $css->render_color_or_gradient( kadence()->sub_option( $post_type_name . '_title_overlay_color', 'color' ) ) );
 					$css->start_media_query( $media_query['tablet'] );
 					$css->set_selector( '.' . $post_type_name . '-hero-section .entry-hero-container-inner' );
 					$css->render_background( kadence()->sub_option( $post_type_name . '_title_background', 'tablet' ), $css );
@@ -4045,6 +4062,8 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->add_property( 'border-color', $this->render_color( kadence()->sub_option( 'buttons_border_colors', 'hover' ) ) );
 		$css->set_selector( '.editor-styles-wrapper .wp-block-button .wp-block-button__link:hover, .editor-styles-wrapper .kb-forms-submit:hover, .editor-styles-wrapper .kt-button:hover' );
 		$css->add_property( 'box-shadow', $css->render_shadow( kadence()->option( 'buttons_shadow_hover' ), kadence()->default( 'buttons_shadow_hover' ) ) );
+		$css->set_selector( '.editor-styles-wrapper :where(.wp-block-image) img, .editor-styles-wrapper :where(.wp-block-kadence-image) img' );
+		$css->add_property( 'border-radius', $this->render_range( kadence()->option( 'image_border_radius' ), 'desktop' ) );
 
 		$css->set_selector( '.editor-styles-wrapper .kt-button' );
 		$css->add_property( 'font-family', kadence()->sub_option( 'buttons_typography', 'family' ) );
@@ -4141,9 +4160,9 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css->set_selector( '.editor-styles-wrapper .wp-block-kadence-rowlayout > .innerblocks-wrap.kb-theme-content-width' );
 		$css->add_property( 'padding-left', 'var(--global-content-edge-padding)' );
 		$css->add_property( 'padding-right', 'var(--global-content-edge-padding)' );
-		$css->set_selector( '.post-content-style-boxed .editor-styles-wrapper .wp-block-kadence-rowlayout > .innerblocks-wrap.kb-theme-content-width' );
-		$css->add_property( 'padding-left', 'calc(var(--global-content-edge-padding) + 2rem)' );
-		$css->add_property( 'padding-right', 'calc(var(--global-content-edge-padding) + 2rem)' );
+		// $css->set_selector( '.post-content-style-boxed .editor-styles-wrapper .wp-block-kadence-rowlayout[data-align="full"] > .innerblocks-wrap.kb-theme-content-width' );
+		// $css->add_property( 'padding-left', 'calc(var(--global-content-edge-padding) + 2rem)' );
+		// $css->add_property( 'padding-right', 'calc(var(--global-content-edge-padding) + 2rem)' );
 		// Align Wide Boxed.
 		$css->set_selector( '.post-content-style-boxed' );
 		$css->add_property( '--global-content-wide-width', 'calc(var(--global-content-width) + 4rem )' );
@@ -4759,26 +4778,30 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 * Enqueues WordPress theme styles for the editor.
 	 */
 	public function action_add_gutenberg_styles() {
-		//wp_register_style( 'kadence-editor-global', false );
+		wp_register_style( 'kadence-editor-global', false, array(), KADENCE_VERSION );
 		//wp_enqueue_style( 'kadence-editor-global' );
-		// wp_add_inline_style( 'kadence-editor-global', trim( apply_filters( 'kadence_editor_dynamic_css', '' ) ) );
-		wp_add_inline_style( 'wp-edit-blocks', trim( apply_filters( 'kadence_editor_dynamic_css', '' ) ) );
+		wp_add_inline_style( 'kadence-editor-global', trim( apply_filters( 'kadence_editor_dynamic_css', '' ) ) );
 		// Enqueue Google Fonts.
 		$google_fonts_url = $this->get_google_fonts_url();
 		if ( ! empty( $google_fonts_url ) ) {
-			wp_enqueue_style( 'kadence-google-fonts', $this->get_google_fonts_url() );
+			wp_register_style( 'kadence-google-fonts', $this->get_google_fonts_url(), array(), KADENCE_VERSION  );
 		}
 	}
 	/**
-	 * Connects theme styles to kadence block style so it loads in full size editing context.
-	 * This is a workaround so dynamic css can be loaded in FSE mode.
+	 * Connects theme styles to core block style so it loads in full size editing context.
+	 * This is a workaround so dynamic css can be loaded in Iframe and FSE mode.
 	 */
 	public function update_block_style_dependencies() {
 		$wp_styles = wp_styles();
-		$style     = $wp_styles->query( 'kadence-blocks-editor-css', 'registered' );
-
+		$style     = $wp_styles->query( 'wp-block-library', 'registered' );
 		if ( ! $style ) {
 			return;
+		}
+		if (
+			wp_style_is( 'kadence-editor-global', 'registered' ) &&
+			! in_array( 'kadence-editor-global', $style->deps, true )
+		) {
+			$style->deps[] = 'kadence-editor-global';
 		}
 		if (
 			wp_style_is( 'kadence-google-fonts', 'registered' ) &&
@@ -4928,7 +4951,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 					return is_single() && kadence()->option( 'post_related' );
 				},
 			),
-			'kadence-splide'   => array(
+			'kad-splide'   => array(
 				'file'             => 'kadence-splide.min.css',
 				'preload_callback' => function() {
 					return is_single() && kadence()->option( 'post_related' );
@@ -5075,25 +5098,32 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		if ( ! apply_filters( 'kadence_print_google_fonts', true ) ) {
 			return '';
 		}
+		$should_output = false;
 		$link    = '';
 		$sub_add = array();
 		$subsets = kadence()->option( 'google_subsets' );
 		foreach ( $google_fonts as $key => $gfont_values ) {
-			if ( ! empty( $link ) ) {
-				$link .= '%7C'; // Append a new font to the string.
-			}
-			$link .= $gfont_values['fontfamily'];
-			if ( ! empty( $gfont_values['fontvariants'] ) ) {
-				$link .= ':';
-				$link .= implode( ',', $gfont_values['fontvariants'] );
-			}
-			if ( ! empty( $gfont_values['fontsubsets'] ) && is_array( $gfont_values['fontsubsets'] ) ) {
-				foreach ( $gfont_values['fontsubsets'] as $subkey ) {
-					if ( ! empty( $subkey ) && ! isset( $sub_add[ $subkey ] ) ) {
-						$sub_add[] = $subkey;
+			if ( ! empty( $gfont_values['fontfamily'] ) ) {
+				if ( ! empty( $link ) ) {
+					$link .= '%7C'; // Append a new font to the string.
+				}
+				$should_output = true;
+				$link .= $gfont_values['fontfamily'];
+				if ( ! empty( $gfont_values['fontvariants'] ) ) {
+					$link .= ':';
+					$link .= implode( ',', $gfont_values['fontvariants'] );
+				}
+				if ( ! empty( $gfont_values['fontsubsets'] ) && is_array( $gfont_values['fontsubsets'] ) ) {
+					foreach ( $gfont_values['fontsubsets'] as $subkey ) {
+						if ( ! empty( $subkey ) && ! in_array( $subkey, $sub_add ) ) {
+							$sub_add[] = $subkey;
+						}
 					}
 				}
 			}
+		}
+		if ( ! $should_output ) {
+			return '';
 		}
 		$args = array(
 			'family' => $link,
@@ -5105,7 +5135,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 					if ( 'chinese' === $key ) {
 						$key = 'chinese-traditional';
 					}
-					if ( ! isset( $sub_add[ $key ] ) ) {
+					if ( ! in_array( $key, $sub_add ) ) {
 						$sub_add[] = $key;
 					}
 				}

@@ -7,7 +7,7 @@ Author: UltimatelySocial
 Author URI: http://ultimatelysocial.com
 Text Domain: ultimate-social-media-icons
 Domain Path: /languages
-Version: 2.8.0
+Version: 2.8.1
 License: GPLv2 or later
 */
 require_once 'analyst/main.php';
@@ -23,7 +23,7 @@ sfsi_error_reporting();
 
 global $wpdb;
 /* define the Root for URL and Document */
-define( 'SFSI_PLUGIN_VERSION', '2.8.0' );
+define( 'SFSI_PLUGIN_VERSION', '2.8.1' );
 define( 'SFSI_DOCROOT', dirname( __FILE__ ) );
 
 define( 'SFSI_PLUGURL', plugin_dir_url( __FILE__ ) );
@@ -219,6 +219,10 @@ function ultimatefbmetatags() {
     }
     if ($metarequest == 'yes' && !empty($post_id)) {
         $post = get_post($post_id);
+
+        if (! $post){
+            return;
+        }
 
         $attachment_id = get_post_thumbnail_id($post_id);
 

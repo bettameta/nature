@@ -122,7 +122,7 @@
 
                 <!--- End Select Sticky icons -->
 
-                <h4 style="padding-top: 0; font-family: 'helveticaneue-light';"><?php _e( 'Show the bar on:', 'ultimate-social-media-icons' ); ?></h4>
+                <h4 style="padding-top: 0; font-family: 'helveticaneue-light'; font-size: 18px;"><?php _e( 'Show the bar on:', 'ultimate-social-media-icons' ); ?></h4>
                 <div class="sfsi_premium_sticky_bar section" style="margin-left: 39px;margin-top: 16px;">
                     <!-- Desktop -->
                     <div class="sfsi_premium_desktop">

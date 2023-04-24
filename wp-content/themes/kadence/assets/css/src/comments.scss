@@ -7,6 +7,14 @@
 	margin-left: auto;
 	margin-right: auto;
 	//padding: 0 var(--global-sm-spacing);
+
+	.comment .avatar {
+		position: absolute;
+		left: -70px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50px;
+	}
 }
 .comment-content a {
 	word-wrap: break-word;
@@ -31,9 +39,13 @@
 	list-style-type: none;
 }
 
-.children {
+.children{
 	margin-left: 1em;
 	padding-left: 0;
+}
+.rtl .children {
+	margin-left: 0;
+	margin-right: 1em;
 }
 #cancel-comment-reply-link {
     margin-left: 0.8em;
@@ -42,6 +54,10 @@
 
 	.children {
 		margin-left: 2em;
+	}
+	.rtl .children {
+		margin-left: 0;
+		margin-right: 2em;
 	}
 }
 
@@ -77,13 +93,6 @@
 	text-decoration: underline;
 }
 
-.comment .avatar {
-	position: absolute;
-	left: -70px;
-	width: 50px;
-	height: 50px;
-	border-radius: 50px;
-}
 
 .bypostauthor .avatar {
 	box-sizing: content-box;

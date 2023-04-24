@@ -43,7 +43,7 @@ function sfsi_check_PopUp($content)
 
             if ( $sfsi_section7_options['sfsi_Show_popupOn'] == "selectedpage" || ( isset( $sfsi_section7_options['sfsi_Show_popupOn_somepages_selectedpage'] ) && $sfsi_section7_options['sfsi_Show_popupOn_somepages_selectedpage'] == 'selectedpage' ) ) {
 
-                $post_id = $post->ID;
+                $post_id = isset($post->ID) ? $post->ID : null;
 
                 if ( !empty( $post_id ) && !empty( $sfsi_section7_options['sfsi_Show_popupOn_PageIDs'] ) ) {
                     if ( is_page() && in_array( $post_id,  maybe_unserialize( $sfsi_section7_options['sfsi_Show_popupOn_PageIDs'] ) ) ) {
@@ -172,6 +172,7 @@ function sfsi_FrontPopupDiv()
         $sfsi_section5['sfsi_redditIcon_order'] => 'reddit',
         $sfsi_section5['sfsi_fbmessengerIcon_order'] => 'fbmessenger',
         $sfsi_section5['sfsi_tiktokIcon_order'] => 'tiktok',
+        $sfsi_section5['sfsi_mastodonIcon_order'] => 'mastodon',
 
     );
     $icons = array();
@@ -259,6 +260,21 @@ function sfsi_FrontPopupDiv()
                 break;
             case 'whatsapp':
                 if ($sfsi_section1_options['sfsi_whatsapp_display'] == 'yes')    $icons .= "<li>" . sfsi_prepairIcons('whatsapp', 1) . "</li>";
+                break;
+            case 'tiktok':
+                if ($sfsi_section1_options['sfsi_tiktok_display'] == 'yes')    $icons .= "<li>" . sfsi_prepairIcons('tiktok', 1) . "</li>";
+                break;
+            case 'mastodon':
+                if ($sfsi_section1_options['sfsi_mastodon_display'] == 'yes')    $icons .= "<li>" . sfsi_prepairIcons('mastodon', 1) . "</li>";
+                break;
+            case "fbmessenger":
+                if ($sfsi_section1_options['sfsi_fbmessenger_display'] == 'yes')    $icons .= "<li>" . sfsi_prepairIcons('fbmessenger', 1) . "</li>";
+                break;
+            case "reddit":
+                if ($sfsi_section1_options['sfsi_reddit_display'] == 'yes')    $icons .= "<li>" . sfsi_prepairIcons('reddit', 1) . "</li>";
+                break;
+            case "snapchat":
+                if ($sfsi_section1_options['sfsi_snapchat_display'] == 'yes')    $icons .= "<li>" . sfsi_prepairIcons('snapchat', 1) . "</li>";
                 break;
             case 'custom':
                 $icons .= "<li>" . sfsi_prepairIcons($icon_arry['ele'], 1) . "</li>";

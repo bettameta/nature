@@ -840,7 +840,8 @@ function mobile_cart() {
 		$icon       = kadence()->option( 'header_mobile_cart_icon', 'shopping-bag' );
 		echo '<div class="header-mobile-cart-wrap kadence-header-cart">';
 		kadence()->customizer_quick_link();
-		echo '<div class="header-cart-inner-wrap header-cart-is-empty-' . ( WC()->cart->get_cart_contents_count() > 0 ? 'false' : 'true' ) . ' cart-show-label-' . ( ! empty( $label ) ? 'true' : 'false' ) . ' cart-style-' . esc_attr( kadence()->option( 'header_mobile_cart_style' ) ) . '">';
+		echo '<span class="header-cart-empty-check header-cart-is-empty-' . ( WC()->cart->get_cart_contents_count() > 0 ? 'false' : 'true' ) . '"></span>';
+		echo '<div class="header-cart-inner-wrap cart-show-label-' . ( ! empty( $label ) ? 'true' : 'false' ) . ' cart-style-' . esc_attr( kadence()->option( 'header_mobile_cart_style' ) ) . '">';
 		if ( 'link' === kadence()->option( 'header_mobile_cart_style' ) ) {
 			echo '<a href="' . esc_url( wc_get_cart_url() ) . '"' . ( ! empty( $label ) ? '' : ' aria-label="' . esc_attr__( 'Shopping Cart', 'kadence' ) . '"' ) . ' class="header-cart-button">';
 			if ( ! empty( $label ) || is_customize_preview() ) {

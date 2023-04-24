@@ -324,3 +324,7 @@
         });
     </script>
     <?php include(SFSI_DOCROOT . '/views/sfsi_chat_on_admin_pannel.php'); ?>
+    <?php
+      echo "<br /><br /><br />";
+      do_action('ins_global_print_carrousel');
+    ?>

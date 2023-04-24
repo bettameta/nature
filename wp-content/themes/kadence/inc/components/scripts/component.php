@@ -81,19 +81,19 @@ class Component implements Component_Interface {
 		}
 		// Enqueue the slide script.
 		wp_register_script(
-			'kadence-splide',
+			'kad-splide',
 			get_theme_file_uri( '/assets/js/splide.min.js' ),
 			array(),
 			KADENCE_VERSION,
 			true
 		);
-		wp_script_add_data( 'kadence-splide', 'async', true );
-		wp_script_add_data( 'kadence-splide', 'precache', true );
+		wp_script_add_data( 'kad-splide', 'async', true );
+		wp_script_add_data( 'kad-splide', 'precache', true );
 		// Enqueue the slide script.
 		wp_register_script(
 			'kadence-slide-init',
 			get_theme_file_uri( '/assets/js/splide-init.min.js' ),
-			array( 'kadence-splide', 'kadence-navigation' ),
+			array( 'kad-splide', 'kadence-navigation' ),
 			KADENCE_VERSION,
 			true
 		);
@@ -152,8 +152,10 @@ class Component implements Component_Interface {
 			'kadenceConfig',
 			array(
 				'screenReader' => array(
-					'expand'   => __( 'Expand child menu', 'kadence' ),
-					'collapse' => __( 'Collapse child menu', 'kadence' ),
+					'expand'     => __( 'Expand child menu', 'kadence' ),
+					'expandOf'   => __( 'Expand child menu of', 'kadence' ),
+					'collapse'   => __( 'Collapse child menu', 'kadence' ),
+					'collapseOf' => __( 'Collapse child menu of', 'kadence' ),
 				),
 				'breakPoints' => array(
 					'desktop' => esc_attr( $breakpoint ),

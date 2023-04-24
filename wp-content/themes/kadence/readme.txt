@@ -2,9 +2,9 @@
 Contributors: britner
 Tags: translation-ready, two-columns, right-sidebar, left-sidebar, footer-widgets, blog, custom-logo, custom-background, custom-menu, rtl-language-support, editor-style, threaded-comments, custom-colors, featured-images, wide-blocks, full-width-template, theme-options, e-commerce.
 Requires at least: 5.4
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.2
-Stable tag: 1.1.31
+Stable tag: 1.1.35
 License: GNU General Public License v3.0 (or later)
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,6 +18,44 @@ Kadence is released under GNU General Public License v3.0 (or later)
 
 
 = Changelog =
+
+== 1.1.35 | 27th March 2022 == 
+* Update: 6.2 css issue with editor title.
+* Update: Editor style tweak.
+
+== 1.1.34 | 22nd March 2022 == 
+* Update: Splide JS to prevent conflicts.
+* Fix: Issue with posts block.
+
+== 1.1.33 | 20th March 2022 == 
+* Update: Editor styling of form.
+* Update: Support for thirdpary woo plugins and ajax cart.
+* Update: Improve accessibility of tabing through dropdown navigation.
+* Fix: Various RTL css issues.
+* Fix: Inherit image ratio issue with featured images.
+* Fix: LMS sidebar issue on archive template.
+* Fix: Issue with css specificity in customizer. 
+* Fix: Issue with mini cart dropdown when lots of products added.
+* Fix: Issue with woocommerce single purchase products and custom quantity spinners.
+* Fix: Issue with sticky header background possibly applied twice on mobile.
+* Fix: Issue with tribe events css.
+* Fix: Issue with css specificity in archive title.
+* Fix: Issue with iframed editor and google fonts.
+* Fix: Issue with possible php notice in archive title.
+* Fix: Title Overlay issue with gradients.
+* Fix: Classic editor embed issue.
+* Fix: Mobile empty cart class.
+* Fix: Role Landmark issue when using above content title.
+
+== 1.1.32 | 31st January 2022 == 
+* Update: CSS styling of some buttons.
+* Update: Dropdown aria label for accessibility.
+* Update: Mobile close js to ignore tabs.
+* Update: bbpress integration, add subscribe in topic meta, tweak forms heading.
+* Update: Global image styling options in customizer.
+* Update: allow more decimal places in font sizing.
+* Fix: Palette, type pairings popover in customizer.
+* Fix: Issue possible issue with heading spacing in editor.
 
 == 1.1.31 | 3rd November 2022 == 
 * Update: Popover css for customizer for 6.1

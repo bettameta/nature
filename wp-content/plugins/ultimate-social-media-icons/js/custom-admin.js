@@ -196,6 +196,7 @@ function sfsi_depened_sections() {
         SFSI("input[name='sfsi_reddit_display']").prop("checked") ? sfsi_section_Display("reddit_section", "show") : sfsi_section_Display("reddit_section", "hide"),
         SFSI("input[name='sfsi_fbmessenger_display']").prop("checked") ? sfsi_section_Display("fbmessenger_section", "show") : sfsi_section_Display("fbmessenger_section", "hide"),
         SFSI("input[name='sfsi_tiktok_display']").prop("checked") ? sfsi_section_Display("tiktok_section", "show") : sfsi_section_Display("tiktok_section", "hide"),
+        SFSI("input[name='sfsi_mastodon_display']").prop("checked") ? sfsi_section_Display("mastodon_section", "show") : sfsi_section_Display("mastodon_section", "hide"),
         SFSI("input[element-type='cusotm-icon']").prop("checked") ? sfsi_section_Display("custom_section", "show") : sfsi_section_Display("custom_section", "hide");
 }
 
@@ -331,6 +332,7 @@ function sfsi_update_step1() {
         messg = SFSI("input[name='sfsi_fbmessenger_display']:checked").val(),
         redd = SFSI("input[name='sfsi_reddit_display']:checked").val(),
         tik = SFSI("input[name='sfsi_tiktok_display']:checked").val(),
+        mast = SFSI("input[name='sfsi_mastodon_display']:checked").val(),
         l = SFSI("input[name='sfsi_custom1_display']:checked").val(),
         S = SFSI("input[name='sfsi_custom2_display']:checked").val(),
         u = SFSI("input[name='sfsi_custom3_display']:checked").val(),
@@ -356,6 +358,7 @@ function sfsi_update_step1() {
             sfsi_fbmessenger_display: messg,
             sfsi_reddit_display: redd,
             sfsi_tiktok_display: tik,
+            sfsi_mastodon_display: mast,
             sfsi_custom1_display: l,
             sfsi_custom2_display: S,
             sfsi_custom3_display: u,
@@ -432,6 +435,8 @@ function sfsi_update_step2() {
         vpu = SFSI("input[name='sfsi_vk_pageURL']").val(),
         op = 1 == SFSI("input[name='sfsi_ok_page']").prop("disabled") ? "" : SFSI("input[name='sfsi_ok_page']:checked").val(),
         opu = SFSI("input[name='sfsi_ok_pageURL']").val(),
+        mastodon_page = 1 == SFSI("input[name='sfsi_mastodon_page']").prop("disabled") ? "" : SFSI("input[name='sfsi_mastodon_page']:checked").val(),
+        mastodon_pageURL = SFSI("input[name='sfsi_mastodon_pageURL']").val(),
 
         redd_pageShare = 1 == SFSI("input[name='sfsi_reddit_pageShare']").prop("disabled") ? "" : SFSI("input[name='sfsi_reddit_pageShare']:checked").val(),
         redd_pageVisit = 1 == SFSI("input[name='sfsi_reddit_page_visit']").prop("disabled") ? "" : SFSI("input[name='sfsi_reddit_page_visit']").val(),
@@ -505,6 +510,8 @@ function sfsi_update_step2() {
         sfsi_whatsapp_share: whatsapp_share,
         sfsi_wechat_share: wechat_share,
         sfsi_wechat_follow: wechat_follow,
+        sfsi_mastodon_page: mastodon_page,
+        sfsi_mastodon_pageURL: mastodon_pageURL,
         nonce: nonce
     };
 
@@ -567,6 +574,7 @@ function sfsi_update_step3() {
         sfsi_wechat_bgColor = SFSI("input[name='sfsi_wechat_bgColor']").val(),
         sfsi_weibo_bgColor = SFSI("input[name='sfsi_weibo_bgColor']").val(),
         sfsi_tiktok_bgColor = SFSI("input[name='sfsi_tiktok_bgColor']").val();
+        sfsi_mastodon_bgColor = SFSI("input[name='sfsi_mastodon_bgColor']").val();
 
     var mouseover_effect_type = 'same_icons'; //SFSI("input[name='sfsi_mouseOver_effect_type']:checked").val();
 
@@ -607,6 +615,7 @@ function sfsi_update_step3() {
         sfsi_wechat_bgColor: sfsi_wechat_bgColor,
         sfsi_weibo_bgColor: sfsi_weibo_bgColor,
         sfsi_tiktok_bgColor: sfsi_tiktok_bgColor,
+        sfsi_mastodon_bgColor: sfsi_mastodon_bgColor,
 
         nonce: nonce
     };
@@ -652,7 +661,12 @@ function sfsi_showPreviewCounts() {
         1 == SFSI("input[name='sfsi_weibo_countsDisplay']").prop("checked") ? (SFSI("#sfsi_weibo_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_weibo_countsDisplay").css("opacity", 0),
         1 == SFSI("input[name='sfsi_wechat_countsDisplay']").prop("checked") ? (SFSI("#sfsi_wechat_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_wechat_countsDisplay").css("opacity", 0),
         1 == SFSI("input[name='sfsi_whatsapp_countsDisplay']").prop("checked") ? (SFSI("#sfsi_whatsapp_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_whatsapp_countsDisplay").css("opacity", 0),
-
+        1 == SFSI("input[name='sfsi_tiktok_countsDisplay']").prop("checked") ? (SFSI("#sfsi_tiktok_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_tiktok_countsDisplay").css("opacity", 0),
+        1 == SFSI("input[name='sfsi_mastodon_countsDisplay']").prop("checked") ? (SFSI("#sfsi_mastodon_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_mastodon_countsDisplay").css("opacity", 0),
+        1 == SFSI("input[name='sfsi_reddit_countsDisplay']").prop("checked") ? (SFSI("#sfsi_reddit_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_reddit_countsDisplay").css("opacity", 0),
+        1 == SFSI("input[name='sfsi_fbmessenger_countsDisplay']").prop("checked") ? (SFSI("#sfsi_fbmessenger_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_fbmessenger_countsDisplay").css("opacity", 0),
+        1 == SFSI("input[name='sfsi_snapchat_countsDisplay']").prop("checked") ? (SFSI("#sfsi_snapchat_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_snapchat_countsDisplay").css("opacity", 0),
+        1 == SFSI("input[name='sfsi_wechat_countsDisplay']").prop("checked") ? (SFSI("#sfsi_wechat_countsDisplay").css("opacity", 0), s = 1) : SFSI("#sfsi_wechat_countsDisplay").css("opacity", 0),
 
         0 == s || "no" == SFSI("input[name='sfsi_display_counts']:checked").val() ? SFSI(".sfsi_Cdisplay").hide() : SFSI(".sfsi_Cdisplay").show();
 }
@@ -730,9 +744,24 @@ function sfsi_update_step4() {
         resp = 1 == SFSI("input[name='sfsi_responsive_share_count']").prop("disabled") ? "" : SFSI("input[name='sfsi_responsive_share_count']:checked").val(),
         original = 1 == SFSI("input[name='sfsi_original_counts']").prop("disabled") ? "" : SFSI("input[name='sfsi_original_counts']:checked").val(),
         round = 1 == SFSI("input[name='sfsi_round_counts']").prop("disabled") ? "" : SFSI("input[name='sfsi_round_counts']:checked").val()
-    whatsapp = 1 == SFSI("input[name='sfsi_whatsapp_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_whatsapp_countsDisplay']:checked").val(),
+        whatsapp = 1 == SFSI("input[name='sfsi_whatsapp_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_whatsapp_countsDisplay']:checked").val(),
         whatsapp_manual = SFSI("input[name='sfsi_whatsapp_manualCounts']").val(),
         //console.log(resp, original, round);
+
+        tiktokc = 1 == SFSI("input[name='sfsi_tiktok_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_tiktok_countsDisplay']:checked").val(),
+        tiktokm = SFSI("input[name='sfsi_tiktok_manualCounts']").val(),
+
+        mastodonc = 1 == SFSI("input[name='sfsi_mastodon_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_mastodon_countsDisplay']:checked").val(),
+        mastodonm = SFSI("input[name='sfsi_mastodon_manualCounts']").val(),
+
+        redditc = 1 == SFSI("input[name='sfsi_reddit_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_reddit_countsDisplay']:checked").val(),
+        redditm = SFSI("input[name='sfsi_reddit_manualCounts']").val(),
+
+        snapchatc = 1 == SFSI("input[name='sfsi_snapchat_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_snapchat_countsDisplay']:checked").val(),
+        snapchatm = SFSI("input[name='sfsi_snapchat_manualCounts']").val(),
+
+        fbmessengerc = 1 == SFSI("input[name='sfsi_fbmessenger_countsDisplay']").prop("disabled") ? "" : SFSI("input[name='sfsi_fbmessenger_countsDisplay']:checked").val(),
+        fbmessengerm = SFSI("input[name='sfsi_fbmessenger_manualCounts']").val(),
 
         $ = {
             action: "updateSrcn4",
@@ -787,6 +816,17 @@ function sfsi_update_step4() {
             sfsi_weibo_manualCounts: wm,
             sfsi_wechat_countsDisplay: wcc,
             sfsi_wechat_manualCounts: wcm,
+            sfsi_tiktok_countsDisplay: tiktokc,
+            sfsi_tiktok_manualCounts: tiktokm,
+            sfsi_mastodon_countsDisplay: mastodonc,
+            sfsi_mastodon_manualCounts: mastodonm,
+            sfsi_reddit_countsDisplay: redditc,
+            sfsi_reddit_manualCounts: redditm,
+            sfsi_snapchat_countsDisplay: snapchatc,
+            sfsi_snapchat_manualCounts: snapchatm,
+            sfsi_fbmessenger_countsDisplay: fbmessengerc,
+            sfsi_fbmessenger_manualCounts: fbmessengerm,
+
             sfsi_responsive_share_count: resp,
             sfsi_original_counts: original,
             sfsi_round_counts: round,
@@ -844,6 +884,7 @@ function sfsi_update_step5() {
         noop = SFSI("input[name='sfsi_icons_AddNoopener']:checked").val(),
 
         se = SFSI("input[name='sfsi_icons_suppress_errors']:checked").val(),
+        sw = SFSI("input[name='sfsi_show_admin_popup']:checked").val(),
         st = SFSI("input[name='sfsi_icons_sharing_and_traffic_tips']:checked").val(),
         c = SFSI("input[name='sfsi_icons_stick']:checked").val(),
         p = SFSI("#sfsi_rssIcon_order").attr("data-index"),
@@ -864,6 +905,7 @@ function sfsi_update_step5() {
         reddI = SFSI("#sfsi_redditIcon_order").attr("data-index"),
         fbMI = SFSI("#sfsi_fbmessengerIcon_order").attr("data-index"),
         tikI = SFSI("#sfsi_tiktokIcon_order").attr("data-index"),
+        mastI = SFSI("#sfsi_mastodonIcon_order").attr("data-index"),
 
         h = new Array();
 
@@ -892,6 +934,7 @@ function sfsi_update_step5() {
         snap = 1 == SFSI("input[name='sfsi_snapchat_MouseOverText']").prop("disabled") ? "" : SFSI("input[name='sfsi_snapchat_MouseOverText']").val(),
         fbM = 1 == SFSI("input[name='sfsi_fbmessenger_MouseOverText']").prop("disabled") ? "" : SFSI("input[name='sfsi_fbmessenger_MouseOverText']").val(),
         tik = 1 == SFSI("input[name='sfsi_tiktok_MouseOverText']").prop("disabled") ? "" : SFSI("input[name='sfsi_tiktok_MouseOverText']").val(),
+        mast = 1 == SFSI("input[name='sfsi_mastodon_MouseOverText']").prop("disabled") ? "" : SFSI("input[name='sfsi_mastodon_MouseOverText']").val(),
         O = {};
     SFSI("input[name='sfsi_custom_MouseOverTexts[]']").each(function() {
         O[SFSI(this).attr("file-id")] = this.value;
@@ -918,6 +961,7 @@ function sfsi_update_step5() {
         sfsi_icons_ClickPageOpen: o,
         sfsi_icons_AddNoopener: o === 'yes' ? noop : 'no',
         sfsi_icons_suppress_errors: se,
+        sfsi_show_admin_popup: sw,
         sfsi_icons_sharing_and_traffic_tips: st,
         sfsi_icons_stick: c,
         sfsi_rss_MouseOverText: v,
@@ -937,6 +981,7 @@ function sfsi_update_step5() {
         sfsi_snapchat_MouseOverText: snap,
         sfsi_fbmessenger_MouseOverText: fbM,
         sfsi_tiktok_MouseOverText: tik,
+        sfsi_mastodon_MouseOverText: mast,
         sfsi_custom_MouseOverTexts: O,
         sfsi_rssIcon_order: p,
         sfsi_emailIcon_order: _,
@@ -956,6 +1001,7 @@ function sfsi_update_step5() {
         sfsi_redditIcon_order: reddI,
         sfsi_fbmessengerIcon_order: fbMI,
         sfsi_tiktokIcon_order: tikI,
+        sfsi_mastodonIcon_order: mastI,
         sfsi_whatsapp_MouseOverText: wa,
         sfsi_custom_orders: h,
         sfsi_custom_social_hide: sfsi_custom_social_hide,
@@ -1550,6 +1596,16 @@ function sfsi_validationStep2() {
             return false;
         }
     }
+
+    /* Mastodon validation */
+    if (sfsi_validator(SFSI('input[name="sfsi_mastodon_display"]'), 'checked')) {
+        if (!sfsi_validator(SFSI('input[name="sfsi_mastodon_pageURL"]'), 'blank')) {
+            showErrorSuc("error", "Error : Invalid Mastodon page url ", 2);
+            SFSI('input[name="sfsi_mastodon_pageURL"]').addClass('inputError');
+            return false;
+        }
+    }
+
     /* validate custom links */
     var er = 0;
     SFSI("input[name='sfsi_CustomIcon_links[]']").each(function() {
@@ -1966,7 +2022,7 @@ function sfsi_make_popBox() {
             "none" != SFSI(this).css("display") && (s = 1);
         }),
         0 == s ? SFSI(".sfsi_Popinner").hide() : SFSI(".sfsi_Popinner").show(),
-        "" != SFSI('input[name="sfsi_popup_text"]').val() ? (SFSI(".sfsi_Popinner >h2").html(SFSI('input[name="sfsi_popup_text"]').val()),
+        "" != SFSI('input[name="sfsi_popup_text"]').val() ? (SFSI(".sfsi_Popinner >h2").html(escapeHtml(SFSI('input[name="sfsi_popup_text"]').val())),
             SFSI(".sfsi_Popinner >h2").show()) : SFSI(".sfsi_Popinner >h2").hide(), SFSI(".sfsi_Popinner").css({
             "border-color": SFSI('input[name="sfsi_popup_border_color"]').val(),
             "border-width": SFSI('input[name="sfsi_popup_border_thickness"]').val(),
@@ -2038,7 +2094,9 @@ function sfsfi_getCookie(s) {
 
 function sfsi_hideFooter() {}
 
-window.onerror = function() {},
+window.onerror = function() {
+    jQuery("#sfpageLoad").fadeOut(2e3);
+},
     SFSI = jQuery,
     SFSI(window).on('load', function() {
         SFSI("#sfpageLoad").fadeOut(2e3);
@@ -2069,6 +2127,19 @@ function selectText(containerid) {
     }
 }
 
+/**
+ * @param {*} input 
+ * @returns 
+ */
+function escapeHtml(unsafe) { 
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
+
 function create_suscriber_form() {
     //Popbox customization
     "no" == SFSI('input[name="sfsi_form_adjustment"]:checked').val() ? SFSI(".sfsi_subscribe_Popinner").css({
@@ -2090,7 +2161,7 @@ function create_suscriber_form() {
     SFSI('input[name="sfsi_form_background"]').val() != "" ? (SFSI(".sfsi_subscribe_Popinner").css("background-color", SFSI('input[name="sfsi_form_background"]').val())) : '';
 
     /*Heading customization*/
-    SFSI('input[name="sfsi_form_heading_text"]').val() != "" ? (SFSI(".sfsi_subscribe_Popinner > form > h5").html(SFSI('input[name="sfsi_form_heading_text"]').val())) : SFSI(".sfsi_subscribe_Popinner > form > h5").html('');
+    SFSI('input[name="sfsi_form_heading_text"]').val() != "" ? (SFSI(".sfsi_subscribe_Popinner > form > h5").html(escapeHtml(SFSI('input[name="sfsi_form_heading_text"]').val()))) : SFSI(".sfsi_subscribe_Popinner > form > h5").html('');
 
     SFSI('#sfsi_form_heading_font').val() != "" ? (SFSI(".sfsi_subscribe_Popinner > form > h5").css("font-family", SFSI("#sfsi_form_heading_font").val())) : '';
 
@@ -2305,7 +2376,7 @@ SFSI(document).ready(function(s) {
     });
 
     /* Flat icon BG color */
-    SFSI('#sfsi_rss_bgColor, #sfsi_email_bgColor, #sfsi_facebook_bgColor, #sfsi_twitter_bgColor, #sfsi_youtube_bgColor, #sfsi_pinterest_bgColor, #sfsi_linkedin_bgColor, #sfsi_snapchat_bgColor, #sfsi_whatsapp_bgColor, #sfsi_reddit_bgColor, #sfsi_fbmessenger_bgColor, #sfsi_ok_bgColor, #sfsi_telegram_bgColor, #sfsi_vk_bgColor, #sfsi_wechat_bgColor, #sfsi_weibo_bgColor, #sfsi_tiktok_bgColor').wpColorPicker({
+    SFSI('#sfsi_rss_bgColor, #sfsi_email_bgColor, #sfsi_facebook_bgColor, #sfsi_twitter_bgColor, #sfsi_youtube_bgColor, #sfsi_pinterest_bgColor, #sfsi_linkedin_bgColor, #sfsi_snapchat_bgColor, #sfsi_whatsapp_bgColor, #sfsi_reddit_bgColor, #sfsi_fbmessenger_bgColor, #sfsi_ok_bgColor, #sfsi_telegram_bgColor, #sfsi_vk_bgColor, #sfsi_wechat_bgColor, #sfsi_weibo_bgColor, #sfsi_tiktok_bgColor, #sfsi_mastodon_bgColor').wpColorPicker({
         defaultColor: true,
         hide: true,
         palettes: true,

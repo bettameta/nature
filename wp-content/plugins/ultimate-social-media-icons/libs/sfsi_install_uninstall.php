@@ -382,6 +382,16 @@ function sfsi_update_plugin()
         if (!isset($option4['sfsi_tiktok_countsFrom'])) {
             $option4['sfsi_tiktok_countsFrom'] = "manual";
         }
+
+        if (!isset($option4['sfsi_mastodon_manualCounts'])) {
+            $option4['sfsi_mastodon_manualCounts'] = "20";
+        }
+        if (!isset($option4['sfsi_mastodon_countsDisplay'])) {
+            $option4['sfsi_mastodon_countsDisplay'] = "no";
+        }
+        if (!isset($option4['sfsi_mastodon_countsFrom'])) {
+            $option4['sfsi_mastodon_countsFrom'] = "manual";
+        }
     }
 
     $option3 = maybe_unserialize( get_option( 'sfsi_section3_options', false ) );
@@ -754,6 +764,9 @@ function sfsi_update_plugin()
         if (!isset($option5['sfsi_tiktokIcon_order'])) {
             $option5['sfsi_tiktokIcon_order']    = '20';
         }
+        if (isset($options5['sfsi_mastodonIcon_order'])) {
+            $option5['sfsi_mastodonIcon_order']    = '21';
+        }
 
         if (!isset($option5['sfsi_telegram_MouseOverText'])) {
             $option5['sfsi_telegram_MouseOverText']    = 'Telegram';
@@ -782,6 +795,9 @@ function sfsi_update_plugin()
         if (!isset($option5['sfsi_tiktok_MouseOverText']) || $option5['sfsi_tiktok_MouseOverText'] == 'Tiktok') {
             $option5['sfsi_tiktok_MouseOverText']    = 'Tiktok';
         }
+        if (!isset($option5['sfsi_mastodon_MouseOverText']) || $option5['sfsi_mastodon_MouseOverText'] == 'Mastodon') {
+            $option5['sfsi_mastodon_MouseOverText']    = 'Mastodon';
+        }
         if (!isset($option5['sfsi_reddit_MouseOverText']) || $option5['sfsi_reddit_MouseOverText'] == 'Reddit') {
             $option5['sfsi_reddit_MouseOverText']    = 'Reddit';
         }
@@ -809,6 +825,10 @@ function sfsi_update_plugin()
 
             $option5['sfsi_pplus_icons_suppress_errors'] = $sup_errors;
             update_option('sfsi_pplus_error_reporting_notice_dismissed', $sup_errors_banner_dismissed);
+        }
+
+        if (!isset($option5['sfsi_icons_AddNoopener'])) {
+            $option5['sfsi_icons_AddNoopener'] = 'no';
         }
     }
 
@@ -1061,6 +1081,7 @@ function sfsi_activate_plugin()
             'sfsi_custom_display' => '',
             'sfsi_custom_files' => '',
             'sfsi_whatsapp_display' => 'no',
+            'sfsi_mastodon_display' => 'no',
         );
         add_option('sfsi_section1_options',  serialize($options1));
     }
@@ -1141,6 +1162,8 @@ function sfsi_activate_plugin()
             'sfsi_fbmessenger_contact' => '',
             'sfsi_reddit_pageShare'    => 'yes',
             'sfsi_reddit_page_visit' => '',
+            'sfsi_mastodon_page'       => 'yes',
+            'sfsi_mastodon_pageURL'       => '',
         );
         add_option('sfsi_section2_options',  serialize($options2));
     }
@@ -1262,13 +1285,9 @@ function sfsi_activate_plugin()
             'sfsi_reddit_countsFrom' => 'manual',
             'sfsi_reddit_manualCounts' => '20',
 
-            'sfsi_fbmessenger_countsDisplay' => 'no',
-            'sfsi_fbmessenger_countsFrom' => 'manual',
-            'sfsi_fbmessenger_manualCounts' => '20',
-
-            'sfsi_tiktok_countsDisplay' => 'no',
-            'sfsi_tiktok_countsFrom' => 'manual',
-            'sfsi_tiktok_manualCounts' => '20',
+            'sfsi_mastodon_countsDisplay' => 'no',
+            'sfsi_mastodon_countsFrom' => 'manual',
+            'sfsi_mastodon_manualCounts' => '20',
 
         );
         add_option('sfsi_section4_options',  serialize($options4));
@@ -1296,6 +1315,7 @@ function sfsi_activate_plugin()
             'sfsi_icons_ClickPageOpen'    => 'yes',
             'sfsi_icons_AddNoopener'    => 'yes',
             'sfsi_icons_suppress_errors' => 'no',
+            'sfsi_show_admin_popup' => 'yes',
             'sfsi_icons_sharing_and_traffic_tips' => 'yes',
             'sfsi_icons_float'            => 'no',
             'sfsi_disable_floaticons'    => 'no',
@@ -1345,6 +1365,7 @@ function sfsi_activate_plugin()
             'sfsi_snapchat_MouseOverText'  => 'Snapchat',
             'sfsi_fbmessenger_MouseOverText'  => 'FbMessenger',
             'sfsi_tiktok_MouseOverText'  => 'Tiktok',
+            'sfsi_mastodon_MouseOverText'  => 'Mastodon',
             'sfsi_custom_MouseOverTexts'  => '',
             'sfsi_custom_social_hide'       => 'no'
         );

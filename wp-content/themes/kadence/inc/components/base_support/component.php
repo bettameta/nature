@@ -378,8 +378,32 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 * @param  string $post_ID the post id.
 	 */
 	public function classic_embed_wrap( $cache, $url, $attr = array(), $post_ID = '' ) {
-		if ( doing_filter( 'the_content' ) && ! has_blocks() && ! empty( $cache ) ) {
-			$cache = '<div class="entry-content-asset videofit">' . $cache . '</div>';
+		if ( doing_filter( 'the_content' ) && ! has_blocks() && ! empty( $cache ) && ! empty( $url ) ) {
+			$do_wrap = false;
+			$patterns = array(
+				'#http://((m|www)\.)?youtube\.com/watch.*#i',
+				'#https://((m|www)\.)?youtube\.com/watch.*#i',
+				'#http://((m|www)\.)?youtube\.com/playlist.*#i',
+				'#https://((m|www)\.)?youtube\.com/playlist.*#i',
+				'#http://youtu\.be/.*#i',
+				'#https://youtu\.be/.*#i',
+				'#https?://(.+\.)?vimeo\.com/.*#i',
+				'#https?://(www\.)?dailymotion\.com/.*#i',
+				'#https?://dai.ly/*#i',
+				'#https?://(www\.)?hulu\.com/watch/.*#i',
+				'#https?://wordpress.tv/.*#i',
+				'#https?://(www\.)?funnyordie\.com/videos/.*#i',
+				'#https?://vine.co/v/.*#i',
+				'#https?://(www\.)?collegehumor\.com/video/.*#i',
+				'#https?://(www\.|embed\.)?ted\.com/talks/.*#i'
+			);
+			$patterns = apply_filters( 'kadence_maybe_wrap_embed_patterns', $patterns );
+			foreach ( $patterns as $pattern ) {
+				$do_wrap = preg_match( $pattern, $url );
+				if ( $do_wrap ) {
+					return '<div class="entry-content-asset videofit">' . $cache . '</div>';
+				}
+			}
 		}
 		return $cache;
 	}

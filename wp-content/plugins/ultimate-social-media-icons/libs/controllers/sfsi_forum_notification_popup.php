@@ -44,6 +44,12 @@ function sfsi_forum_notification_popup() {
 		return;
 	}
 
+	$option_5 = maybe_unserialize(get_option('sfsi_section5_options',false));
+	$sfsi_show_admin_popup_option_5 = isset($option_5['sfsi_show_admin_popup']) ? $option_5['sfsi_show_admin_popup'] : 'yes';
+	if( 'yes' !== $sfsi_show_admin_popup_option_5 ) {
+		return;
+	}
+
 	$sfsi_hide_admin_forum_notification = get_option( 'sfsi_hide_admin_forum_notification' );
 	if( 'yes' === $sfsi_hide_admin_forum_notification ) {
 		return;

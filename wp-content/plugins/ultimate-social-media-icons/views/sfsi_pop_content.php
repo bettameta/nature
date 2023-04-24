@@ -1,6 +1,6 @@
 <?php 
 
-$rss_readmore_text='Note: Also if you already offer a newsletter it makes sense to offer this option too, because it will get you more readers, as expained here.';
+$rss_readmore_text='Note: Also if you already offer a newsletter it makes sense to offer this option too, because it will get you more readers, as explained here.';
 $ress_readmore_button='Ok, keep it active for the time being,I want to see how it works';
 $rss_readmore_text2='Deactivate it';
 
@@ -232,10 +232,10 @@ $pin_url= isset($option2['sfsi_pinterest_pageUrl']) && !empty($option2['sfsi_pin
 
 			<h4><?php 
   			printf(
-  				__( 'Note: Also if you already offer a newsletter it makes sense to offer this option too, because it will get you %1$s more readers %2$s, as explained %3$shere.%4$s','ultimate-social-media-icons' ),
+  				__( 'Note: Also if you already offer a newsletter it makes sense to offer this option too, because it will get you %1$s more readers%2$s as explained %3$shere.%4$s','ultimate-social-media-icons' ),
   				'<span class="mediam_txt">',
   				'</span>',
-  				'<a href="http://api.follow.it/rss" target="new" style="color:#5A6570;display: inline;text-decoration:underline">',
+  				'<a href="https://follow.it/docs/publishers/sending-messages/what-is-meant-by-provide-choice-and-get-more-followers" target="new" style="color:#5A6570;display: inline;text-decoration:underline">',
   				'</a>'
   			);
 			?></h4>

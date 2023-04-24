@@ -2,8 +2,8 @@
 Contributors: socialdude, socialtech
 Tags: share, social, share icons, social media, widget, sharing icons, sharing buttons, social share, sharing
 Requires at least: 3.5
-Tested up to: 6.1.1
-Stable tag: 2.8.0
+Tested up to: 6.2
+Stable tag: 2.8.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -301,6 +301,17 @@ It depends on which language you speak :) however probably the answer is â€œyesâ
 
 
 == Changelog ==
+
+= 2.8.1 =
+* Tested with WP 6.2
+* Added mastodon icons and support
+* Fixed display bugs
+* Adjusted plugin compatibility with third-party plugins
+* Fixed share counts
+* Fixed social pop-up icons not displaying
+* Adjustment of flat icons
+* Allow to show other icons on popup banner
+* Fixed offset PHP errors
 
 = 2.8.0 =
 * Adjusted PHP compatibility
@@ -1090,7 +1101,14 @@ It depends on which language you speak :) however probably the answer is â€œyesâ
 
 == Upgrade Notice ==
 
-= 2.8.0 =
-* Added black-friday theme (only for that period)
-* Tested up to WordPress 6.1.1
-* Adjusted PHP compatibility
+= 2.8.1 =
+* Tested with WP 6.2
+* Added mastodon icons and support
+* Fixed display bugs
+* Adjusted plugin compatibility with third-party plugins
+* Fixed share counts
+* Fixed share counts
+* Fixed social pop-up icons not displaying
+* Adjustment of flat icons
+* Allow to show other icons on popup banner
+* Fixed offset PHP errors

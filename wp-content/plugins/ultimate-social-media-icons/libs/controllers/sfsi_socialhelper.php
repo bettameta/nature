@@ -58,8 +58,8 @@ class sfsi_SocialHelper
 	// }
 	function sfsi_get_fb( $url ) {
 		$count = 0; 
-		$appid = '959456867427268';
-		$appsecret = '7cc27f382c47fd5cc3a7203e40d70bf1';
+		$appid = '1158609188420319';
+		$appsecret = '191de9759fc4109320cdfc4b46279ff7';
 		$json_string = $this->file_get_contents_curl( 'https://graph.facebook.com/v12.0/?id='.$url."&fields=engagement&access_token=".$appid.'|'.$appsecret, true );
 		$json 		 = json_decode( $json_string );
 		if( isset( $json ) && isset( $json->engagement ) ) {
@@ -70,8 +70,8 @@ class sfsi_SocialHelper
 
 	function sfsi_banner_get_fb( $url ) {
 		$count 		 = 0; 
-		$appid = '290081412196492';
-		$appsecret = 'a86ca864f716e974cb3d72294c20b275';
+		$appid = '1158609188420319';
+		$appsecret = '191de9759fc4109320cdfc4b46279ff7';
 		$json_string = $this->file_get_contents_curl( 'https://graph.facebook.com/v12.0/?id='.$url."&fields=engagement&access_token=".$appid.'|'.$appsecret, true );
 		$json 		 = json_decode( $json_string );
 		if( isset( $json ) && isset( $json->engagement ) ) {
@@ -82,8 +82,8 @@ class sfsi_SocialHelper
 	
 	/* get facebook page likes */
 	function sfsi_get_fb_pagelike( $url ) {
-		$appid = '959456867427268';
-		$appsecret = '7cc27f382c47fd5cc3a7203e40d70bf1';
+		$appid = '1158609188420319';
+		$appsecret = '191de9759fc4109320cdfc4b46279ff7';
 		$json_url ='https://graph.facebook.com/'.$url.'?fields=fan_count&access_token='.$appid.'|'.$appsecret;
 		$json_string = $this->file_get_contents_curl( $json_url, true );
 		$json = json_decode( $json_string, true );
@@ -491,7 +491,7 @@ class sfsi_SocialHelper
 	}  
 	
 	/* create on page pinit button icon */      
-	public function sfsi_PinIt( $url='', $icon ) {   
+	public function sfsi_PinIt( $url='', $icon = 0 ) {   
 		if( "" == $url ) {
 			$url = trailingslashit( get_permalink() );
 		}
@@ -598,7 +598,7 @@ class sfsi_SocialHelper
 	}
 	
 	/* create linkedIn  share button */
-	public function sfsi_LinkedInShare( $url='', $icon ) {
+	public function sfsi_LinkedInShare( $url='', $icon = 0 ) {
 		$url = ( isset( $url ) && '' !== $url ) ? $url : home_url();
 		return '<a '.sfsi_checkNewWindow().' href="https://www.linkedin.com/shareArticle?url='.urlencode( $url ).'"><img class="sfsi_wicon" data-pin-nopin= true alt="Share" title="Share" src="'.$icon.'" /></a>';
 	  // return  $ifollow='<script type="IN/Share" data-url="'.$url.'"></script>';

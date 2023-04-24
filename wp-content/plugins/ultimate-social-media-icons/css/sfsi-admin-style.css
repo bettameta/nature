@@ -253,6 +253,7 @@ ul.icn_listing li .tb_4_ck {
 .tab1 ul.icn_listing li .sfsicls_ok,
 .tab1 ul.icn_listing li .sfsicls_wechat,
 .tab1 ul.icn_listing li .sfsicls_weibo,
+.tab1 ul.icn_listing li .sfsicls_mastodon,
 .sfsicls_linkdin,
 .sfsicls_whatsapp,
 .tab1 ul.icn_listing li .sfsicls_pinterest,
@@ -293,7 +294,10 @@ ul.icn_listing li .tb_4_ck {
     background: url(../images/icons_theme/default/default_weibo.png) no-repeat;
     background-size: contain;
 }
-
+.tab1 ul.icn_listing li .sfsicls_mastodon {
+    background: url(../images/icons_theme/default/default_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .tab1 ul.icn_listing li .sfsicls_rs_s {
     background-position: 0 0;
     color: #f7941d;
@@ -425,7 +429,8 @@ ul.icn_listing li .right_info a {
 .tab2 .row h2.sfsicls_snapchat,
 .tab2 .row h2.sfsicls_reddit,
 .tab2 .row h2.sfsicls_fbmessenger,
-.tab2 .row h2.sfsicls_tiktok
+.tab2 .row h2.sfsicls_tiktok,
+.tab2 .row h2.sfsicls_mastodon
  {
     background: url(../images/tab_1_icn_list.png) no-repeat;
     padding: 0 0 0 70px;
@@ -442,6 +447,7 @@ ul.icn_listing li .right_info a {
 .tab2 .row h2.sfsicls_telegram {
     background: url(../images/icons_theme/default/default_telegram.png) no-repeat;
     background-size: contain;
+    color: #0088cc;
 }
 .tab2 .row h2.sfsicls_vk {
     background: url(../images/icons_theme/default/default_vk.png) no-repeat;
@@ -457,6 +463,10 @@ ul.icn_listing li .right_info a {
 }
 .tab2 .row h2.sfsicls_weibo {
     background: url(../images/icons_theme/default/default_weibo.png) no-repeat;
+    background-size: contain;
+}
+.tab2 .row h2.sfsicls_mastodon {
+    background: url(../images/icons_theme/default/default_mastodon.png) no-repeat;
     background-size: contain;
 }
 .tab2 .row h2.sfsicls_email {
@@ -498,7 +508,7 @@ ul.icn_listing li .right_info a {
     color: #369;
 }
 .tab2 .inr_cont {
-    margin: 0 0 12px 94px;
+    margin: 0 0 12px 93px;
 }
 ul.tab_2_email_sec .sf_arow {
     width: 55px;
@@ -958,6 +968,27 @@ ul.tab_2_email_sec li .radio {
 .icns_tab_3 .row_16_23,
 .icns_tab_3 .row_17_23,
 
+.icns_tab_3 .row_1_24,
+.icns_tab_3 .row_2_24,
+.icns_tab_3 .row_3_24,
+.icns_tab_3 .row_4_24,
+.icns_tab_3 .row_5_24,
+.icns_tab_3 .row_6_24,
+.icns_tab_3 .row_7_24,
+.icns_tab_3 .row_8_24,
+.icns_tab_3 .row_9_24,
+.icns_tab_3 .row_10_24,
+.icns_tab_3 .row_11_24,
+.icns_tab_3 .row_12_24,
+.icns_tab_3 .row_13_24,
+.icns_tab_3 .row_14_24,
+.icns_tab_3 .row_15_24,
+.icns_tab_3 .row_16_24,
+.icns_tab_3 .row_17_24,
+.icns_tab_3 .row_18_24,
+.icns_tab_3 .row_19_24,
+.icns_tab_3 .row_20_24,
+
 .icns_tab_3 .row_1_18,
 .icns_tab_3 .row_2_18,
 .icns_tab_3 .row_3_18,
@@ -1052,6 +1083,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/default/default_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_1_24 {
+    background: url(../images/icons_theme/default/default_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_2_1 {
     background: url(../images/icons_theme/flat/flat_rss.png) no-repeat;
     background-size: contain;
@@ -1133,6 +1168,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/flat/flat_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_2_24 {
+    background: url(../images/icons_theme/flat/flat_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_3_1 {
     background-position: -7px -146px;
 }
@@ -1199,6 +1238,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_3_23 {
     background: url(../images/icons_theme/thin/thin_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_3_24 {
+    background: url(../images/icons_theme/thin/thin_mastodon.png) no-repeat;
     background-size: contain;
 }
 .icns_tab_3 .row_4_1 {
@@ -1269,6 +1312,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/cute/cute_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_4_24 {
+    background: url(../images/icons_theme/cute/cute_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_5_1 {
     background-position: -7px -296px;
 }
@@ -1335,6 +1382,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_5_23 {
     background: url(../images/icons_theme/cubes/cubes_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_5_24 {
+    background: url(../images/icons_theme/cubes/cubes_mastodon.png) no-repeat;
     background-size: contain;
 }
 .icns_tab_3 .row_6_1 {
@@ -1405,6 +1456,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/chrome_blue/chrome_blue_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_6_24 {
+    background: url(../images/icons_theme/chrome_blue/chrome_blue_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_7_1 {
     background-position: -7px -444px;
 }
@@ -1471,6 +1526,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_7_23 {
     background: url(../images/icons_theme/chrome_grey/chrome_grey_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_7_24 {
+    background: url(../images/icons_theme/chrome_grey/chrome_grey_mastodon.png) no-repeat;
     background-size: contain;
 }
 .icns_tab_3 .row_8_1 {
@@ -1541,6 +1600,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/splash/splash_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_8_24 {
+    background: url(../images/icons_theme/splash/splash_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_9_1 {
     background-position: -7px -592px;
 }
@@ -1607,6 +1670,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_9_23 {
     background: url(../images/icons_theme/orange/orange_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_9_24 {
+    background: url(../images/icons_theme/orange/orange_mastodon.png) no-repeat;
     background-size: contain;
 }
 .icns_tab_3 .row_10_1 {
@@ -1677,6 +1744,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/crystal/crystal_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_10_24 {
+    background: url(../images/icons_theme/crystal/crystal_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_11_1 {
     background-position: -7px -740px;
 }
@@ -1743,6 +1814,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_11_23 {
     background: url(../images/icons_theme/glossy/glossy_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_11_24 {
+    background: url(../images/icons_theme/glossy/glossy_mastodon.png) no-repeat;
     background-size: contain;
 }
 .icns_tab_3 .row_12_1 {
@@ -1813,6 +1888,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/black/black_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_12_24 {
+    background: url(../images/icons_theme/black/black_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_13_1 {
     background-position: -7px -888px;
 }
@@ -1879,6 +1958,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_13_23 {
     background: url(../images/icons_theme/silver/silver_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_13_24 {
+    background: url(../images/icons_theme/silver/silver_mastodon.png) no-repeat;
     background-size: contain;
 }
 .icns_tab_3 .row_14_1 {
@@ -1949,6 +2032,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/shaded_dark/shaded_dark_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_14_24 {
+    background: url(../images/icons_theme/shaded_dark/shaded_dark_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_15_1 {
     background-position: -7px -1036px;
 }
@@ -2017,6 +2104,10 @@ ul.tab_2_email_sec li .radio {
     background: url(../images/icons_theme/shaded_light/shaded_light_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_15_24 {
+    background: url(../images/icons_theme/shaded_light/shaded_light_mastodon.png) no-repeat;
+    background-size: contain;
+}
 .icns_tab_3 .row_16_1 {
     background-position: -7px -1109px;
 }
@@ -2083,6 +2174,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_16_23 {
     background: url(../images/icons_theme/transparent/transparent_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_16_24 {
+    background: url(../images/icons_theme/transparent/transparent_mastodon.png) no-repeat;
     background-size: contain;
 }
 
@@ -2158,6 +2253,10 @@ ul.tab_2_email_sec li .radio {
 }
 .icns_tab_3 .row_20_23 {
     background: url(../images/icons_theme/animated_icons/animated_icons_tiktok.gif) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_20_24 {
+    background: url(../images/icons_theme/animated_icons/animated_icons_mastodon.gif) no-repeat;
     background-size: contain;
 }
 
@@ -5176,6 +5275,12 @@ input[type="number"] {
 .sfsi_margin_top_0{
     margin-top: 0 !important;
 }
+
+.sfsi_margin_top_0 span.span_before_input, 
+.sfsi_margin_top_0 span.span_after_input {
+    font-size: 17px !important;
+}
+
 .sfsi_responsive_icon_preview .sfsi_icons_container a{
     text-decoration: none;
 }
@@ -5887,6 +5992,10 @@ ul.sfsiplus_icn_listing8 .sfsi_plus_float_icons_alignment {
     background: url(../images/icons_theme/flat_square/flat_square_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_17_24 {
+    background: url(../images/icons_theme/flat_square/flat_square_mastodon.png) no-repeat;
+    background-size: contain;
+}
 
 
 /* Flat squared section */
@@ -5960,6 +6069,10 @@ ul.sfsiplus_icn_listing8 .sfsi_plus_float_icons_alignment {
 }
 .icns_tab_3 .row_18_23 {
     background: url(../images/icons_theme/flat_squared/flat_squared_tiktok.png) no-repeat;
+    background-size: contain;
+}
+.icns_tab_3 .row_18_24 {
+    background: url(../images/icons_theme/flat_squared/flat_squared_mastodon.png) no-repeat;
     background-size: contain;
 }
 
@@ -6036,6 +6149,11 @@ ul.sfsiplus_icn_listing8 .sfsi_plus_float_icons_alignment {
     background: url(../images/icons_theme/icons_only/icons_only_tiktok.png) no-repeat;
     background-size: contain;
 }
+.icns_tab_3 .row_19_24 {
+    background: url(../images/icons_theme/icons_only/icons_only_mastodon.png) no-repeat;
+    background-size: contain;
+}
+
 
 .specify_counts.pinterest_section .sfsi_show_via_onhover.disabled_checkbox .sfsiicnsdvwrp {
     float: left;

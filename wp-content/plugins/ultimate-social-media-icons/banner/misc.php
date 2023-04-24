@@ -4,7 +4,7 @@
    * File for our cool Carousel in the footer
    *
    * @category Child Plugin
-   * @version v0.2.0
+   * @version v0.3.0
    * @since v0.1.0
    * @author iClyde <kontakt@iclyde.pl>
    */
@@ -130,7 +130,7 @@
           // Get menu slug name
           if (!$this->menu_name($menu)) return false;
 
-          if ($this->page === $this->menu && !defined('INISEV_CAROUSEL')) {
+          if (/*$this->page === $this->menu && */!defined('INISEV_CAROUSEL')) {
 
             // Initialize Carousel constant
             define('INISEV_CAROUSEL', true);
@@ -142,8 +142,15 @@
             wp_enqueue_script('inisev-carousel-script', ($this->url . 'assets/index.min.js'), [], filemtime($this->_root_dir . '/assets/index.min.js'), true);
             wp_enqueue_style('inisev-carousel-style', ($this->url . 'assets/style.min.css'), [], filemtime($this->_root_dir . '/assets/style.min.css'));
 
+            // Pass nonce to JS
+            wp_localize_script('inisev-carousel-script', 'inisev_carousel', [
+              'nonce' => wp_create_nonce('inisev_carousel'),
+            ], true);
+
             // Print the footer
-            add_action('in_admin_footer', [&$this, '_print'], 1);
+            if (!has_action('ins_global_print_carrousel')) {
+              add_action('ins_global_print_carrousel', [&$this, '_print'], 1);
+            }
 
           }
 
@@ -236,7 +243,8 @@
 
           // Make sure it found something
           if (isset($this->menu)) return true;
-          else return $this->fail(6);
+          else return true;
+          // else return $this->fail(6);
 
         }
 
@@ -422,6 +430,10 @@
         * Handle ajax request
         */
         public function handle_installation() {
+
+          if(check_ajax_referer('inisev_carousel', 'nonce', false) === false) {
+             wp_send_json_error();
+          }
 
           // Handle the slug and install the plugin
           $slug = sanitize_text_field($_POST['slug']);

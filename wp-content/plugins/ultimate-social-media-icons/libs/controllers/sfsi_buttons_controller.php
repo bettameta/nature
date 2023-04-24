@@ -36,6 +36,7 @@ function sfsi_options_updater1()
     $sfsi_fbmessenger_display   = isset( $_POST["sfsi_fbmessenger_display"] ) ? sanitize_text_field($_POST["sfsi_fbmessenger_display"] ) : 'no';
     $sfsi_reddit_display        = isset( $_POST["sfsi_reddit_display"] ) ? sanitize_text_field($_POST["sfsi_reddit_display"] ) : 'no';
     $sfsi_tiktok_display        = isset( $_POST["sfsi_tiktok_display"] ) ? sanitize_text_field($_POST["sfsi_tiktok_display"] ) : 'no';
+    $sfsi_mastodon_display       = isset( $_POST["sfsi_mastodon_display"] ) ? sanitize_text_field($_POST["sfsi_mastodon_display"] ) : 'no';
 
     $up_option1 = array(
         'sfsi_rss_display'      => sanitize_text_field($sfsi_rss_display),
@@ -59,6 +60,7 @@ function sfsi_options_updater1()
         'sfsi_fbmessenger_display'  => sanitize_text_field($sfsi_fbmessenger_display),
         'sfsi_reddit_display'       => sanitize_text_field($sfsi_reddit_display),
         'sfsi_tiktok_display'       => sanitize_text_field($sfsi_tiktok_display),
+        'sfsi_mastodon_display'      => sanitize_text_field($sfsi_mastodon_display),
 
     );
     update_option('sfsi_section1_options',  serialize($up_option1));
@@ -149,6 +151,9 @@ function sfsi_options_updater2()
 
     $sfsi_whatsapp_msg        = isset( $_POST["sfsi_whatsapp_msg"] ) ? sanitize_text_field($_POST["sfsi_whatsapp_msg"] ) : '';
     $sfsi_whatsapp_share      = isset( $_POST["sfsi_whatsapp_share"] ) ? sanitize_text_field($_POST["sfsi_whatsapp_share"] ) : '';
+
+    $sfsi_mastodon_page       = isset( $_POST["sfsi_mastodon_page"] ) ? sanitize_text_field($_POST["sfsi_mastodon_page"] ) : '';
+    $sfsi_mastodon_pageURL    = isset( $_POST["sfsi_mastodon_pageURL"] ) ? esc_url(trim($_POST["sfsi_mastodon_pageURL"] )) : '';
 
     /*
      * Escape custom icons url
@@ -248,13 +253,17 @@ function sfsi_options_updater2()
         'sfsi_reddit_pageShare'     => sanitize_text_field($sfsi_reddit_pageShare),
         'sfsi_reddit_page_visit'    => sanitize_text_field($sfsi_reddit_page_visit),
          
-         /* Whatsapp options */
+        /* Whatsapp options */
         'sfsi_whatsapp_msg'         => sanitize_text_field($sfsi_whatsapp_msg),
         'sfsi_whatsapp_share'       => sanitize_text_field($sfsi_whatsapp_share),
          
-         /* Wechat options */
-         'sfsi_wechat_share'        => sanitize_text_field($sfsi_wechat_share),
-         'sfsi_wechat_follow'       => sanitize_text_field($sfsi_wechat_follow),
+        /* Wechat options */
+        'sfsi_wechat_share'        => sanitize_text_field($sfsi_wechat_share),
+        'sfsi_wechat_follow'       => sanitize_text_field($sfsi_wechat_follow),
+
+        /* Mastodon options */
+        'sfsi_mastodon_page'       => sanitize_text_field($sfsi_mastodon_page),
+        'sfsi_mastodon_pageURL'    => esc_url($sfsi_mastodon_pageURL),
 
     );
 
@@ -315,6 +324,7 @@ function sfsi_options_updater3()
     $sfsi_wechat_bgColor      = isset( $_POST["sfsi_wechat_bgColor"] ) ? sanitize_text_field( $_POST["sfsi_wechat_bgColor"] ) : '';
     $sfsi_weibo_bgColor       = isset( $_POST["sfsi_weibo_bgColor"] ) ? sanitize_text_field( $_POST["sfsi_weibo_bgColor"] ) : '';
     $sfsi_tiktok_bgColor      = isset( $_POST["sfsi_tiktok_bgColor"] ) ? sanitize_text_field( $_POST["sfsi_tiktok_bgColor"] ) : '';
+    $sfsi_mastodon_bgColor    = isset( $_POST["sfsi_mastodon_bgColor"] ) ? sanitize_text_field( $_POST["sfsi_mastodon_bgColor"] ) : '';
 
     /* Design and animation option  */
     $up_option3 = array(
@@ -352,7 +362,8 @@ function sfsi_options_updater3()
         'sfsi_vk_bgColor'                   => sanitize_text_field( $sfsi_vk_bgColor ),
         'sfsi_wechat_bgColor'               => sanitize_text_field( $sfsi_wechat_bgColor ),
         'sfsi_weibo_bgColor'                => sanitize_text_field( $sfsi_weibo_bgColor ),
-        'sfsi_tiktok_bgColor'               => sanitize_text_field( $sfsi_tiktok_bgColor )
+        'sfsi_tiktok_bgColor'               => sanitize_text_field( $sfsi_tiktok_bgColor ),
+        'sfsi_mastodon_bgColor'             => sanitize_text_field( $sfsi_mastodon_bgColor ),
 
     );
     update_option('sfsi_section3_options', serialize($up_option3));
@@ -444,6 +455,21 @@ function sfsi_options_updater4()
     $sfsi_whatsapp_countsDisplay          = isset( $_POST["sfsi_whatsapp_countsDisplay"] ) ? sanitize_text_field($_POST["sfsi_whatsapp_countsDisplay"] ) : 'no';
     $sfsi_whatsapp_manualCounts           = isset( $_POST["sfsi_whatsapp_manualCounts"] ) ? intval(trim($_POST["sfsi_whatsapp_manualCounts"] )) : '';
 
+    $sfsi_tiktok_countsDisplay          = isset( $_POST["sfsi_tiktok_countsDisplay"] ) ? sanitize_text_field($_POST["sfsi_tiktok_countsDisplay"] ) : 'no';
+    $sfsi_tiktok_manualCounts           = isset( $_POST["sfsi_tiktok_manualCounts"] ) ? intval(trim($_POST["sfsi_tiktok_manualCounts"] )) : '';
+
+    $sfsi_mastodon_countsDisplay          = isset( $_POST["sfsi_mastodon_countsDisplay"] ) ? sanitize_text_field($_POST["sfsi_mastodon_countsDisplay"] ) : 'no';
+    $sfsi_mastodon_manualCounts           = isset( $_POST["sfsi_mastodon_manualCounts"] ) ? intval(trim($_POST["sfsi_mastodon_manualCounts"] )) : '';
+    
+    $sfsi_fbmessenger_countsDisplay          = isset( $_POST["sfsi_fbmessenger_countsDisplay"] ) ? sanitize_text_field($_POST["sfsi_fbmessenger_countsDisplay"] ) : 'no';
+    $sfsi_fbmessenger_manualCounts           = isset( $_POST["sfsi_fbmessenger_manualCounts"] ) ? intval(trim($_POST["sfsi_fbmessenger_manualCounts"] )) : '';
+
+    $sfsi_snapchat_countsDisplay          = isset( $_POST["sfsi_snapchat_countsDisplay"] ) ? sanitize_text_field($_POST["sfsi_snapchat_countsDisplay"] ) : 'no';
+    $sfsi_snapchat_manualCounts           = isset( $_POST["sfsi_snapchat_manualCounts"] ) ? intval(trim($_POST["sfsi_snapchat_manualCounts"] )) : '';
+
+    $sfsi_reddit_countsDisplay          = isset( $_POST["sfsi_reddit_countsDisplay"] ) ? sanitize_text_field($_POST["sfsi_reddit_countsDisplay"] ) : 'no';
+    $sfsi_reddit_manualCounts           = isset( $_POST["sfsi_reddit_manualCounts"] ) ? intval(trim($_POST["sfsi_reddit_manualCounts"] )) : '';
+
     $sfsi_round_counts           = isset( $_POST["sfsi_round_counts"] ) ? sanitize_text_field($_POST["sfsi_round_counts"] ) : 'no';
     $sfsi_original_counts           = isset( $_POST["sfsi_original_counts"] ) ? sanitize_text_field($_POST["sfsi_original_counts"] ) : 'no';
     $sfsi_responsive_share_count               = isset( $_POST["sfsi_responsive_share_count"] ) ? sanitize_text_field($_POST["sfsi_responsive_share_count"] ) : 'no';
@@ -517,6 +543,21 @@ function sfsi_options_updater4()
         'sfsi_whatsapp_countsDisplay'    => sanitize_text_field($sfsi_whatsapp_countsDisplay),
         'sfsi_whatsapp_manualCounts'     => intval($sfsi_whatsapp_manualCounts),
 
+        'sfsi_tiktok_countsDisplay'    => sanitize_text_field($sfsi_tiktok_countsDisplay),
+        'sfsi_tiktok_manualCounts'     => intval($sfsi_tiktok_manualCounts),
+
+        'sfsi_mastodon_countsDisplay'    => sanitize_text_field($sfsi_mastodon_countsDisplay),
+        'sfsi_mastodon_manualCounts'     => intval($sfsi_mastodon_manualCounts),
+
+        'sfsi_fbmessenger_countsDisplay'    => sanitize_text_field($sfsi_fbmessenger_countsDisplay),
+        'sfsi_fbmessenger_manualCounts'     => intval($sfsi_fbmessenger_manualCounts),
+
+        'sfsi_snapchat_countsDisplay'    => sanitize_text_field($sfsi_snapchat_countsDisplay),
+        'sfsi_snapchat_manualCounts'     => intval($sfsi_snapchat_manualCounts),
+
+        'sfsi_reddit_countsDisplay'    => sanitize_text_field($sfsi_reddit_countsDisplay),
+        'sfsi_reddit_manualCounts'     => intval($sfsi_reddit_manualCounts),
+
         'sfsi_round_counts'    => sanitize_text_field($sfsi_round_counts),
         'sfsi_original_counts'    => sanitize_text_field($sfsi_original_counts),
         'sfsi_responsive_share_count'    => sanitize_text_field($sfsi_responsive_share_count),
@@ -570,6 +611,7 @@ function sfsi_options_updater5()
     $sfsi_snapchat_MouseOverText      = isset( $_POST["sfsi_snapchat_MouseOverText"] ) ? sanitize_text_field($_POST["sfsi_snapchat_MouseOverText"] ) : '';
     $sfsi_fbmessenger_MouseOverText      = isset( $_POST["sfsi_fbmessenger_MouseOverText"] ) ? sanitize_text_field($_POST["sfsi_fbmessenger_MouseOverText"] ) : '';
     $sfsi_tiktok_MouseOverText      = isset( $_POST["sfsi_tiktok_MouseOverText"] ) ? sanitize_text_field($_POST["sfsi_tiktok_MouseOverText"] ) : '';
+    $sfsi_mastodon_MouseOverText      = isset( $_POST["sfsi_mastodon_MouseOverText"] ) ? sanitize_text_field($_POST["sfsi_mastodon_MouseOverText"] ) : '';
 
     $sfsi_youtube_MouseOverText     = isset( $_POST["sfsi_youtube_MouseOverText"] ) ? sanitize_text_field($_POST["sfsi_youtube_MouseOverText"] ) : '';
     if (isset( $_POST["sfsi_custom_orders"] )) {
@@ -602,6 +644,7 @@ function sfsi_options_updater5()
     $sfsi_redditIcon_order          = isset( $_POST["sfsi_redditIcon_order"] ) ? sanitize_text_field($_POST["sfsi_redditIcon_order"] ) : '18';
     $sfsi_fbmessengerIcon_order     = isset( $_POST["sfsi_fbmessengerIcon_order"] ) ? sanitize_text_field($_POST["sfsi_fbmessengerIcon_order"] ) : '19';
     $sfsi_tiktokIcon_order          = isset( $_POST["sfsi_tiktokIcon_order"] ) ? sanitize_text_field($_POST["sfsi_tiktokIcon_order"] ) : '20';
+    $sfsi_mastodonIcon_order        = isset( $_POST["sfsi_mastodonIcon_order"] ) ? sanitize_text_field($_POST["sfsi_mastodonIcon_order"] ) : '21';
 
     if (isset( $_POST["sfsi_custom_MouseOverTexts"] )) {
         $sfsi_custom_MouseOverTexts = array();
@@ -612,6 +655,7 @@ function sfsi_options_updater5()
     $sfsi_custom_MouseOverTexts     = isset( $sfsi_custom_MouseOverTexts) ? serialize($sfsi_custom_MouseOverTexts) : '';
 
     $sfsi_custom_social_hide        = isset( $_POST["sfsi_custom_social_hide"] ) ? sanitize_text_field($_POST["sfsi_custom_social_hide"] ) : 'no';
+    $sfsi_show_admin_popup         = isset( $_POST["sfsi_show_admin_popup"] ) ? sanitize_text_field($_POST["sfsi_show_admin_popup"] ) : 'yes';
     $sfsi_icons_sharing_and_traffic_tips     = isset( $_POST["sfsi_icons_sharing_and_traffic_tips"] ) ? sanitize_text_field($_POST["sfsi_icons_sharing_and_traffic_tips"] ) : 'yes';
     $sfsi_whatsappIcon_order        = isset( $_POST["sfsi_whatsappIcon_order"] ) ? sanitize_text_field($_POST["sfsi_whatsappIcon_order"] ) : '16';
 
@@ -660,6 +704,7 @@ function sfsi_options_updater5()
         'sfsi_snapchat_MouseOverText'     => sanitize_text_field($sfsi_snapchat_MouseOverText),
         'sfsi_fbmessenger_MouseOverText'     => sanitize_text_field($sfsi_fbmessenger_MouseOverText),
         'sfsi_tiktok_MouseOverText'     => sanitize_text_field($sfsi_tiktok_MouseOverText),
+        'sfsi_mastodon_MouseOverText'     => sanitize_text_field($sfsi_mastodon_MouseOverText),
         'sfsi_reddit_MouseOverText'     => sanitize_text_field($sfsi_reddit_MouseOverText),
         'sfsi_CustomIcons_order'        => $sfsi_custom_orders,
         'sfsi_rssIcon_order'            => intval($sfsi_rssIcon_order),
@@ -680,9 +725,11 @@ function sfsi_options_updater5()
         'sfsi_redditIcon_order'         => intval($sfsi_redditIcon_order),
         'sfsi_fbmessengerIcon_order'    => intval($sfsi_fbmessengerIcon_order),
         'sfsi_tiktokIcon_order'         => intval($sfsi_tiktokIcon_order),
+        'sfsi_mastodonIcon_order'       => intval($sfsi_mastodonIcon_order),
 
         'sfsi_custom_MouseOverTexts'    => $sfsi_custom_MouseOverTexts,
         'sfsi_custom_social_hide'       => $sfsi_custom_social_hide,
+        'sfsi_show_admin_popup'         => sanitize_text_field($sfsi_show_admin_popup),
         'sfsi_icons_sharing_and_traffic_tips'    => sanitize_text_field($sfsi_icons_sharing_and_traffic_tips),
         'sfsi_whatsappIcon_order'         => intval($sfsi_whatsappIcon_order),
 
@@ -1167,7 +1214,8 @@ function sfsi_getCounts($for_resposive = false)
         'snapchat_count' => '',
         'reddit_count' => '',
         'fbmessenger_count' => '',
-        'tiktok_count' => ''
+        'tiktok_count' => '',
+        'mastodon_count' => '',
     );
 
     /* get rss count */
@@ -1290,6 +1338,7 @@ function sfsi_getCounts($for_resposive = false)
             $scounts['instagram_count'] = $sfsi_section4_options['sfsi_instagram_manualCounts'];
         }
     }
+
     if ($for_resposive == false) {
         $scounts['telegram_count'] = isset( $sfsi_section4_options['sfsi_telegram_manualCounts'] ) ? $sfsi_section4_options['sfsi_telegram_manualCounts'] : '0';
         $scounts['vk_count'] = isset( $sfsi_section4_options['sfsi_vk_manualCounts'] ) ? $sfsi_section4_options['sfsi_vk_manualCounts'] : '0';
@@ -1301,9 +1350,10 @@ function sfsi_getCounts($for_resposive = false)
         $scounts['reddit_count'] = isset( $sfsi_section4_options['sfsi_reddit_manualCounts'] ) ? $sfsi_section4_options['sfsi_reddit_manualCounts'] : '0';
         $scounts['fbmessenger_count'] = isset( $sfsi_section4_options['sfsi_fbmessenger_manualCounts'] ) ? $sfsi_section4_options['sfsi_fbmessenger_manualCounts'] : '0';
         $scounts['tiktok_count'] = isset( $sfsi_section4_options['sfsi_tiktok_manualCounts'] ) ? $sfsi_section4_options['sfsi_tiktok_manualCounts'] : '0';
+        $scounts['mastodon_count'] = isset( $sfsi_section4_options['sfsi_mastodon_manualCounts'] ) ? $sfsi_section4_options['sfsi_mastodon_manualCounts'] : '0';
     }
+
     return $scounts;
-    exit;
 }
 /* activate and remove footer credit link */
 add_action('wp_ajax_activateFooter', 'sfsiActivateFooter');

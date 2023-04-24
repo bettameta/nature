@@ -72,7 +72,7 @@
 
        <!---Pinterest on mouse-over Check gallery plugins is active -->
        <?php
-            if ($sfsi_dismiss_gallery['show_banner'] == "yes" || false == $sfsi_dismiss_gallery) {
+            if ((isset($sfsi_dismiss_gallery['show_banner']) &&  $sfsi_dismiss_gallery['show_banner'] == "yes") || false == $sfsi_dismiss_gallery) {
                 foreach ($gallery_plugins as $key => $gallery_plugin) {
                     $sfsi_show_gallery_banner = sfsi_check_on_plugin_page($gallery_plugin['dir_slug'], $gallery_plugin['option_name'], $current_site_url);
 

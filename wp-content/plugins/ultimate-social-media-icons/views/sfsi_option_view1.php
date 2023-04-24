@@ -26,6 +26,7 @@ $option1['sfsi_snapchat_display'] = isset( $option1['sfsi_snapchat_display'] ) ?
 $option1['sfsi_reddit_display'] = isset( $option1['sfsi_reddit_display'] ) ? sanitize_text_field( $option1['sfsi_reddit_display'] ) : 'no';
 $option1['sfsi_fbmessenger_display'] = isset( $option1['sfsi_fbmessenger_display'] ) ? sanitize_text_field( $option1['sfsi_fbmessenger_display'] ) : 'no';
 $option1['sfsi_tiktok_display'] = isset( $option1['sfsi_tiktok_display'] ) ? sanitize_text_field( $option1['sfsi_tiktok_display'] ) : 'no';
+$option1['sfsi_mastodon_display'] = isset( $option1['sfsi_mastodon_display'] ) ? sanitize_text_field( $option1['sfsi_mastodon_display'] ) : 'no';
 ?>
 <!-- Section 1 "Which icons do you want to show on your site? " main div Start -->
 
@@ -153,7 +154,7 @@ $option1['sfsi_tiktok_display'] = isset( $option1['sfsi_tiktok_display'] ) ? san
                 <span class="sfsicls_utube"><?php _e('Youtube','ultimate-social-media-icons') ?></span>
             </div>
             <div class="right_info">
-                <p><span><?php _e('It depends:','ultimate-social-media-icons') ?></span> <?php _e('Show this icon if you have a youtube account (and you should set up one if you have video content – that can increase your traffic significantly).','ultimate-social-media-icons') ?> </p>
+                <p><span><?php _e('It depends:','ultimate-social-media-icons') ?></span> <?php _e('Show this icon if you have a Youtube account (and you should set up one if you have video content – that can increase your traffic significantly).','ultimate-social-media-icons') ?> </p>
             </div>
         </li>
 
@@ -361,6 +362,18 @@ $option1['sfsi_tiktok_display'] = isset( $option1['sfsi_tiktok_display'] ) ? san
         </li>
         <!-- END TIKTOK ICON -->
 
+        <!-- MASTODON ICON -->
+        <li class="sfsi_vertically_center">
+            <div>
+                <div class="radio_section tb_4_ck"><input name="sfsi_mastodon_display" <?php echo ($option1['sfsi_mastodon_display'] == 'yes') ? 'checked="true"' : ''; ?> id="sfsi_mastodon_display" type="checkbox" value="yes" class="styled" /></div>
+                <span class="sfsicls_mastodon"><?php _e( 'Mastodon', 'ultimate-social-media-icons' ); ?></span>
+            </div>
+            <div class="right_info">
+                <p><?php _e( 'Mastodon is the largest decentralized social network on the internet that functions much like Twitter.', 'ultimate-social-media-icons' ); ?></p>
+            </div>
+        </li>
+        <!-- END MASTODON ICON -->
+
         <!-- Custom icon section start here -->
         <?php if (get_option('sfsi_custom_icons') == 'no') { ?>
             <?php
@@ -415,7 +428,7 @@ $option1['sfsi_tiktok_display'] = isset( $option1['sfsi_tiktok_display'] ) ? san
                             <?php _e('Premium Feature:','ultimate-social-media-icons') ?>
                             </label>
                             <label><?php _e('Upload a custom icon if you have other accounts/websites you want to link to -','ultimate-social-media-icons') ?></label>
-                            <a class="pop-up" style="cursor:pointer; color: #12a252 !important;border-bottom: 1px solid #12a252;text-decoration: none;font-weight: bold;font-family: unset;" data-id="sfsi_quickpay-overlay" onclick="sfsi_open_quick_checkout(event)" target="_blank">
+                            <a class="pop-up" style="cursor:pointer; color: #12a252 !important;border-bottom: 1px solid #12a252;text-decoration: none;font-weight: bold;font-family: unset;vertical-align: middle;" data-id="sfsi_quickpay-overlay" onclick="sfsi_open_quick_checkout(event)" target="_blank">
                             <?php _e('Get it now.','ultimate-social-media-icons') ?>
                             </a>
                         </p>

@@ -686,7 +686,13 @@ function sfsi_footer_script() {
 				$sfsi_anchor_div_style .= 'width:' . $sfsi_responsive_icons['settings']['icon_width_size'] . 'px;';
 			} else {
 				$sfsi_anchor_style .= " flex-basis:100%;";
-				$sfsi_anchor_div_style .= " width:100%;";
+				
+				// If the current URL has param 'page=sfsi-options' then set the width to 100% else set it to auto.
+				if ( isset( $_GET['page'] ) && 'sfsi-options' === strtolower($_GET['page']) ) {
+					$sfsi_anchor_div_style .= 'width:100%;';
+				} else {
+					$sfsi_anchor_div_style .= 'width:auto;';
+				}
 			}
 
 			foreach ($sfsi_responsive_icons['default_icons'] as $icon => $icon_config) {
