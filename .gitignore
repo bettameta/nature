@@ -2,5 +2,6 @@
 .DS_Store
 wp-config.php
 .htaccess
+wp-content/uploads
+wp-content/ai1wm-backups
 wp-content/updraft
-wp-content/ai1wm-backups/localhost-nature-20230117-002027-7f55qo.wpress
